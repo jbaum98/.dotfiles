@@ -1,0 +1,17 @@
+snippet 2for "A nested for loop for 2D arrays"
+for (int $1 = 0; $1 < ${2:$3.length}; $1++) {
+	for (int $4 = 0; $4 < ${5:$3[0].length}; $4++) {
+		$0
+	}
+}
+endsnippet
+
+snippet 3for "A nested for loop for 3D arrays"
+for (int $1 = 0; $1 < ${2:$3.length}; $1++) {
+	for (int $4 = 0; $4 < ${5:$3[0].length}; $4++) {
+		for (int $6 = 0; $6 < ${7:$3[0][0].length}; $6++) {
+			$0
+		}
+	}
+}
+endsnippet

@@ -1,0 +1,7 @@
+[user]
+	email = jake.waksbaum@gmail.com
+	name = Jake Waksbaum
+[branch]
+	autosetuprebase = always
+[push]
+	default = simple
