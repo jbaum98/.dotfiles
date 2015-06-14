@@ -2,8 +2,6 @@
 scriptencoding utf-8
 set encoding=utf-8
 set fileencoding=utf-8
-let g:compl = !has('lua')
-let g:compl = 1
 " Plug {{{
 "set nocompatible
 call plug#begin('~/.vim/plugged')
@@ -11,8 +9,6 @@ call plug#begin('~/.vim/plugged')
 
 " Plugs {{{
 Plug 'bling/vim-airline'
-Plug g:compl ? 'Shougo/neocomplcache.vim' : 'Shougo/neocomplete'
-Plug 'spf13/snipmate-snippets'
 Plug 'Shougo/vimproc'
 Plug 'Shougo/context_filetype.vim'
 Plug 'mnpk/vim-monokai'
@@ -28,7 +24,6 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'groenewege/vim-less'
 Plug 'digitaltoad/vim-jade'
 Plug 'mbbill/undotree'
-Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'benekastah/neomake'
 Plug 'tpope/vim-haml'
@@ -37,12 +32,8 @@ Plug 'slim-template/vim-slim'
 Plug 'stephpy/vim-yaml'
 Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-rails'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-dispatch'
-Plug 'jgdavey/tslime.vim'
-Plug 'SirVer/ultisnips'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'mhinz/vim-startify'
 Plug 'tacahiroy/ctrlp-funky'
@@ -54,7 +45,6 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'lukerandall/haskellmode-vim'
 Plug 'eagletmt/ghcmod-vim'
 Plug 'eagletmt/neco-ghc'
-Plug 'majutsushi/tagbar'
 Plug 'sophacles/vim-processing'
 call plug#end()
 filetype plugin indent on    " required
@@ -167,122 +157,9 @@ autocmd FileType java let b:dispatch = 'java ' + expand('%:r')
 autocmd Filetype ruby,yaml,html,php setlocal ts=2 sts=2 sw=2
 " }}}
 
-" Neocomplete {{{
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-
-if !g:compl
-    " Use neocomplete.
-    let g:neocomplete#enable_at_startup = 1
-    " Use smartcase.
-    let g:neocomplete#enable_smart_case = 1
-    " Set minimum syntax keyword length.
-    let g:neocomplete#sources#syntax#min_keyword_length = 3
-    let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-    " Define dictionary.
-    let g:neocomplete#sources#dictionary#dictionaries = {
-                \ 'default' : '',
-                \ 'vimshell' : $HOME.'/.vimshell_hist',
-                \ 'scheme' : $HOME.'/.gosh_completions'
-                \ }
-
-    " Define keyword.
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-    " Movement
-    inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-    " Close popup by <Space>.
-    inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup()."\<Space>" : "\<Space>"
-
-    " AutoComplPop like behavior.
-    " let g:neocomplete#enable_auto_select = 1
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-        let g:neocomplete#sources#omni#input_patterns = {}
-    endif
-
-else
-    " Use neocomplcache.
-    let g:neocomplcache_enable_at_startup = 1
-    " Use smartcase.
-    let g:neocomplcache_enable_smart_case = 1
-    " Set minimum syntax keyword length.
-    let g:neocomplcache_min_syntax_length = 3
-    let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-    " Define dictionary.
-    let g:neocomplcache_dictionary_filetype_lists = {
-                \ 'default' : '',
-                \ 'vimshell' : $HOME.'/.vimshell_hist',
-                \ 'scheme' : $HOME.'/.gosh_completions'
-                \ }
-
-    " Define keyword.
-    if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
-    endif
-    let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-    " Movement
-    inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-    " Close popup by <Space>.
-    inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup()."\<Space>" : "\<Space>"
-
-    " AutoComplPop like behavior.
-    " let g:neocomplcache_enable_auto_select = 1
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplcache_force_omni_patterns')
-        let g:neocomplcache_force_omni_patterns = {}
-    endif
-
-endif
-
-let g:UltiSnipsExpandTrigger = "<nop>"
-let g:ulti_expand_or_jump_res = 0
-function! ExpandSnippetOrCarriageReturn()
-    let snippet = UltiSnips#ExpandSnippetOrJump()
-    if g:ulti_expand_or_jump_res > 0
-        return snippet
-    else
-        return "\<CR>"
-    endif
-endfunction
-inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-
-let g:EclimCompletionMethod = 'omnifunc'
-
-let g:neocomplcache_force_omni_patterns.java = '\k\.\k*'
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-endif
-
-" }}}
-
 " NeoMake {{{
 autocmd BufWritePost * Neomake
 let g:neomake_java_enabled_makers=['javac']
-" }}}
-
-" NERDTree {{{
-map <C-n> :NERDTreeToggle<CR>
-" Close vim if NERDTree is the only thing open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-" Ignore .class files
-let NERDTreeIgnore=['\.class']
 " }}}
 
 " Tmux {{{
@@ -292,11 +169,6 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 " }}}
 
-" Slime {{{
-vmap <C-c><C-c> <Plug>SendSelectionToTmux
-nmap <C-c><C-c> <Plug>NormalModeSendToTmux
-nmap <C-c>r <Plug>SetTmuxVars
-"}}}
 let g:formatprg_args_java = "--style=java"
 "set clipboard=exclude:.*
 
@@ -318,10 +190,5 @@ let g:haskell_conceal              = 0
 let g:haskell_conceal_enumerations = 0
 let g:ghcmod_ghc_options = ['-Wall']
 "}}}
-
-" Tagbar {{{
-"nmap <leader>t= :TagbarToggle<CR>
-"let g:tagbar_autofocus = 1
-" }}}
 
 " vim:foldmethod=marker:foldlevel=0
