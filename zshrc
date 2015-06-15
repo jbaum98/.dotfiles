@@ -65,8 +65,8 @@ alias rspec='rspec --color --format documentation'
 
 alias todos='grep -n "TODO" *'
 
-alias et="emacsclient -a ''-t"
-alias eg="xiwi emacsclient -a '' -c"
+alias et="emacsclient -a \"\" -nw"
+alias eg="xiwi emacsclient -a \"\" -c"
 export EDITOR=vim
 
 bindkey '^[[1;5D' emacs-backward-word

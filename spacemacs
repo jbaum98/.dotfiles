@@ -48,7 +48,10 @@
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages
+   '(
+     smart-compile
+     )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -162,7 +165,7 @@ before layers configuration."
    ;; specified with an installed package.
    ;; Not used for now.
    dotspacemacs-default-package-repository nil
-   evil-escape-key-sequence "jk"
+   ;; evil-escape-key-sequence "jk"
    )
   ;; User initialization goes here
   )
@@ -189,6 +192,7 @@ layers configuration."
 org_archive\\|txt\\)$" . org-mode))
   (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
   (add-to-list 'auto-mode-alist '(".zshrc" . sh-mode))
+  (evil-leader/set-key "cC" 'smart-compile)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
