@@ -65,8 +65,8 @@ alias rspec='rspec --color --format documentation'
 
 alias todos='grep -n "TODO" *'
 
-alias et="emacsclient -t"
-alias eg="xiwi emacsclient -c"
+alias et="emacsclient -a ''-t"
+alias eg="xiwi emacsclient -a '' -c"
 export EDITOR=vim
 
 bindkey '^[[1;5D' emacs-backward-word
@@ -78,5 +78,4 @@ bindkey '^[[1;5C' emacs-forward-word
 #fi
 
 export PATH=$HOME/.cabal/bin:$PATH
-emacs --daemon &>/dev/null
 eval "$(hsvm init)"

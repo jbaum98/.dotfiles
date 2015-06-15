@@ -158,7 +158,7 @@ autocmd Filetype ruby,yaml,html,php setlocal ts=2 sts=2 sw=2
 " }}}
 
 " NeoMake {{{
-autocmd BufWritePost * Neomake
+"autocmd BufWritePost * Neomake
 let g:neomake_java_enabled_makers=['javac']
 " }}}
 
@@ -172,7 +172,7 @@ nnoremap <c-l> <c-w>l
 let g:formatprg_args_java = "--style=java"
 "set clipboard=exclude:.*
 
-autocmd InsertLeave,TextChanged * nested if expand('%') != '' | update | endif
+"autocmd InsertLeave,TextChanged * nested if expand('%') != '' | update | endif
 nnoremap ; :
 nnoremap : ;
 
