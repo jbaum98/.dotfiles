@@ -23,12 +23,11 @@
      ;; (git :variables
      ;;      git-gutter-use-fringe t)
      markdown
-     (org
-      :variable
+     (org :variables
       org-enable-github-support t)
-     ;; shell
+     shell
      syntax-checking
-     progidy
+     prodigy
      clojure
      haskell
      html
@@ -38,9 +37,11 @@
      python
      racket
      ruby
+     comint
      shell-scripts
      sql
      git
+     github
      evil-commentary
      vim-powerline
      )
@@ -51,6 +52,8 @@
    dotspacemacs-additional-packages
    '(
      smart-compile
+     cdlatex
+     auctex
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -94,8 +97,8 @@ before layers configuration."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Inconsolata"
-                               :size 13
+   dotspacemacs-default-font '("Menlo"
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 5)
@@ -166,6 +169,7 @@ before layers configuration."
    ;; Not used for now.
    dotspacemacs-default-package-repository nil
    ;; evil-escape-key-sequence "jk"
+   ;; ruby-enable-ruby-on-rails-support t
    )
   ;; User initialization goes here
   )
@@ -193,7 +197,50 @@ org_archive\\|txt\\)$" . org-mode))
   (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
   (add-to-list 'auto-mode-alist '(".zshrc" . sh-mode))
   (evil-leader/set-key "cC" 'smart-compile)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (awk . t)
+     (C . t)
+     (calc . t)
+     (clojure . t)
+     (css . t)
+     (ditaa . t)
+     (dot . t)
+     (emacs-lisp . t)
+     (gnuplot . t)
+     (haskell . t)
+     (java . t)
+     (js . t)
+     (latex . t)
+     (lisp . t)
+     (makefile . t)
+     (org . t)
+     (perl . t)
+     (python . t)
+     (R . t)
+     (ruby . t)
+     (sass . t)
+     (scala . t)
+     (scheme . t)
+     (sh . t)
+     (sql . t)
+     (sqlite . t)
+     ))
+  (add-hook 'org-mode-hook 'turn-on-org-cdlatex)
+  (setq rspec-use-rake-when-possible nil)
+  (setq rspec-use-bundler-when-possible nil)
+  (setq rspec-use-spring-when-possible t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(rspec-use-bundler-when-possible nil)
+ '(rspec-use-rake-when-possible nil)
+ '(rspec-use-spring-when-possible t)
+ )
