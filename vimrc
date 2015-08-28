@@ -1,61 +1,116 @@
 " Jake Waksbaum
+
 scriptencoding utf-8
 set encoding=utf-8
 set fileencoding=utf-8
 " Plug {{{
-"set nocompatible
 call plug#begin('~/.vim/plugged')
 " }}}
 
 " Plugs {{{
+"Plug 'mhinz/vim-startify'
 Plug 'bling/vim-airline'
-Plug 'Shougo/vimproc'
-Plug 'Shougo/context_filetype.vim'
+"Plug 'vim-scripts/AnsiEsc.vim'
+"Plug 'Shougo/vimproc'
+"Plug 'Shougo/context_filetype.vim'
 Plug 'mnpk/vim-monokai'
+Plug 'jbaum98/vim-colors-solarized'
 Plug 'kien/ctrlp.vim'
+Plug 'tacahiroy/ctrlp-funky'
 Plug 'tpope/vim-fugitive'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'edsono/vim-matchit'
+Plug 'airblade/vim-gitgutter'
+"Plug 'nathanaelkane/vim-indent-guides'
+Plug 'tpope/vim-surround'
+""" Languages
+"""""" Javascript
 Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript'
 Plug 'crusoexia/vim-javascript-lib'
-Plug 'Raimondi/delimitMate'
+""""""
 Plug 'kchmck/vim-coffee-script'
-Plug 'groenewege/vim-less'
 Plug 'digitaltoad/vim-jade'
-Plug 'mbbill/undotree'
-Plug 'tpope/vim-surround'
-Plug 'benekastah/neomake'
-Plug 'tpope/vim-haml'
 Plug 'vim-ruby/vim-ruby'
-Plug 'slim-template/vim-slim'
-Plug 'stephpy/vim-yaml'
-Plug 'airblade/vim-gitgutter'
-Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-rails'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'mhinz/vim-startify'
-Plug 'tacahiroy/ctrlp-funky'
-Plug 'myusuf3/numbers.vim'
-Plug 'godlygeek/tabular'
-Plug 'ap/vim-css-color'
-Plug 'spf13/PIV'
-Plug 'Chiel92/vim-autoformat'
+Plug 'stephpy/vim-yaml'
+Plug 'tpope/vim-haml'
+Plug 'slim-template/vim-slim'
+Plug 'groenewege/vim-less'
 Plug 'lukerandall/haskellmode-vim'
-Plug 'eagletmt/ghcmod-vim'
-Plug 'eagletmt/neco-ghc'
 Plug 'sophacles/vim-processing'
+"""
+Plug 'scrooloose/nerdcommenter'
+"Plug 'christoomey/vim-tmux-navigator'
+"Plug 'godlygeek/tabular'
+Plug 'ap/vim-css-color'
+"Plug 'spf13/PIV'
+"Plug 'Chiel92/vim-autoformat'
 call plug#end()
 filetype plugin indent on    " required
+" }}}
+
+" Basics {{{
+set nocompatible
+" allow unsaved background buffers and remember marks/undo for them
+set hidden
+" remember more commands and search history
+set history=10000
+set cmdheight=1
+set switchbuf=useopen
+" This makes RVM work inside Vim. I have no idea why.
+set shell=bash
+" Prevent Vim from clobbering the scrollback buffer. See
+" http://www.shallowsky.com/linux/noaltscreen.html
+set t_ti= t_te=
+" use emacs-style tab completion when selecting files, etc
+set wildmode=longest,list
+" make tab completion for files/buffers act like bash
+set wildmenu
+let mapleader = "\<Space>"
+" Normally, Vim messes with iskeyword when you open a shell file. This can
+" leak out, polluting other file types even after a 'set ft=' change. This
+" variable prevents the iskeyword change so it can't hurt anyone.
+let g:sh_noisk=1
+" Insert only one space when joining lines that contain sentence-terminating
+" punctuation like `.`.
+set nojoinspaces
+" If a file is changed outside of vim, automatically reload it without asking
+set autoread
+" }}}
+
+" Autocmds {{{
+augroup vimrcEx
+  " Clear all autocmds in the group
+  autocmd!
+  autocmd FileType text setlocal textwidth=78
+  " Jump to last cursor position unless it's invalid or in an event handler
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+
+  "for ruby, autoindent with two spaces, always expand tabs
+  autocmd Filetype java set makeprg=javac
+  autocmd FileType java let b:dispatch = 'java ' + expand('%:r')
+  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber set ai sw=2 sts=2 et
+  autocmd FileType python set sw=4 sts=4 et
+
+  autocmd! BufRead,BufNewFile *.sass setfiletype sass
+  " Leave the return key alone when in command line windows, since it's used
+  " to run commands there.
+  autocmd! CmdwinEnter * :unmap <cr>
+  autocmd! CmdwinLeave * :call MapCR()
+  autocmd! FileType *.slim set sw=2 sts=2 et
+augroup END
 " }}}
 
 " Colors {{{
 syntax enable
 set number
-set t_Co=256
+let g:solarized_termcolors=256
 set background=dark
-colorscheme monokai
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"autocmd VimEnter * colorscheme solarized
+colorscheme solarized
 " }}}
 
 " Spaces and Tabs {{{
@@ -63,9 +118,11 @@ set tabstop=4 " number of visual spaces per TAB
 set softtabstop=4 " number of spaces in tab when editing
 set shiftwidth=4
 set expandtab " makes tabs spaces
-filetype indent on
+filetype plugin indent on
 set modelines=1
-set backspace=2
+set backspace=indent,eol,start
+set autoindent
+set copyindent
 set smartindent
 " }}}
 
@@ -81,11 +138,17 @@ set showcmd
 set cursorline
 set wildmenu
 set showmatch
+set showtabline=2
+set winwidth=79
+" keep more context when scrolling off the end of a buffer
+set scrolloff=3
 " }}}
 
 " Search {{{
 set incsearch
 set hlsearch
+" make searches case-sensitive only if they contain upper-case characters
+set ignorecase smartcase
 " }}}
 
 " Folding {{{
@@ -95,20 +158,12 @@ set foldnestmax=10
 set foldmethod=indent
 " }}}
 
-" Line Shortcuts {{{
-nnoremap j gj
-nnoremap k gk
-nnoremap gV `[v`]
-inoremap jk <esc>
-" }}}
-
 " Backups/Undo {{{
 set backup
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set backupskip=/tmp/*,/private/tmp/*
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
-nnoremap <leader>u :UndotreeToggle<cr>
 if has("persistent_undo")
     set undodir='~/.undo/'
     set undofile
@@ -133,62 +188,147 @@ endif
 " }}}
 
 " Custom Mappings {{{
-let mapleader = "-"
+nnoremap ; :
+nnoremap : ;
+" Open and source .vimrc file
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap H ^
-nnoremap L $
-inoremap <Left> <nop>
-inoremap <Right> <nop>
-inoremap <Up> <nop>
-inoremap <Down> <nop>
-nnoremap <Left> <nop>
-nnoremap <Right> <nop>
-nnoremap <Up> <nop>
-nnoremap <Down> <nop>
-inoremap <C-c> <CR><Esc>O
-nnoremap <C-]> ^i<tab><Esc>
-nnoremap <Leader>f :CtrlPFunky<Cr>
-" }}}
-
-" Filetypes {{{
-autocmd Filetype java set makeprg=javac
-autocmd FileType java let b:dispatch = 'java ' + expand('%:r')
-autocmd Filetype ruby,yaml,html,php setlocal ts=2 sts=2 sw=2
-" }}}
-
-" NeoMake {{{
-"autocmd BufWritePost * Neomake
-let g:neomake_java_enabled_makers=['javac']
-" }}}
-
-" Tmux {{{
+" nnoremap j gj
+" nnoremap k gk
+" nnoremap gV `[v`]
+inoremap jk <esc>
+"Move splits more easily
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+" nnoremap H ^
+" nnoremap L $
+inoremap <C-c> <CR><Esc>O
+nnoremap <C-]> ^i<tab><Esc>
+nnoremap <Leader>f :CtrlPFunky<Cr>
+nnoremap <Leader>p :CtrlP<Cr>
+" Close all other windows, open a vertical split, and open this file's test
+" alternate in it.
+nnoremap <leader>s :call FocusOnFile()<cr>
+function! FocusOnFile()
+  tabnew %
+  normal! v
+  normal! l
+  :A
+  normal! h
+endfunction
+" Current directory
+cnoremap <expr> %% expand('%:h').'/'
+map <leader>e :edit %%
+map <leader>v :view %%
+" Rename current file
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+map <leader>n :call RenameFile()<cr>
+" Promote to let
+function! PromoteToLet()
+  :normal! dd
+  " :exec '?^\s*it\>'
+  :normal! P
+  :.s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
+  :normal ==
+endfunction
+:command! PromoteToLet :call PromoteToLet()
+:map <leader>L :PromoteToLet<cr>
 " }}}
 
-let g:formatprg_args_java = "--style=java"
-"set clipboard=exclude:.*
+" Multipurpose Tab {{{
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-n>
+" }}}
 
-"autocmd InsertLeave,TextChanged * nested if expand('%') != '' | update | endif
-nnoremap ; :
-nnoremap : ;
+" Running Tests {{{
+"function! MapCR()
+  "nnoremap <cr> :call RunTestFile()<cr>
+"endfunction
+"call MapCR()
+nnoremap <leader>T :call RunNearestTest()<cr>
+nnoremap <leader>t :call RunTestFile()<cr>
+nnoremap <leader>a :call RunTests('')<cr>
+"nnoremap <leader>c :w\|:!script/features<cr>
+"nnoremap <leader>w :w\|:!script/features --profile wip<cr>
 
-" Haskell {{{
-let g:haddock_browser="/usr/bin/env links2"
-autocmd Filetype haskell set makeprg=ghc\ %
-au BufEnter *.hs compiler ghc
-let g:ghc="/usr/bin/env ghc"
-" disable all conceals, including the simple ones like
-" lambda and composition
-let g:haskell_conceal              = 0
-" disable concealing of 'enumerations': commatized lists like
-" deriving clauses and LANGUAGE pragmas,
-" otherwise collapsed into a single ellipsis
-let g:haskell_conceal_enumerations = 0
-let g:ghcmod_ghc_options = ['-Wall']
-"}}}
+function! RunTestFile(...)
+    if a:0
+        let command_suffix = a:1
+    else
+        let command_suffix = ""
+    endif
+
+    " Run the tests for the previously-marked file.
+    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.py\)$') != -1
+    if in_test_file
+        call SetTestFile(command_suffix)
+    elseif !exists("t:grb_test_file")
+        return
+    end
+    call RunTests(t:grb_test_file)
+endfunction
+
+function! RunNearestTest()
+    let spec_line_number = line('.')
+    call RunTestFile(":" . spec_line_number)
+endfunction
+
+function! SetTestFile(command_suffix)
+    " Set the spec file that tests will be run for.
+    let t:grb_test_file=@% . a:command_suffix
+endfunction
+
+function! RunTests(filename)
+    " Write the file and run tests for the given filename
+    if expand("%") != ""
+      :w
+    end
+    if match(a:filename, '\.feature$') != -1
+        exec ":!script/features " . a:filename
+    else
+        " First choice: project-specific test script
+        if filereadable("script/test")
+            exec ":!script/test " . a:filename
+        " Fall back to the .test-commands pipe if available, assuming someone
+        " is reading the other side and running the commands
+        elseif filewritable(".test-commands")
+          let cmd = 'rspec --color --format progress --require "~/lib/vim_rspec_formatter" --format VimFormatter --out tmp/quickfix'
+          exec ":!echo " . cmd . " " . a:filename . " > .test-commands"
+
+          " Write an empty string to block until the command completes
+          sleep 100m " milliseconds
+          :!echo > .test-commands
+          redraw!
+        " Fall back to a blocking test run with Bundler
+        elseif filereadable("Gemfile")
+            exec ":!bundle exec rspec --color " . a:filename
+        " If we see python-looking tests, assume they should be run with Nose
+        elseif strlen(glob("test/**/*.py") . glob("tests/**/*.py"))
+            exec "!nosetests " . a:filename
+        " Fall back to a normal blocking test run
+        else
+            exec ":!rspec --color " . a:filename
+        end
+    end
+endfunction
+" }}}
 
 " vim:foldmethod=marker:foldlevel=0
