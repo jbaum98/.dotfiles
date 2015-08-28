@@ -12,6 +12,7 @@ antigen bundles <<EOBUNDLES
                     zsh-users/zsh-syntax-highlighting
                     zsh-users/zsh-history-substring-search
                     zsh-users/zsh-completions
+                    srijanshetty/zsh-pandoc-completion
                     git
                     ssh-agent
                     rake
@@ -61,13 +62,15 @@ alias tmux="tmux -2 -u"
 alias brtest="brew install hello && brew test hello && brew rm hello"
 
 alias be="bundle exec"
-alias rspec='rspec --color --format documentation'
 
 alias todos='grep -n "TODO" *'
 
-alias et="emacsclient -a \"\" -nw"
-alias eg="xiwi emacsclient -a \"\" -c"
-export EDITOR=vim
+#alias e="emacsclient -t -a \"\""
+#alias E="SUDO_EDITOR=\"emacsclient -t -a \"\" \" sudoedit"
+#alias eg="xiwi emacsclient -a \"\" -c"
+alias e="nvim"
+alias E="SUDO_EDITOR=\"nvim\" sudoedit"
+export EDITOR=nvim
 
 bindkey '^[[1;5D' emacs-backward-word
 bindkey '^[[1;5C' emacs-forward-word
