@@ -2,7 +2,6 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=20000
 
-export TERM="$TERM-256color"
 export LANG=en_US.UTF-8
 
 source $HOME/.zsh/antigen/antigen.zsh
@@ -44,6 +43,9 @@ if hash xiwi 2>/dev/null; then
 fi
 
 
+if hash hsvm 2>/dev/null; then
+    eval "$(hsvm init)"
+fi
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
@@ -81,4 +83,3 @@ bindkey '^[[1;5C' emacs-forward-word
 #fi
 
 export PATH=$HOME/.cabal/bin:$PATH
-eval "$(hsvm init)"
