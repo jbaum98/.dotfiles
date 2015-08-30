@@ -128,8 +128,8 @@ set smartindent
 
 " Invisbles {{{ set list
 set listchars=tab:▸\ ,trail:·
-hi NonText guifg=#444444¬
-hi SpecialKey guifg=#444444
+"hi NonText guifg=#444444¬
+"hi SpecialKey guifg=#444444
 "}}}
 
 " UI {{{
