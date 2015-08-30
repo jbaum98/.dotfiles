@@ -331,4 +331,9 @@ function! RunTests(filename)
 endfunction
 " }}}
 
+" Java {{{
+autocmd Filetype java set makeprg=javac\ %
+set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+" }}}
+
 " vim:foldmethod=marker:foldlevel=0
