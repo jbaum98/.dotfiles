@@ -4,6 +4,14 @@ SAVEHIST=20000
 
 export LANG=en_US.UTF-8
 
+# The following lines were added by compinstall
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle :compinstall filename '$HOME/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
 source $HOME/.zsh/zgen/zgen.zsh
 
 if ! zgen saved; then
@@ -52,14 +60,6 @@ fi
 if hash hsvm 2>/dev/null; then
     eval "$(hsvm init)"
 fi
-# The following lines were added by compinstall
-
-zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
-zstyle :compinstall filename '$HOME/.zshrc'
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
 
 autoload -U promptinit
 promptinit
