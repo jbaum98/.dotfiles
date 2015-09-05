@@ -4,7 +4,7 @@ SAVEHIST=20000
 
 export LANG=en_US.UTF-8
 
-source /home/jake/.zsh/zgen/zgen.zsh
+source $HOME/.zsh/zgen/zgen.zsh
 
 if ! zgen saved; then
     echo "Creating a zgen save"
@@ -32,7 +32,12 @@ setopt interactivecomments
 skip_global_compinit=1
 
 if [ `uname` = "Darwin" ]; then
+    export RBENV_ROOT=/usr/local/var/rbenv
     fpath=(/usr/local/share/zsh-completions $fpath)
+fi
+
+if hash rbenv 2>/dev/null; then
+    eval "$(rbenv init -)"
 fi
 
 if hash direnv 2>/dev/null; then
