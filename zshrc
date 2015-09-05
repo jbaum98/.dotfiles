@@ -4,25 +4,28 @@ SAVEHIST=20000
 
 export LANG=en_US.UTF-8
 
-source $HOME/.zsh/antigen/antigen.zsh
+source /home/jake/.zsh/zgen/zgen.zsh
 
-antigen bundles <<EOBUNDLES
-                    robbyrussell/oh-my-zsh lib/
-                    zsh-users/zsh-syntax-highlighting
-                    zsh-users/zsh-history-substring-search
-                    zsh-users/zsh-completions
-                    srijanshetty/zsh-pandoc-completion
-                    git
-                    ssh-agent
-                    rake
-                    rvm
-                    rbenv
-                    common-aliases
-EOBUNDLES
+if ! zgen saved; then
+    echo "Creating a zgen save"
 
-antigen theme $HOME/.zsh agnoster_mod --no-local-clone
+    zgen loadall <<EOPLUGINS
+        robbyrussell/oh-my-zsh lib/
+        zsh-users/zsh-syntax-highlighting
+        zsh-users/zsh-history-substring-search
+        zsh-users/zsh-completions
+        srijanshetty/zsh-pandoc-completion
+        robbyrussell/oh-my-zsh plugins/git
+        robbyrussell/oh-my-zsh plugins/ssh-agent
+        robbyrussell/oh-my-zsh plugins/rake
+        robbyrussell/oh-my-zsh plugins/rvm
+        robbyrussell/oh-my-zsh plugins/rbenv
+        robbyrussell/oh-my-zsh plugins/common-aliases
+        jbaum98/agnoster.zsh-theme agnoster.zsh-theme
+EOPLUGINS
 
-antigen apply
+    zgen save
+fi
 
 setopt extended_glob
 setopt interactivecomments
@@ -30,8 +33,6 @@ skip_global_compinit=1
 
 if [ `uname` = "Darwin" ]; then
     fpath=(/usr/local/share/zsh-completions $fpath)
-else
-    fpath=($HOME/.antigen/repos/https-COLON--SLASH--SLASH-github.com-SLASH-zsh-users-SLASH-zsh-completions.git/src $fpath)
 fi
 
 if hash direnv 2>/dev/null; then
