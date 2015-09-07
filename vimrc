@@ -21,6 +21,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 "Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'godlygeek/tabular'
 """ Text Objects
 Plug 'bkad/CamelCaseMotion' " i,w is camelCase word
 Plug 'vim-scripts/argtextobj.vim' " aa and ia are arguments in a function call
