@@ -21,6 +21,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 "Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-surround'
+""" Text Objects
+Plug 'bkad/CamelCaseMotion' " i,w is camelCase word
+Plug 'vim-scripts/argtextobj.vim' " aa and ia are arguments in a function call
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock' " ar and ir are Ruby blocks
+"""
 """ Languages
 """""" Javascript
 Plug 'jelera/vim-javascript-syntax'
