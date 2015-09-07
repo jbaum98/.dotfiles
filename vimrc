@@ -198,6 +198,8 @@ endif
 " Custom Mappings {{{
 nnoremap ; :
 nnoremap : ;
+vnoremap ; :
+vnoremap : ;
 " Open and source .vimrc file
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
