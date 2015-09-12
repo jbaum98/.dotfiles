@@ -44,48 +44,23 @@ if [ `uname` = "Darwin" ]; then
     fpath=(/usr/local/share/zsh-completions $fpath)
 fi
 
-if hash rbenv 2>/dev/null; then
-    eval "$(rbenv init -)"
-fi
-
-if hash direnv 2>/dev/null; then
-    eval "$(direnv hook zsh)"
-fi
-
-if hash xiwi 2>/dev/null; then
-    alias subl='LANG=en_US.UTF-8 xiwi subl -w'
-fi
-
-
-if hash hsvm 2>/dev/null; then
-    eval "$(hsvm init)"
-fi
 
 autoload -U promptinit
 promptinit
 setopt prompt_subst
 
-alias tmux="tmux -2 -u"
-
-alias brtest="brew install hello && brew test hello && brew rm hello"
-
-alias be="bundle exec"
-
-alias todos='grep -n "TODO" *'
-
-#alias e="emacsclient -t -a \"\""
-#alias E="SUDO_EDITOR=\"emacsclient -t -a \"\" \" sudoedit"
-#alias eg="xiwi emacsclient -a \"\" -c"
-alias e="nvim"
-alias E="SUDO_EDITOR=\"nvim\" sudoedit"
-export EDITOR=nvim
-
 bindkey '^[[1;5D' emacs-backward-word
 bindkey '^[[1;5C' emacs-forward-word
+
+files=('hooks' 'environment' 'aliases' 'path')
+for f in $files; do
+    file=".$f"
+    if [[ -f $file ]]; then
+        source $file
+    fi
+done
 
 # start tmux
 #if command -v tmux>/dev/null; then
 #[[ ! $TERM =~ screen ]] && [ -z $TMUX ] && tmux -2 -u
 #fi
-
-export PATH=$HOME/.cabal/bin:$PATH

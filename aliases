@@ -1,0 +1,15 @@
+if hash xiwi 2>/dev/null; then
+    alias subl='LANG=en_US.UTF-8 xiwi subl -w'
+fi
+
+alias tmux="tmux -2 -u"
+
+alias brtest="brew install hello && brew test hello && brew rm hello"
+
+alias be="bundle exec"
+
+alias todos='grep -n "TODO" *'
+alias e="nvim"
+alias E="SUDO_EDITOR=\"nvim\" sudoedit"
+
+# vim:filetype=sh

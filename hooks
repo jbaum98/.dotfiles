@@ -1,0 +1,13 @@
+if hash rbenv 2>/dev/null; then
+    eval "$(rbenv init -)"
+fi
+
+if hash direnv 2>/dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
+if hash hsvm 2>/dev/null; then
+    eval "$(hsvm init)"
+fi
+
+# vim:filetype=sh
