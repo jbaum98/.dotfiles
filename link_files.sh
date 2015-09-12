@@ -5,16 +5,31 @@ REL_PATH="`dirname $0`"
 # Execute this script from your home directory
 
 main() {
-     get_files | remove_self | link_files
-     link_nvim "vim vimrc"
+     get_files | exclude_self | compute_links | add_nvim_links | rm_existing_links | link_files
 }
 
 get_files() {
    ls $REL_PATH
 }
 
-remove_self() {
+exclude_self() {
     grep -v `basename $0`
+}
+
+compute_links() {
+    while read path; do
+        echo "`src_path $path` `dest_path $path`"
+    done
+}
+
+rm_existing_links() {
+    while read link; do
+        dest="`echo $link | cut -d ' ' -f 2`"
+        if [ -L $dest ]; then
+            rm $dest
+        fi
+        echo $link # to pass it on
+    done
 }
 
 dest_path() {
@@ -26,17 +41,17 @@ src_path() {
 }
 
 link_files() {
-    while read path; do link $path; done
+    while read link; do link_file $link; done
 }
 
-link() {
-    ln -s "`src_path $1`" "`dest_path $1`"
+link_file() {
+    ln -s $1 $2
 }
 
-link_nvim() {
-    for vim_file in $*; do 
-        ln -s ".$vim_file" ".n$vim_file"
-    done
+add_nvim_links() {
+    while read link; do echo $link; done # pass on existing links
+    echo ".vim .nvim"
+    echo ".vimrc .nvimrc"
 }
 
 main
