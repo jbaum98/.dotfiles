@@ -9,7 +9,16 @@ alias brtest="brew install hello && brew test hello && brew rm hello"
 alias be="bundle exec"
 
 alias todos='grep -n "TODO" *'
-alias e="nvim"
-alias E="SUDO_EDITOR=\"nvim\" sudoedit"
+
+if hash nvim 2>/dev/null; then
+    ed="nvim"
+elif hash vim 2>/dev/null; then
+    ed="vim"
+else
+    ed="vi"
+fi
+
+alias e="$ed"
+alias E="SUDO_EDITOR=\"$ed\" sudoedit"
 
 # vim:filetype=sh
