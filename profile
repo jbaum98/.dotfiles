@@ -17,7 +17,7 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 
 files=('hooks' 'environment' 'aliases' 'path')
-for f in $files; do
+for f in "${files[@]}"; do
     file=".$f"
     if [[ -f $file ]]; then
         source $file
