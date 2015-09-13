@@ -1,0 +1,13 @@
+if [[ -L $0 ]]; then
+    DOTFILE_DIR="`readlink -e $0 | xargs dirname`"
+else
+    DOTFILE_DIR="`dirname $0`"
+fi
+
+LIB_DIR=$DOTFILE_DIR/lib
+ls $LIB_DIR |
+while read f; do
+    source $LIB_DIR/$f
+done
+
+# vim:filetype=sh

@@ -16,10 +16,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-files=('hooks' 'environment' 'aliases' 'path')
-for f in "${files[@]}"; do
-    file=".$f"
-    if [[ -f $file ]]; then
-        source $file
-    fi
-done
+source .source_dotfile_libs
+
+# vim:filetype=sh

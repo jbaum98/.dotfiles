@@ -5,7 +5,7 @@ REL_PATH="`dirname $0`"
 # Execute this script from your home directory
 
 main() {
-     get_files | exclude_self | compute_links | add_nvim_links | rm_existing_links | link_files
+     get_files | exclude_self | exclude_lib | compute_links | add_nvim_links | rm_existing_links | link_files
 }
 
 get_files() {
@@ -14,6 +14,10 @@ get_files() {
 
 exclude_self() {
     grep -v `basename $0`
+}
+
+exclude_lib() {
+    grep -v "^lib$"
 }
 
 compute_links() {

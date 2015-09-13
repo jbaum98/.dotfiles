@@ -26,7 +26,6 @@ if ! zgen saved; then
         robbyrussell/oh-my-zsh plugins/git
         robbyrussell/oh-my-zsh plugins/ssh-agent
         robbyrussell/oh-my-zsh plugins/rake
-        robbyrussell/oh-my-zsh plugins/rvm
         robbyrussell/oh-my-zsh plugins/rbenv
         robbyrussell/oh-my-zsh plugins/common-aliases
         jbaum98/agnoster.zsh-theme agnoster.zsh-theme
@@ -52,13 +51,7 @@ setopt prompt_subst
 bindkey '^[[1;5D' emacs-backward-word
 bindkey '^[[1;5C' emacs-forward-word
 
-files=('hooks' 'environment' 'aliases' 'path')
-for f in $files; do
-    file=".$f"
-    if [[ -f $file ]]; then
-        source $file
-    fi
-done
+source .source_dotfile_libs
 
 # start tmux
 #if command -v tmux>/dev/null; then

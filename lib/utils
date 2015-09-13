@@ -1,0 +1,9 @@
+add_paths() {
+    export PATH="`spaces_to_colons $*`:$PATH"
+}
+
+spaces_to_colons() {
+    echo $* | tr " " ":"
+}
+
+# vim:filetype=sh
