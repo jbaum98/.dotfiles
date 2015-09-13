@@ -10,7 +10,7 @@ main() {
 
 get_files() {
    for file in $REL_PATH/*; do
-       echo basname "$file"
+       echo basename "$file"
    done
 }
 
