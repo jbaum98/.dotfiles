@@ -1,18 +1,18 @@
-add_paths() {
-    export PATH="`spaces_to_colons $*`:$PATH"
+add_path() {
+    export PATH="$1:$PATH"
+}
+
+add_existing_path() {
+    if [ -d $1 ] ; then
+        add_path $1
+    fi
 }
 
 add_existing_paths() {
-    $paths ="`echo $* | tr ' ' '\n'`"
-    for path in $paths; do
-        if [ -d $1 ] ; then
-            add_path $1
-        fi
+    lines=($@)
+    for line in $lines; do 
+        add_existing_path $line
     done
-}
-
-spaces_to_colons() {
-    echo $* | tr " " ":"
 }
 
 exists() {
