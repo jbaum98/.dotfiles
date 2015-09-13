@@ -9,7 +9,9 @@ main() {
 }
 
 get_files() {
-   ls $REL_PATH
+   for file in $REL_PATH/*; do
+       echo basname "$file"
+   done
 }
 
 exclude_self() {
