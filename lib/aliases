@@ -1,4 +1,6 @@
-if hash xiwi 2>/dev/null; then
+source utils
+
+if exists xiwi; then
     alias subl='LANG=en_US.UTF-8 xiwi subl -w'
 fi
 
@@ -10,9 +12,9 @@ alias be="bundle exec"
 
 alias todos='grep -n "TODO" *'
 
-if hash nvim 2>/dev/null; then
+if exists nvim; then
     ed="nvim"
-elif hash vim 2>/dev/null; then
+elif exists vim; then
     ed="vim"
 else
     ed="vi"

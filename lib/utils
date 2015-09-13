@@ -2,8 +2,21 @@ add_paths() {
     export PATH="`spaces_to_colons $*`:$PATH"
 }
 
+add_existing_paths() {
+    $paths ="`echo $* | tr ' ' '\n'`"
+    for path in $paths; do
+        if [ -d $1 ] ; then
+            add_path $1
+        fi
+    done
+}
+
 spaces_to_colons() {
     echo $* | tr " " ":"
+}
+
+exists() {
+    hash $1 2>/dev/null
 }
 
 # vim:filetype=sh

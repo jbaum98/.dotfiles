@@ -1,8 +1,5 @@
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
+source utils
 
-export PATH=$HOME/.cabal/bin:$PATH
+add_existing_paths $HOME/bin $HOME/.cabal/bin
 
 # vim:filetype=sh
