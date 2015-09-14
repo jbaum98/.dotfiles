@@ -1,22 +1,22 @@
 #!/bin/bash
 
-REL_PATH="`dirname $0`"
-EXCLUDE=("`basename $0`" "lib" "shell_startup")
+EXCLUDE=("link_files.sh" "lib" "shell_startup")
+DEST_DIR=${1:-$HOME}
 
 # Execute this script from your home directory
 
 main() {
-     get_files | exclude $EXCLUDE | compute_links | add_nvim_links | rm_existing_links | link_files
+     get_files | exclude ${EXCLUDE[*]} | compute_links | add_nvim_links | rm_existing_links | link_files
 }
 
 get_files() {
-   for file in $REL_PATH/*; do
+   for file in $DOTFILE_DIR/*; do
        basename "$file"
    done
 }
 
 exclude() {
-    re="`join \| $*`"
+    re="`join \| $@`"
     grep -Evx "$re"
 }
 
@@ -47,11 +47,11 @@ rm_existing_links() {
 }
 
 dest_path() {
-    echo ".$1"
+    echo "$DEST_DIR/.$1"
 }
 
 src_path() {
-    echo "$REL_PATH/$1" 
+    echo "$DOTFILE_DIR/$1" 
 }
 
 link_files() {
@@ -64,8 +64,8 @@ link_file() {
 
 add_nvim_links() {
     while read link; do echo $link; done # pass on existing links
-    echo ".vim .nvim"
-    echo ".vimrc .nvimrc"
+    echo ".vim `dest_path nvim`"
+    echo ".vimrc `dest_path nvimrc`"
 }
 
 main
