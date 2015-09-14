@@ -1,3 +1,4 @@
+export DOTFILE_DIR="$HOME/.dotfiles"
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
 SAVEHIST=20000
@@ -51,7 +52,10 @@ setopt prompt_subst
 bindkey '^[[1;5D' emacs-backward-word
 bindkey '^[[1;5C' emacs-forward-word
 
-source .source_startup
+fpath=($DOTFILE_DIR/lib $fpath)
+autoload source_all
+
+source_all $DOTFILE_DIR/shell_startup
 
 # start tmux
 #if command -v tmux>/dev/null; then

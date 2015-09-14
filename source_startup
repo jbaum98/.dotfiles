@@ -1,14 +1,2 @@
-#!/bin/bash
-
-if [[ -L "${BASH_SOURCE[0]}" ]]; then
-    DOTFILE_DIR="`readlink -e ${BASH_SOURCE[0]} | xargs dirname`"
-else
-    DOTFILE_DIR="`dirname ${BASH_SOURCE[0]}`"
-fi
-
-fpath=($DOTFILE_DIR/lib $fpath)
-for f in $DOTFILE_DIR/shell_startup/*; do
-    source $f
-done
 
 # vim:filetype=sh

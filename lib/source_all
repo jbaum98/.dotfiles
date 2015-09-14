@@ -1,0 +1,9 @@
+source_all() {
+    for dir in $*; do
+        for f in $dir/*; do
+            source $f
+        done
+    done
+}
+
+# vim:filetype=sh

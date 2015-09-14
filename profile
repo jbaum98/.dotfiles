@@ -9,6 +9,8 @@
 #umask 022
 
 # if running bash
+export DOTFILE_DIR="$HOME/.dotfiles"
+
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
@@ -20,16 +22,8 @@ autoload() {
     :
 }
 
-if [[ -L "${BASH_SOURCE[0]}" ]]; then
-    DOTFILE_DIR="`readlink -e ${BASH_SOURCE[0]} | xargs dirname`"
-else
-    DOTFILE_DIR="`dirname ${BASH_SOURCE[0]}`"
-fi
+source $DOTFILE_DIR/lib/source_all
 
-for f in $DOTFILE_DIR/lib/*; do
-    source $f
-done
-
-source .source_startup
+source_all $DOTFILE_DIR/lib $DOTFILE_DIR/shell_startup
 
 # vim:filetype=sh
