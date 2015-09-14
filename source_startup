@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [[ -L $0 ]]; then
-    DOTFILE_DIR="`readlink -e $0 | xargs dirname`"
+if [[ -L "${BASH_SOURCE[0]}" ]]; then
+    DOTFILE_DIR="`readlink -e ${BASH_SOURCE[0]} | xargs dirname`"
 else
-    DOTFILE_DIR="`dirname $0`"
+    DOTFILE_DIR="`dirname ${BASH_SOURCE[0]}`"
 fi
 
 fpath=($DOTFILE_DIR/lib $fpath)

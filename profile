@@ -16,6 +16,20 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-source .source_dotfile_libs
+autoload() {
+    :
+}
+
+if [[ -L "${BASH_SOURCE[0]}" ]]; then
+    DOTFILE_DIR="`readlink -e ${BASH_SOURCE[0]} | xargs dirname`"
+else
+    DOTFILE_DIR="`dirname ${BASH_SOURCE[0]}`"
+fi
+
+for f in $DOTFILE_DIR/lib/*; do
+    source $f
+done
+
+source .source_startup
 
 # vim:filetype=sh
