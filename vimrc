@@ -115,6 +115,7 @@ augroup END
 syntax enable
 set number
 let g:solarized_termcolors=256
+set t_Co=256
 set background=dark
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 "autocmd VimEnter * colorscheme solarized
