@@ -153,6 +153,14 @@ set winwidth=79
 set scrolloff=3
 " }}}
 
+" Git Gutter {{{
+let g:gitgutter_enabled = 0
+nnoremap <leader>gg :GitGutterToggle<cr>
+nnoremap <leader>gr :GitGutterRevertHunk<cr>
+nnoremap <leader>gn :GitGutterNextHunk<cr>
+nnoremap <leader>gp :GitGutterPrevHunk<cr>
+" }}}
+
 " Search {{{
 set incsearch
 set hlsearch
