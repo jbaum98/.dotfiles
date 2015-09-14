@@ -51,7 +51,7 @@ setopt prompt_subst
 bindkey '^[[1;5D' emacs-backward-word
 bindkey '^[[1;5C' emacs-forward-word
 
-source .source_dotfile_libs
+source .source_startup
 
 # start tmux
 #if command -v tmux>/dev/null; then

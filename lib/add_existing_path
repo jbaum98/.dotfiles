@@ -1,0 +1,7 @@
+add_existing_path() {
+    if [ -d $1 ] ; then
+        add_path $1
+    fi
+}
+
+# vim:filetype=sh

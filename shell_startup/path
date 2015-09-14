@@ -1,4 +1,3 @@
-source `dirname $0`/utils
 autoload add_existing_paths
 
 add_existing_paths "$HOME/bin" "$HOME/.cabal/bin"

@@ -1,4 +1,3 @@
-source `dirname $0`/utils
 autoload exists
 
 if exists rbenv; then

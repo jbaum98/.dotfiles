@@ -1,21 +1,29 @@
 #!/bin/bash
 
 REL_PATH="`dirname $0`"
+EXCLUDE=("`basename $0`" "lib" "shell_startup")
 
 # Execute this script from your home directory
 
 main() {
-     get_files | exclude_self | exclude_lib | compute_links | add_nvim_links | rm_existing_links | link_files
+     get_files | exclude $EXCLUDE | compute_links | add_nvim_links | rm_existing_links | link_files
 }
 
 get_files() {
    for file in $REL_PATH/*; do
-       echo basename "$file"
+       basename "$file"
    done
 }
 
-exclude_self() {
-    grep -v `basename $0`
+exclude() {
+    re="`join \| $*`"
+    grep -Evx "$re"
+}
+
+join() { 
+    local IFS="$1"
+    shift
+    echo "$*"
 }
 
 exclude_lib() {
