@@ -2,6 +2,7 @@
 
 EXCLUDE=("link_files.sh" "lib" "shell_startup")
 DEST_DIR=${1:-$HOME}
+DOTFILE_DIR=${DOTFILE_DIR:-$HOME/.dotfiles}
 
 # Execute this script from your home directory
 
