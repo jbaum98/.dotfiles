@@ -212,8 +212,8 @@ vnoremap : ;
 " Open and source .vimrc file
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-" nnoremap j gj
-" nnoremap k gk
+nnoremap j gj
+nnoremap k gk
 " nnoremap gV `[v`]
 inoremap jk <esc>
 "Move splits more easily
