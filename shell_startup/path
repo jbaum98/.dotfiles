@@ -1,5 +1,17 @@
-autoload add_existing_paths
+autoload add_existing_paths exists
 
 add_existing_paths "$HOME/bin" "$HOME/.cabal/bin"
+
+if exists rbenv; then
+    eval "$(rbenv init -)"
+fi
+
+if exists direnv; then
+    eval "$(direnv hook zsh)"
+fi
+
+if exists hsvm; then
+    eval "$(hsvm init)"
+fi
 
 # vim:filetype=sh

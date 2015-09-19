@@ -12,9 +12,6 @@ alias be="bundle exec"
 
 alias todos='grep -n "TODO" *'
 
-foo() {
-get_ed
-}
 alias vi="vi -u $HOME/.exrc"
 alias e="$(get_ed)"
 alias E="SUDO_EDITOR=\"$(get_ed)\" sudoedit"

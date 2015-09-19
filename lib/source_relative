@@ -1,0 +1,10 @@
+source_relative() {
+    local dir=$(dirname $0)
+    echo $dir
+    if [[ -z "$dir" ]]; then
+        dir="$PWD"
+    fi
+    source "$dir/$1"
+}
+
+# vim:filetype=sh
