@@ -53,7 +53,7 @@ bindkey '^[[1;5D' emacs-backward-word
 bindkey '^[[1;5C' emacs-forward-word
 
 fpath=($DOTFILE_DIR/lib $fpath)
-autoload source_all
+autoload source_all get_ed
 
 source_all $DOTFILE_DIR/shell_startup
 

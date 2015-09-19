@@ -1,3 +1,5 @@
-export EDITOR=e
+autoload get_ed
+
+export EDITOR="$(get_ed)"
 
 # vim:filetype=sh
