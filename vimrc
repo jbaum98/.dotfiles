@@ -9,6 +9,7 @@ call plug#begin('~/.vim/plugged')
 
 " Plugs {{{
 "Plug 'mhinz/vim-startify'
+Plug 'dhruvasagar/vim-markify'
 Plug 'bling/vim-airline'
 "Plug 'vim-scripts/AnsiEsc.vim'
 "Plug 'Shougo/vimproc'
@@ -189,7 +190,6 @@ let g:airline_theme = 'kalisi'
 set laststatus=2 " Always display the statusline in all windows
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
 set guifont=Droid\ Sans\ Mono\ for\ Powerline:h15
-set encoding=utf-8
 set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
 if has("gui_running")
@@ -223,6 +223,7 @@ inoremap <C-c> <CR><Esc>O
 nnoremap <C-]> ^i<tab><Esc>
 nnoremap <Leader>f :CtrlPFunky<Cr>
 nnoremap <Leader>p :CtrlP<Cr>
+nnoremap <Leader>m :w \| silent make<cr>
 " Close all other windows, open a vertical split, and open this file's test
 " alternate in it.
 nnoremap <leader>s :call FocusOnFile()<cr>
@@ -346,9 +347,9 @@ function! RunTests(filename)
 endfunction
 " }}}
 
-" Java {{{
-autocmd Filetype java set makeprg=javac\ %
-set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+" Markify {{{
+let g:markify_error_text='✗✗'
+let g:markify_warning_text='❢❢'
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
