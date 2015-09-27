@@ -7,7 +7,11 @@ if exists rbenv; then
 fi
 
 if exists direnv; then
-    eval "$(direnv hook zsh)"
+    if [ -n "$ZSH_VERSION" ]; then
+        eval "$(direnv hook zsh)"
+    else
+        eval "$(direnv hook bash)"
+    fi
 fi
 
 if exists hsvm; then

@@ -8,13 +8,12 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# if running bash
 export DOTFILE_DIR="$HOME/.dotfiles"
 
-if [ -n "$BASH_VERSION" ]; then
+if [ -n "$BASH_VERSION" ] && [ $0 == "-su" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+        . "$HOME/.bashrc"
     fi
 fi
 
@@ -25,5 +24,9 @@ autoload() {
 source $DOTFILE_DIR/lib/source_all
 
 source_all $DOTFILE_DIR/lib $DOTFILE_DIR/shell_startup
+#source $DOTFILE_DIR/shell_startup/aliases
+#source $DOTFILE_DIR/shell_startup/environment
+#source $DOTFILE_DIR/shell_startup/index
+#source $DOTFILE_DIR/shell_startup/path
 
 # vim:filetype=sh
