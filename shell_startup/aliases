@@ -16,4 +16,14 @@ alias vi="vi -u $HOME/.exrc"
 alias e="$(get_ed)"
 alias E="SUDO_EDITOR=\"$(get_ed)\" sudoedit"
 
+if ! exists pbcopy; then
+    if exists xclip; then
+        alias pbcopy='xclip -selection clipboard'
+        alias pbpaste='xclip -selection clipboard -o'
+    elif exists xsel; then
+        alias pbcopy='xsel --clipboard --input'
+        alias pbpaste='xsel --clipboard --output'
+    fi
+fi
+
 # vim:filetype=sh
