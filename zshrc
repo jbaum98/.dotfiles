@@ -40,7 +40,7 @@ setopt interactivecomments
 skip_global_compinit=1
 
 if [ `uname` = "Darwin" ]; then
-    export RBENV_ROOT=/usr/local/var/rbenv
+    test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
     fpath=(/usr/local/share/zsh-completions $fpath)
 fi
 
