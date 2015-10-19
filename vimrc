@@ -11,6 +11,7 @@ call plug#begin('~/.vim/plugged')
 "Plug 'mhinz/vim-startify'
 Plug 'dhruvasagar/vim-markify'
 Plug 'bling/vim-airline'
+Plug 'rhysd/vim-crystal'
 "Plug 'vim-scripts/AnsiEsc.vim'
 "Plug 'Shougo/vimproc'
 "Plug 'Shougo/context_filetype.vim'
@@ -44,7 +45,7 @@ Plug 'stephpy/vim-yaml'
 Plug 'tpope/vim-haml'
 Plug 'slim-template/vim-slim'
 Plug 'groenewege/vim-less'
-Plug 'lukerandall/haskellmode-vim'
+Plug 'dag/vim2hs'
 Plug 'sophacles/vim-processing'
 """
 Plug 'scrooloose/nerdcommenter'
@@ -97,7 +98,7 @@ augroup vimrcEx
               \ endif
 
   "for ruby, autoindent with two spaces, always expand tabs
-  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,slim set ai sw=2 sts=2 et
+  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,slim,crystal set ai sw=2 sts=2 et
 
 
   autocmd! BufRead,BufNewFile *.sass setfiletype sass

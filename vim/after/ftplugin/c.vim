@@ -1,12 +1,17 @@
 if !filereadable(expand("%:p:h")."/Makefile")
     setlocal makeprg=gcc\ -Wall\ -Wextra\ -o\ %<\ %
-    setlocal efm=%f:%l:%c:\ %trror:\ %m
-    setlocal efm+=%f:%l:%c:\ %tarning:\ %m
-    setlocal efm+=%-G%.%#
 endif
+
+setlocal efm=%f:%l:%c:\ %trror:\ %m
+setlocal efm+=%f:%l:%c:\ %tarning:\ %m
+setlocal efm+=%-G%.%#
 
 nnoremap <leader>r :w \| make \| call RunFile()<cr>
 
 function! RunFile()
-    !./%:r 2>&1
+    if !filereadable(expand("%:p:h")."/Makefile")
+        !./%:r 2>&1
+    else
+        :make run
+    end
 endfunction
