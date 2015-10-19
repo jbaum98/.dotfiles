@@ -34,6 +34,7 @@ Plug 'nelstrom/vim-textobj-rubyblock' " ar and ir are Ruby blocks
 """ Languages
 """""" Javascript
 Plug 'jelera/vim-javascript-syntax'
+Plug 'rhysd/vim-crystal'
 Plug 'pangloss/vim-javascript'
 Plug 'crusoexia/vim-javascript-lib'
 """"""
@@ -117,7 +118,7 @@ set t_Co=256
 set background=dark
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 "autocmd VimEnter * colorscheme solarized
-colorscheme solarized
+colorscheme monokai
 " }}}
 
 " Spaces and Tabs {{{
@@ -351,6 +352,11 @@ endfunction
 " Markify {{{
 let g:markify_error_text='✗✗'
 let g:markify_warning_text='❢❢'
+" }}}
+
+" CtrlP {{{
+let g:ctrlp_root_markers=['.project_root']
+set wildignore+=*.o
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
