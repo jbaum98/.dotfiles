@@ -12,6 +12,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'dhruvasagar/vim-markify'
 Plug 'bling/vim-airline'
 Plug 'rhysd/vim-crystal'
+Plug 'amiorin/vim-fenced-code-blocks'
 "Plug 'vim-scripts/AnsiEsc.vim'
 "Plug 'Shougo/vimproc'
 "Plug 'Shougo/context_filetype.vim'
@@ -141,7 +142,6 @@ set listchars=tab:▸\ ,trail:·
 "}}}
 
 " UI {{{
-set number
 set showcmd
 set cursorline
 set wildmenu
@@ -208,8 +208,8 @@ nnoremap : ;
 vnoremap ; :
 vnoremap : ;
 " Open and source .vimrc file
-nnoremap <leader>ev :split $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>erc :split $MYVIMRC<cr>
+nnoremap <leader>src :source $MYVIMRC<cr>
 nnoremap j gj
 nnoremap k gk
 " nnoremap gV `[v`]
@@ -225,7 +225,7 @@ inoremap <C-c> <CR><Esc>O
 nnoremap <C-]> ^i<tab><Esc>
 nnoremap <Leader>f :CtrlPFunky<Cr>
 nnoremap <Leader>p :CtrlP<Cr>
-nnoremap <Leader>m :w \| silent make<cr>
+nnoremap <Leader>m :w \| make<cr><cr>
 " Close all other windows, open a vertical split, and open this file's test
 " alternate in it.
 nnoremap <leader>s :call FocusOnFile()<cr>
