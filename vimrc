@@ -9,6 +9,7 @@ call plug#begin('~/.vim/plugged')
 
 " Plugs {{{
 "Plug 'mhinz/vim-startify'
+Plug 'vim-utils/vim-man'
 Plug 'dhruvasagar/vim-markify'
 Plug 'bling/vim-airline'
 Plug 'rhysd/vim-crystal'
@@ -150,6 +151,10 @@ set showtabline=2
 set winwidth=79
 " keep more context when scrolling off the end of a buffer
 set scrolloff=3
+if (exists('+colorcolumn'))
+    set colorcolumn=80
+    highlight ColorColumn ctermbg=9
+endif
 " }}}
 
 " Git Gutter {{{
