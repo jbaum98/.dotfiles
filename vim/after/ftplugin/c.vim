@@ -4,7 +4,8 @@ endif
 
 setlocal efm=%f:%l:%c:\ %trror:\ %m
 setlocal efm+=%f:%l:%c:\ %tarning:\ %m
-setlocal efm+=Assertion\ failed:\ (%m)\\,\ function\ %s\\,\ file\ %f\\,\ line\ %l.
+setlocal efm+=%.%#:\ %f:%l:\ %.%#:\ Assertion\ `%m'\ failed.
+setlocal efm+=Assertion\ failed:\ (%m)\\,\ function\ %.%#\\,\ file\ %f\\,\ line\ %l.
 setlocal efm+=%-G%.%#
 
 nnoremap <leader>r :w \| make \| call RunFile()<cr>
