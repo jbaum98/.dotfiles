@@ -7,7 +7,8 @@ DOTFILE_DIR=${DOTFILE_DIR:-$HOME/.dotfiles}
 # Execute this script from your home directory
 
 main() {
-     get_files | exclude ${EXCLUDE[*]} | compute_links | add_nvim_links | rm_existing_links | link_files
+     mkdir -p $DEST_DIR/.config
+     get_files | exclude ${EXCLUDE[*]} | compute_links | add_vim_links | rm_existing_links | link_files
 }
 
 get_files() {
@@ -63,10 +64,10 @@ link_file() {
     ln -s $1 $2
 }
 
-add_nvim_links() {
+add_vim_links() {
     while read link; do echo $link; done # pass on existing links
-    echo ".vim `dest_path nvim`"
-    echo ".vimrc `dest_path nvimrc`"
+    echo ".vim/init.vim `dest_path vimrc`"
+    echo "$DOTFILE_DIR/vim $DEST_DIR/.config/nvim"
 }
 
 main
