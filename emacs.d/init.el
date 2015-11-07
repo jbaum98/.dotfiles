@@ -20,7 +20,15 @@
 (savehist-mode t)                      ;; do customization before activate
 (visual-line-mode 1)
 (tool-bar-mode -1)
-(set-face-attribute 'default nil :height 160 :font "Consolas")
+(defun font-existsp (font)
+  (if (null (x-list-fonts font))
+      nil t))
+(if window-system
+    (progn
+      (set-face-attribute 'default nil :height 160)
+      (if (font-existsp "Consolas")
+	  (set-face-attribute 'default nil :font "Consolas"))
+  ))
 
 (use-package monokai-theme
   :init
