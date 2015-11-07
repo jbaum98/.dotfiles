@@ -186,7 +186,7 @@ set backupskip=/tmp/*,/private/tmp/*
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
 if has("persistent_undo")
-    set undodir='~/.undo/'
+    set undodir=~/.undo/
     set undofile
 endif
 " }}}
