@@ -1,3 +1,4 @@
+# -*- mode: sh; -*-
 export DOTFILE_DIR="$HOME/.dotfiles"
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
