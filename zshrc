@@ -13,6 +13,8 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+MLPURE_FORCE_DISPLAY_USERNAME=1
+
 source $HOME/.zsh/zgen/zgen.zsh
 
 if ! zgen saved; then
@@ -29,7 +31,7 @@ if ! zgen saved; then
         robbyrussell/oh-my-zsh plugins/rake
         robbyrussell/oh-my-zsh plugins/rbenv
         robbyrussell/oh-my-zsh plugins/common-aliases
-        jbaum98/agnoster.zsh-theme agnoster.zsh-theme
+        loliee/mlpure pure.zsh
 EOPLUGINS
 
     zgen save
