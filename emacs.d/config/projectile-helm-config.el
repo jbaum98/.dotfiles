@@ -9,12 +9,13 @@
 (use-package projectile
   :commands (projectile-find-file projectile-find-directory helm-projectile-find-file helm-projectile-find-directory)
   :config
+  (use-package helm-projectile)
   (projectile-global-mode)
   (setq-default projectile-enable-caching nil)
-  (require 'helm-projectile)
   (setq-default projectile-completion-system 'helm)
   (helm-projectile-on)
   )
+
 
 (use-package helm
   :commands (helm-projectile-find-file helm-projectile-find-directory
@@ -28,6 +29,8 @@
     "x" 'helm-M-x
     "h" 'helm-apropos
     )
+  :config
+  (use-package async)
   )
 
 (provide 'projectile-helm-config)
