@@ -1,5 +1,3 @@
-autoload exists get_ed
-
 if exists xiwi; then
     alias subl='LANG=en_US.UTF-8 xiwi subl -w'
 fi
@@ -13,8 +11,8 @@ alias be="bundle exec"
 alias todos='grep -n "TODO" *'
 
 alias vi="vi -u $HOME/.exrc"
-alias e="$(get_ed)"
-alias E="SUDO_EDITOR=\"$(get_ed)\" sudoedit"
+alias e="emacsclient -c -a ''"
+alias E="SUDO_EDITOR=\"emacsclient -c -a ''\" sudoedit"
 
 if ! exists pbcopy; then
     if exists xclip; then
