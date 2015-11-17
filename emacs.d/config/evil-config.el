@@ -22,7 +22,7 @@
 (use-package evil-escape
   :config
   (evil-escape-mode)
-  (setq-default evil-escape-key-sequence "jk")
+  (setq-default evil-escape-key-sequence "fd")
   )
 
 (use-package evil-leader

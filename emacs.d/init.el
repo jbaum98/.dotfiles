@@ -19,6 +19,7 @@
 (require 'evil-config)
 (require 'projectile-helm-config)
 (require 'completion)
+(require 'magit-config)
 
 (use-package rspec-mode
   :mode ("\\.rb\\'" . ruby-mode)
