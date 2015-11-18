@@ -4,17 +4,26 @@
 
 ;;; Code:
 
-(autoload 'use-package "Loads packages on demand" nil nil)
-
 (use-package company
-  :commands company-complete
+  :commands company-complete company-select-next company-select-previous
   :init
   (define-key evil-insert-state-map (kbd "TAB") 'company-complete)
   :config
-  (company-mode)
-  (define-key evil-insert-state-map (kbd "C-n") 'company-select-next)
-  (define-key evil-insert-state-map (kbd "C-p") 'company-select-previous)
-  (setq company-backends '((company-capf company-dabbrev-code company-files)))
+  (global-company-mode)
+  (setq-default
+   company-selection-wrap-around t
+   company-auto-complete t
+   company-transformers '(company-sort-by-occurrence)
+   company-frontends '(company-preview-frontend company-pseudo-tooltip-unless-just-one-frontend)
+   register-preview-delay nil
+   )
+  (delete 'company-capf company-backends)
+  (define-key company-active-map (kbd "C-j") #'company-select-next)
+  (define-key company-active-map (kbd "C-k") #'company-select-previous)
+  (dolist (key (list (kbd "TAB") (kbd "<tab>") [tab]))
+    (define-key company-active-map key #'company-select-next))
+  (dolist (key (list (kbd "RET") (kbd "<return>") [return]))
+    (define-key company-active-map key nil))
   )
 
 (provide 'completion)

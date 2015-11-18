@@ -3,14 +3,31 @@
 
 ;;; Code:
 
+(push "/usr/local/bin" exec-path)
+
 ; indent on newline
 (define-key global-map (kbd "RET") 'newline-and-indent)
+
+(setq-default tab-width 2)
+(setq-default indent-tabs-mode nil)
+(setq inhibit-startup-message t)
+(fset 'yes-or-no-p 'y-or-n-p)
+(delete-selection-mode t)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(blink-cursor-mode t)
+(show-paren-mode t)
+(column-number-mode t)
+(set-fringe-style -1)
+(tooltip-mode -1)
 
 ;; save history to .emacs.d
 (setq-default savehist-additional-variables
 	      '(search-ring regexp-search-ring)
 	      savehist-file (concat user-emacs-directory "savehist"))
 (savehist-mode t)
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 
 ;; keep backups somewhere else
 (setq backup-directory-alist

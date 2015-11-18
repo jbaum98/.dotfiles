@@ -1,3 +1,9 @@
+;;; magit-config --- magit configuration
+
+;;; Commentary:
+
+;;; Code:
+
 (use-package magit
   :commands magit-status
   :config
@@ -5,3 +11,4 @@
   )
 
 (provide 'magit-config)
+;;; magit-config ends here

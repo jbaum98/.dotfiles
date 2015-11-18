@@ -4,10 +4,6 @@
 
 ;;; Code:
 
-(autoload 'use-package "Loads packages on demand" nil nil)
-(autoload 'evil-define-key "Define key for evil mode map" nil nil)
-(autoload 'evil-leader/set-leader "Set Evil leader key" nil nil)
-
 (use-package evil
   :config
   (evil-mode t)
@@ -45,7 +41,7 @@
 	     evilnc-quick-comment-or-uncomment-to-the-line
 	     comment-or-uncomment-region
 	     evilnc-toggle-invert-comment-line-by-line)
-  :config
+  :init
   (evil-leader/set-key
    "cc" 'evilnc-comment-or-uncomment-lines
    "cl" 'evilnc-quick-comment-or-uncomment-to-the-line

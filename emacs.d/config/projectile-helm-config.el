@@ -4,8 +4,6 @@
 
 ;;; Code:
 
-(autoload 'use-package "Loads packages on demand" nil nil)
-
 (use-package projectile
   :commands (projectile-find-file projectile-find-directory helm-projectile-find-file helm-projectile-find-directory)
   :config
