@@ -6,8 +6,6 @@ case $- in
     *) return;;
 esac
 
-export DOTFILES="${HOME}/.dotfiles"
-
 for config_file in $DOTFILES/lib/*; do
     source $config_file
 done

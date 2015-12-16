@@ -6,8 +6,6 @@ case $- in
     *) return;;
 esac
 
-export DOTFILES="$HOME/.dotfiles"
-
 autoload() {
     typeset -fu
 }

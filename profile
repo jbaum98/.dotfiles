@@ -1,3 +1,5 @@
+export DOTFILES="${HOME}/.dotfiles"
+
 source $DOTFILES/lib/exists
 
 PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
