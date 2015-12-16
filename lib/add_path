@@ -1,5 +1,0 @@
-add_path() {
-    export PATH="$1:$PATH"
-}
-
-# vim:filetype=sh

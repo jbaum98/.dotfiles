@@ -32,8 +32,7 @@ if ! zgen saved; then
         robbyrussell/oh-my-zsh plugins/rake
         robbyrussell/oh-my-zsh plugins/rbenv
         robbyrussell/oh-my-zsh plugins/common-aliases
-        mafredri/zsh-async
-        loliee/mlpure pure.zsh
+        nojhan/liquidprompt
 EOPLUGINS
 
     zgen save

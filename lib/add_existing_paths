@@ -1,9 +1,0 @@
-add_existing_paths() {
-    autoload add_existing_path
-    lines=($@)
-    for line in $lines; do 
-        add_existing_path $line
-    done
-}
-
-# vim:filetype=sh

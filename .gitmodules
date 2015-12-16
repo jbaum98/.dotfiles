@@ -1,3 +1,9 @@
-[submodule "zsh/zgen"]
-	path = zsh/zgen
-	url = git@github.com:tarjoilija/zgen.git
+[submodule "shell/zsh/zgen"]
+	path = shell/zsh/zgen
+	url = https://github.com/tarjoilija/zgen.git
+[submodule "emacs.d"]
+	path = emacs.d
+	url = https://github.com/syl20bnr/spacemacs.git
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot.git

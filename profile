@@ -1,32 +1,21 @@
-# ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
-# see /usr/share/doc/bash/examples/startup-files for examples.
-# the files are located in the bash-doc package.
+source $DOTFILES/lib/exists
 
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
+PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
 
-export DOTFILE_DIR="$HOME/.dotfiles"
+if exists rbenv; then
+    eval "$(rbenv init -)"
+fi
 
-# if running bash
-if [ -n "$BASH_VERSION" ] && [ $0 == "-su" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-        . "$HOME/.bashrc"
+if exists direnv; then
+    if [ -n "$ZSH_VERSION" ]; then
+        eval "$(direnv hook zsh)"
+    else
+        eval "$(direnv hook bash)"
     fi
 fi
 
-autoload() {
-    :
-}
-
-source $DOTFILE_DIR/lib/source_all
-
-source_all $DOTFILE_DIR/lib $DOTFILE_DIR/shell_startup
+if exists hsvm; then
+    eval "$(hsvm init)"
+fi
 
 # vim:filetype=sh
-# Local Variables:
-# mode: sh
-# End:

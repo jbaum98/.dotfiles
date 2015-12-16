@@ -2,9 +2,10 @@ nnoremap ; :
 nnoremap : ;
 vnoremap ; :
 vnoremap : ;
-" Open and source .vimrc file
 nnoremap j gj
 nnoremap k gk
+inoremap fd <esc>
+vnoremap fd <esc>
 " nnoremap gV `[v`]
 "Move splits more easily
 nnoremap <c-j> <c-w>j

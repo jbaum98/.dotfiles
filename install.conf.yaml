@@ -1,0 +1,18 @@
+- clean: ['~']
+
+- link:
+    ~/.bashrc: bashrc
+    ~/.emacs.d: emacs.d/
+    ~/.exrc: exrc
+    ~/.gitconfig: gitconfig
+    ~/.profile: profile
+    ~/.spacemacs: spacemacs
+    ~/.tmux.conf: tmux.conf
+    ~/.vim: vim/
+    ~/.config/nvim: vim/
+    ~/.vimrc: vim/init.vim
+    ~/.zshrc: zshrc
+
+- shell:
+  - [git pull --rebase, Updating dotfiles]
+  - [git submodule update --init --recursive, Installing submodules]
