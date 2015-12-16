@@ -53,4 +53,4 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # load Liquid Prompt
-source ~/liquidprompt/liquidprompt
+source "${DOTFILES}/shell/bash/liquidprompt/liquidprompt"

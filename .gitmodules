@@ -8,3 +8,6 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot.git
+[submodule "shell/bash/liquidprompt"]
+	path = shell/bash/liquidprompt
+	url = https://github.com/nojhan/liquidprompt.git
