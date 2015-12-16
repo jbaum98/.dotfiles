@@ -1,5 +1,8 @@
 - clean: ['~']
 
+- shell:
+    - mkdir -p $HOME/.config
+
 - link:
     ~/.bashrc: bashrc
     ~/.emacs.d: emacs.d/
@@ -14,5 +17,5 @@
     ~/.zshrc: zshrc
 
 - shell:
-  - [git pull --rebase, Updating dotfiles]
+  - [git pull, Updating dotfiles]
   - [git submodule update --init --recursive, Updating submodules]
