@@ -7,10 +7,11 @@
 - link:
     ~/.bashrc: bashrc
     ~/.bash_profile: bash_profile
+    ~/.profile: profile
+    ~/.zprofile: zprofile
     ~/.emacs.d: emacs.d/
     ~/.exrc: exrc
     ~/.gitconfig: gitconfig
-    ~/.profile: profile
     ~/.spacemacs: spacemacs
     ~/.tmux.conf: tmux.conf
     ~/.vim: vim/
