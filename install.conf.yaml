@@ -1,10 +1,11 @@
-- clean: ['~']
-
 - shell:
     - mkdir -p $HOME/.config
 
+- clean: ['~', '~/.config']
+
 - link:
     ~/.bashrc: bashrc
+    ~/.bash_profile: bash_profile
     ~/.emacs.d: emacs.d/
     ~/.exrc: exrc
     ~/.gitconfig: gitconfig
