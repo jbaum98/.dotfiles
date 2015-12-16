@@ -1,3 +1,5 @@
+# -*- mode: sh; -*-
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -16,4 +18,4 @@ for config_file in $LIB; do
 done
 
 _source_common "aliases" "environment"
-_source_bash   "history" "misc"
+_source_bash   "history" "misc" "appearance"

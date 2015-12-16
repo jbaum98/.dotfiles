@@ -15,4 +15,5 @@
 
 - shell:
   - [git pull --rebase, Updating dotfiles]
-  - [git submodule update --init --recursive, Installing submodules]
+  - [git submodule update --init --recursive, Updating submodules]
+  - [zgen update, Updateing ZSH modules]
