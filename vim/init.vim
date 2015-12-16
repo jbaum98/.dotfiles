@@ -218,7 +218,8 @@ nnoremap <leader>src :source $MYVIMRC<cr>
 nnoremap j gj
 nnoremap k gk
 " nnoremap gV `[v`]
-inoremap jk <esc>
+inoremap fd <esc>
+vnoremap fd <esc>
 "Move splits more easily
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k

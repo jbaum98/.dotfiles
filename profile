@@ -27,3 +27,6 @@ source $DOTFILE_DIR/lib/source_all
 source_all $DOTFILE_DIR/lib $DOTFILE_DIR/shell_startup
 
 # vim:filetype=sh
+# Local Variables:
+# mode: sh
+# End:
