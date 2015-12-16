@@ -1,5 +1,6 @@
 - shell:
     - mkdir -p $HOME/.config
+    - [git pull, Updating dotfiles]
 
 - clean: ['~', '~/.config']
 
@@ -18,5 +19,4 @@
     ~/.zshrc: zshrc
 
 - shell:
-  - [git pull, Updating dotfiles]
-  - [git submodule update --init --recursive, Updating submodules]
+    - [git submodule update --init --recursive, Updating submodules]
