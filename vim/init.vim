@@ -221,10 +221,10 @@ nnoremap k gk
 inoremap fd <esc>
 vnoremap fd <esc>
 "Move splits more easily
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
+nnoremap <leader>wj <c-w>j
+nnoremap <leader>wk <c-w>k
+nnoremap <leader>wh <c-w>h
+nnoremap <leader>wl <c-w>l
 " nnoremap H ^
 " nnoremap L $
 inoremap <C-c> <CR><Esc>O
