@@ -53,3 +53,4 @@
     ra = !git r --all
     l = "!. $DOTFILES/githelpers && pretty_git_log"
     la = !git l --all
+	lgb = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%n' --abbrev-commit --date=relative --branches
