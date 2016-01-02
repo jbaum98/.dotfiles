@@ -253,8 +253,13 @@ layers configuration. You are free to put any user code."
      (scala . t)
      (shell . t)
      (sql . t))))
+ '(org-highlight-latex-and-related (quote (latex script entities)))
+ '(org-latex-pdf-process
+   (quote
+    ("\"xelatex -interaction nonstopmode %f\"" "\"xelatex -interaction nonstopmode %f\"")) nil nil "for multiple passes")
+ '(org-pretty-entities t)
  '(org-return-follows-link t)
- '(org-startup-with-inline-images t t)
+ '(org-startup-with-inline-images t)
  '(org-startup-with-latex-preview t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
