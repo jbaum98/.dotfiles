@@ -223,6 +223,11 @@ layers configuration. You are free to put any user code."
                        (concat "make -k "
                                (file-name-sans-extension buffer-file-name))))))
   (setq-default shell-default-shell 'eshell)
+  (advice-add 'magit-key-mode :filter-args
+              (lambda (arguments)
+                (if (eq (car arguments) 'pulling)
+                    (list 'pulling (list "--rebase"))
+                  arguments)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
