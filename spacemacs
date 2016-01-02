@@ -215,6 +215,14 @@ user code."
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+  (add-hook 'c-mode-hook
+            (lambda ()
+              (if (or (file-exists-p "makefile")
+                      (file-exists-p "Makefile"))
+                  (set (make-local-variable 'compile-command)
+                       (concat "make -k "
+                               (file-name-sans-extension buffer-file-name))))))
+  (setq-default shell-default-shell 'eshell)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
