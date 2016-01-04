@@ -1,8 +1,6 @@
 - shell:
-    - [git stash, Stashing local modifications]
     - [git pull, Updating dotfiles]
     - [git submodule update --init --recursive, Updating submodules]
-    - [git stash pop, Restoring local modifications]
     - mkdir -p $HOME/.config
 
 - clean: ['~', '~/.config']
