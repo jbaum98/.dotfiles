@@ -44,7 +44,8 @@ values."
      (org :variables
           org-enable-github-support t)
      python
-     ruby
+     (ruby :variables
+           ruby-test-runner 'rspec)
      ruby-on-rails
      shell-scripts
      yaml
