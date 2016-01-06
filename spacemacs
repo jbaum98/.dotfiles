@@ -266,7 +266,7 @@ layers configuration. You are free to put any user code."
  '(org-highlight-latex-and-related (quote (latex script entities)))
  '(org-latex-pdf-process
    (quote
-    ("\"xelatex -interaction nonstopmode %f\"" "\"xelatex -interaction nonstopmode %f\"")) nil nil "for multiple passes")
+    ("xelatex -interaction nonstopmode %f" "xelatex -interaction nonstopmode %f")))
  '(org-pretty-entities t)
  '(org-return-follows-link t)
  '(org-startup-with-inline-images t)
