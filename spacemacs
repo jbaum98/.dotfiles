@@ -269,8 +269,7 @@ layers configuration. You are free to put any user code."
     ("xelatex -interaction nonstopmode %f" "xelatex -interaction nonstopmode %f")))
  '(org-pretty-entities t)
  '(org-return-follows-link t)
- '(org-startup-with-inline-images t)
- '(org-startup-with-latex-preview t))
+ '(org-startup-with-inline-images t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
