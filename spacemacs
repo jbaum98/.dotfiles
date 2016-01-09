@@ -284,6 +284,68 @@ from lines like:
      (shell . t)
      (sql . t))))
  '(org-highlight-latex-and-related (quote (latex script entities)))
+ '(org-latex-classes
+   (quote
+    (("article" "\\documentclass[11pt]{article}"
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+     ("report" "\\documentclass[11pt]{report}"
+      ("\\part{%s}" . "\\part*{%s}")
+      ("\\chapter{%s}" . "\\chapter*{%s}")
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+     ("book" "\\documentclass[11pt]{book}"
+      ("\\part{%s}" . "\\part*{%s}")
+      ("\\chapter{%s}" . "\\chapter*{%s}")
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
+     ("lab-report" "\\documentclass[11pt,titlepage]{report}
+\\usepackage{SIunits}
+\\usepackage[margin=1in]{geometry}
+\\setlength{\\parindent}{0}
+
+\\makeatletter
+\\newcommand\\partners[1]{\\renewcommand\\@partners{#1}}
+\\newcommand\\@partners{\\@latex@error{No \\noexpand\\partners{} given}\\@ehc}
+\\newcommand\\labnumber[1]{\\renewcommand\\@labnumber{#1}}
+\\newcommand\\@labnumber{\\@latex@error{No \\noexpand\\labnumber{} given}\\@ehc}
+
+
+\\renewcommand{\\maketitle}{
+\\begin{titlepage}
+    \\begin{center}
+        \\vspace*{1cm}
+
+        \\Huge
+        \\textbf{\\@title}
+        
+        \\vspace{0.5cm}
+        \\LARGE
+        Lab \\#\\@labnumber{}
+        
+        \\vspace{1.5cm}
+        
+        \\textbf{\\@author}
+
+        \\textbf{\\@partners}
+        
+    \\end{center}
+\\end{titlepage}
+
+\\LARGE
+\\textbf{\\@title}
+\\normalsize
+}
+\\makeatother
+"
+      ("\\section*{%s}" . "\\section*{%s}")
+      ("\\subsection*{%s}" . "\\subsection*{%s}")
+      (" \\subsubsection*{%s}" . " \\subsubsection*{%s}")))))
  '(org-latex-pdf-process
    (quote
     ("xelatex -interaction nonstopmode %f" "xelatex -interaction nonstopmode %f")))
