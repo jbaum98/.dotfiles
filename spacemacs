@@ -225,6 +225,19 @@ layers configuration. You are free to put any user code."
   ;; Also in visual mode
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
+
+  (defun jk-org-kwds ()
+    "parse the buffer and return a cons list of (property . value)
+from lines like:
+#+PROPERTY: value"
+    (org-element-map (org-element-parse-buffer 'element) 'keyword
+      (lambda (keyword) (cons (org-element-property :key keyword)
+                              (org-element-property :value keyword)))))
+
+  (defun jk-org-kwd (KEYWORD)
+    "get the value of a KEYWORD in the form of #+KEYWORD: value"
+    (cdr (assoc KEYWORD (jk-org-kwds))))
+
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
   (add-hook 'org-babel-after-execute-hook 'spacemacs/toggle-typographic-substitutions-on)
   (add-hook 'c-mode-hook
