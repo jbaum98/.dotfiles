@@ -218,6 +218,13 @@ user code."
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+
+  ;; Make evil-mode up/down operate in screen lines instead of logical lines
+  (define-key evil-motion-state-map "j" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
+  ;; Also in visual mode
+  (define-key evil-visual-state-map "j" 'evil-next-visual-line)
+  (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
   (add-hook 'org-babel-after-execute-hook 'spacemacs/toggle-typographic-substitutions-on)
   (add-hook 'c-mode-hook
