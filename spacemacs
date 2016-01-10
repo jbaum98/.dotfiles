@@ -263,6 +263,12 @@ from lines like:
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(exec-path-from-shell-arguments (quote ("-l")))
+ '(flycheck-locate-config-file-functions
+   (quote
+    (flycheck-locate-config-file-home flycheck-locate-config-file-ancestor-directories flycheck-locate-config-file-by-path
+                                      (lambda
+                                        (filename _checker)
+                                        (projectile-file-truename filename)))))
  '(org-babel-load-languages
    (quote
     ((C . t)
