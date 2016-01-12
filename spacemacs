@@ -313,7 +313,7 @@ from lines like:
      ("lab-report" "\\documentclass[11pt,titlepage]{report}
 \\usepackage{SIunits}
 \\usepackage[margin=1in]{geometry}
-\\setlength{\\parindent}{0}
+\\setlength{\\parindent}{0cm}
 
 \\makeatletter
 \\newcommand\\partners[1]{\\renewcommand\\@partners{#1}}
