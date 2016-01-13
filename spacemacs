@@ -356,9 +356,8 @@ from lines like:
       ("\\subsection{%s}" . "\\subsection*{%s}")
       ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
      ("lab-report" "\\documentclass[11pt,titlepage]{report}
-\\usepackage{SIunits}
-\\usepackage[margin=1in]{geometry}
-\\setlength{\\parindent}{0cm}
+[NO-DEFAULT-PACKAGES]
+[PACKAGES]
 
 \\makeatletter
 \\newcommand\\partners[1]{\\renewcommand\\@partners{#1}}
@@ -374,17 +373,17 @@ from lines like:
 
         \\Huge
         \\textbf{\\@title}
-        
+
         \\vspace{0.5cm}
         \\LARGE
         Lab \\#\\@labnumber{}
-        
+
         \\vspace{1.5cm}
-        
+
         \\textbf{\\@author}
 
         \\textbf{\\@partners}
-        
+
     \\end{center}
 \\end{titlepage}
 
@@ -397,9 +396,20 @@ from lines like:
       ("\\section*{%s}" . "\\section*{%s}")
       ("\\subsection*{%s}" . "\\subsection*{%s}")
       (" \\subsubsection*{%s}" . " \\subsubsection*{%s}")))))
- '(org-latex-pdf-process
-   (quote
-    ("xelatex -interaction nonstopmode %f" "xelatex -interaction nonstopmode %f")))
+ '(org-latex-packages-alist
+(quote
+ (("" "hyperref" nil)
+  ("" "amsmath" t)
+  ("" "amssymb" t)
+  ("" "SIunits" t)
+  ("" "fontspec" t)
+  ("margin=1in" "geometry" nil)
+  "\\setlength{\\parindent}{0cm}"
+  ("" "titlesec" t)
+  "\\titleformat*{\\section}{\\LARGE\\bfseries}" "\\titleformat*{\\subsection}{\\normalsize\\bfseries}")))
+'(org-latex-pdf-process
+(quote
+ ("xelatex -interaction nonstopmode %f" "xelatex -interaction nonstopmode %f")))
  '(org-pretty-entities t)
  '(org-return-follows-link t)
  '(org-startup-with-inline-images t))
