@@ -396,7 +396,24 @@ from lines like:
       ("\\section*{%s}" . "\\section*{%s}")
       ("\\subsection*{%s}" . "\\subsection*{%s}")
       (" \\subsubsection*{%s}" . " \\subsubsection*{%s}")))))
- '(org-latex-packages-alist
+ '(org-latex-create-formula-image-program (quote imagemagick))
+ '(org-latex-default-packages-alist
+(quote
+ (("AUTO" "inputenc" nil)
+  ("T1" "fontenc" t)
+  ("" "fixltx2e" nil)
+  ("" "graphicx" t)
+  ("" "grffile" t)
+  ("" "longtable" nil)
+  ("" "wrapfig" nil)
+  ("" "rotating" nil)
+  ("normalem" "ulem" t)
+  ("" "amsmath" t)
+  ("" "textcomp" t)
+  ("" "amssymb" t)
+  ("" "capt-of" nil)
+  ("" "hyperref" nil))))
+'(org-latex-packages-alist
 (quote
  (("" "hyperref" nil)
   ("" "amsmath" t)
