@@ -39,6 +39,7 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'rhysd/vim-crystal'
 Plug 'pangloss/vim-javascript'
 Plug 'crusoexia/vim-javascript-lib'
+Plug 'LnL7/vim-nix'
 """"""
 Plug 'kchmck/vim-coffee-script'
 Plug 'digitaltoad/vim-jade'
