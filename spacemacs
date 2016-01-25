@@ -419,7 +419,7 @@ from lines like:
  (("" "hyperref" nil)
   ("" "amsmath" t)
   ("" "amssymb" t)
-  ("" "SIunits" t)
+  ("" "siunitx" t)
   ("" "fontspec" t)
   ("margin=1in" "geometry" nil)
   "\\setlength{\\parindent}{0cm}"
