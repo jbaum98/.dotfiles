@@ -1,9 +1,9 @@
 - shell:
     - [git pull, Updating dotfiles]
     - [git submodule update --init --recursive, Updating submodules]
-    - mkdir -p $HOME/.config
+    - mkdir -p $HOME/.config $HOME/.nixpkgs
 
-- clean: ['~', '~/.config']
+- clean: ['$HOME', '$HOME/.config', '$HOME/.nixpkgs']
 
 - link:
     ~/.bashrc: bashrc
@@ -20,3 +20,4 @@
     ~/.config/nvim: vim/
     ~/.vimrc: vim/init.vim
     ~/.zshrc: zshrc
+    ~/.nixpkgs/config.nix: config.nix
