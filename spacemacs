@@ -272,6 +272,27 @@ layers configuration. You are free to put any user code."
   (define-key evil-visual-state-map "j" 'evil-next-visual-line)
   (define-key evil-visual-state-map "k" 'evil-previous-visual-line)
 
+  (defun calc-offset-on-org-level ()
+    "Calculate offset (in chars) on current level in org mode file."
+    (* (or (org-current-level) 0) org-indent-indentation-per-level))
+
+  (defun my-org-fill-paragraph (&optional JUSTIFY)
+    "Calculate apt fill-column value and fill paragraph."
+    (let* ((fill-column (- fill-column (calc-offset-on-org-level))))
+      (org-fill-paragraph JUSTIFY)))
+
+  (defun my-org-auto-fill-function ()
+    "Calculate apt fill-column value and do auto-fill"
+    (let* ((fill-column (- fill-column (calc-offset-on-org-level))))
+      (org-auto-fill-function)))
+
+  (defun my-org-mode-hook ()
+    (setq fill-paragraph-function   'my-org-fill-paragraph
+          normal-auto-fill-function 'my-org-auto-fill-function))
+
+    (add-hook 'org-load-hook 'my-org-mode-hook)
+    (add-hook 'org-mode-hook 'my-org-mode-hook)
+
   (defun jk-org-kwds ()
     "parse the buffer and return a cons list of (property . value)
 from lines like:
@@ -286,6 +307,19 @@ from lines like:
 
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
   (add-hook 'org-babel-after-execute-hook 'spacemacs/toggle-typographic-substitutions-on)
+
+  (defun org-export-filter-timestamp-remove-brackets (timestamp backend info)
+    "removes relevant brackets from a timestamp"
+    (cond
+     ((org-export-derived-backend-p backend 'latex)
+      (replace-regexp-in-string "[<>]\\|[][]" "" timestamp))
+     ((org-export-derived-backend-p backend 'html)
+      (replace-regexp-in-string "&[lg]t;\\|[][]" "" timestamp))))
+
+  (eval-after-load 'ox '(add-to-list
+                         'org-export-filter-timestamp-functions
+                         'org-export-filter-timestamp-remove-brackets))
+
   (add-hook 'c-mode-hook
             (lambda ()
               (if (or (file-exists-p "makefile")
@@ -293,6 +327,11 @@ from lines like:
                   (set (make-local-variable 'compile-command)
                        (concat "make -k "
                                (file-name-sans-extension buffer-file-name))))))
+  (add-hook 'haskell-mode-hook
+            (lambda ()
+              (set (make-local-variable 'compile-command)
+                   (concat "ghc " buffer-file-name))))
+
   (setq-default shell-default-shell 'eshell)
   (advice-add 'magit-key-mode :filter-args
               (lambda (arguments)
@@ -315,6 +354,8 @@ from lines like:
                                       (lambda
                                         (filename _checker)
                                         (projectile-file-truename filename)))))
+ '(haskell-font-lock-symbols t)
+ '(hindent-style "gibiansky")
  '(org-babel-load-languages
    (quote
     ((C . t)
@@ -334,8 +375,11 @@ from lines like:
      (sass . t)
      (scala . t)
      (shell . t)
-     (sql . t))))
+     (sql . t)
+     (octave . t))))
+ '(org-display-custom-times t)
  '(org-highlight-latex-and-related (quote (latex script entities)))
+ '(org-latex-active-timestamp-format "%s")
  '(org-latex-classes
    (quote
     (("article" "\\documentclass[11pt]{article}"
@@ -429,8 +473,29 @@ from lines like:
 (quote
  ("xelatex -interaction nonstopmode %f" "xelatex -interaction nonstopmode %f")))
  '(org-pretty-entities t)
+ '(org-read-date-force-compatible-dates nil)
  '(org-return-follows-link t)
- '(org-startup-with-inline-images t))
+ '(org-startup-with-inline-images t)
+ '(org-time-stamp-custom-formats (quote ("<%B %e, %Y>" . "<%B %e, %Y %H:%M>")))
+'(package-selected-packages
+(quote
+ (go-eldoc company-go go-mode hydra js2-mode f magit-popup auto-complete gitignore-mode with-editor yasnippet async inf-ruby markdown-mode clojure-mode packed anaconda-mode flycheck haskell-mode git-gutter company projectile helm helm-core multiple-cursors json-reformat magit pythonic bind-key evil srefactor orgit magit-gitflow helm-flx git-gutter-fringe+ git-gutter+ evil-magit company-quickhelp clj-refactor yaml-mode xterm-color ws-butler which-key web-mode web-beautify use-package typo toc-org tagedit stickyfunc-enhance spacemacs-theme solarized-theme smeargle slim-mode shm shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv quelpa pyvenv python pytest pyenv-mode projectile-rails popwin pip-requirements persp-mode page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets nix-mode multi-term mmm-mode markdown-toc macrostep less-css-mode json-mode js2-refactor js-doc jade-mode ido-vertical-mode hy-mode htmlize hl-todo hindent help-fns+ helm-pydoc helm-projectile helm-nixos-options helm-gitignore helm-descbinds helm-css-scss helm-company helm-c-yasnippet haskell-snippets gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe gh-md flycheck-pos-tip flycheck-haskell fish-mode fill-column-indicator feature-mode eyebrowse exec-path-from-shell evil-visualstar evil-surround evil-escape eshell-prompt-extras esh-help emmet-mode emacs-eclim elisp-slime-nav disaster diff-hl cython-mode company-web company-tern company-statistics company-nixos-options company-ghc company-cabal company-c-headers company-auctex company-anaconda coffee-mode cmm-mode cmake-mode clang-format cider-eval-sexp-fu cider chruby bundler bind-map auto-yasnippet auto-compile align-cljlet ac-ispell)))
+'(safe-local-variable-values
+(quote
+ ((global-flycheck-mode . t)
+  (flycheck-disabled-checkers haskell-stack-ghc)
+  (flycheck-disabled-checkers . haskell-stack-ghc)
+  (flycheck-ghc-search-path
+   ("lib"))
+  (flycheck-mode t)
+  (flycheck-mode . t)
+  (flycheck-ghc-search-path . "lib")
+  (flycheck-disabled-checkers
+   (quote
+    (haskell-stack-ghc)))
+  (flycheck-disabled-checkers
+   (haskell-stack-ghc))
+  (flycheck-ghc-search-path "lib")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
