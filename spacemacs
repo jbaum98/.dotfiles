@@ -36,6 +36,7 @@ values."
      clojure
      emacs-lisp
      haskell
+     go
      html
      java
      javascript
