@@ -4,7 +4,7 @@ export DOTFILES="${HOME}/.dotfiles"
 
 source $DOTFILES/lib/exists
 
-PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
+PATH=$HOME/.local/bin:$HOME/.cabal/bin:$HOME/bin:$PATH
 
 if exists direnv; then
     if [ -n "$ZSH_VERSION" ]; then
