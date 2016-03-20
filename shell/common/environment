@@ -1,9 +1,7 @@
-autoload get_ed
 # -*- mode: sh; -*-
 
-export EDITOR="emacsclient -c -a \"\""
+export EDITOR="vim"
 export TERM="xterm-256color"
-export LANG=en_US.UTF-8
-
+export LANG="en_US.UTF-8"
 
 # vim:filetype=sh
