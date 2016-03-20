@@ -8,10 +8,6 @@ fi
 
 PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
 
-if exists rbenv; then
-    eval "$(rbenv init -)"
-fi
-
 if exists direnv; then
     if [ -n "$ZSH_VERSION" ]; then
         eval "$(direnv hook zsh)"

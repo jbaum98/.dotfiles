@@ -16,4 +16,4 @@ for config_file in $LIB; do
 done
 
 _source_common "aliases" "environment"
-_source_bash   "history" "misc" "appearance"
+_source_bash   "history" "misc" "rbenv" "appearance"
