@@ -1,4 +1,5 @@
 autoload get_ed
+# -*- mode: sh; -*-
 
 export EDITOR="emacsclient -c -a \"\""
 export TERM="xterm-256color"

@@ -1,3 +1,5 @@
+# -*- mode: sh; -*-
+
 if exists xiwi; then
     alias subl='LANG=en_US.UTF-8 xiwi subl -w'
 fi

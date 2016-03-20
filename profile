@@ -1,3 +1,5 @@
+# -*- mode: sh; -*-
+
 export DOTFILES="${HOME}/.dotfiles"
 
 source $DOTFILES/lib/exists
