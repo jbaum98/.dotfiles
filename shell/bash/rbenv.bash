@@ -1,3 +1,6 @@
+
 PATH=$HOME/.rbenv/bin:$PATH
 
-eval "$(rbenv init -)" 
+if exists rbenv; then
+    eval "$(rbenv init -)" 
+fi
