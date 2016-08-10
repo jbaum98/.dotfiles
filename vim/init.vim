@@ -54,6 +54,7 @@ Plug 'slim-template/vim-slim'
 Plug 'groenewege/vim-less'
 Plug 'dag/vim2hs'
 Plug 'sophacles/vim-processing'
+Plug 'rust-lang/rust.vim'
 """
 Plug 'scrooloose/nerdcommenter'
 "Plug 'christoomey/vim-tmux-navigator'
