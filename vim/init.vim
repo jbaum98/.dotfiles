@@ -9,6 +9,8 @@ call plug#begin('~/.vim/plugged')
 
 " Plugs {{{
 "Plug 'mhinz/vim-startify'
+Plug 'vimwiki/vimwiki'
+Plug 'tbabej/taskwiki'
 Plug 'vim-utils/vim-man'
 Plug 'dhruvasagar/vim-markify'
 Plug 'jceb/vim-orgmode'
@@ -292,9 +294,9 @@ inoremap <s-tab> <c-n>
   "nnoremap <cr> :call RunTestFile()<cr>
 "endfunction
 "call MapCR()
-nnoremap <leader>T :call RunNearestTest()<cr>
-nnoremap <leader>t :call RunTestFile()<cr>
-nnoremap <leader>a :call RunTests('')<cr>
+"nnoremap <leader>T :call RunNearestTest()<cr>
+"nnoremap <leader>t :call RunTestFile()<cr>
+"nnoremap <leader>a :call RunTests('')<cr>
 "nnoremap <leader>c :w\|:!script/features<cr>
 "nnoremap <leader>w :w\|:!script/features --profile wip<cr>
 
