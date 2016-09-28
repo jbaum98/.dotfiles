@@ -21,3 +21,4 @@
     ~/.vimrc: vim/init.vim
     ~/.zshrc: zshrc
     ~/.nixpkgs/config.nix: config.nix
+    ~/.taskrc: taskrc

@@ -1,0 +1,78 @@
+# [Created by task 2.5.0 9/20/2016 23:00:43]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.task
+taskd.server=freecinc.com:53589
+taskd.key=~/.task/freecinc_75fc70b4.key.pem
+taskd.certificate=~/.task/freecinc_75fc70b4.cert.pem
+taskd.ca=~/.task/freecinc_75fc70b4.ca.pem
+taskd.credentials=FreeCinc\/freecinc_75fc70b4\/8bcaf389-0dbb-4250-b834-12b74b6af409
+
+# Color theme (uncomment one to use)
+#include /usr/local/share/doc/task/rc/light-16.theme
+#include /usr/local/share/doc/task/rc/light-256.theme
+#include /usr/local/share/doc/task/rc/dark-16.theme
+#include /usr/local/share/doc/task/rc/dark-256.theme
+#include /usr/local/share/doc/task/rc/dark-red-256.theme
+#include /usr/local/share/doc/task/rc/dark-green-256.theme
+#include /usr/local/share/doc/task/rc/dark-blue-256.theme
+#include /usr/local/share/doc/task/rc/dark-violets-256.theme
+#include /usr/local/share/doc/task/rc/dark-yellow-green.theme
+#include /usr/local/share/doc/task/rc/dark-gray-256.theme
+include /usr/local/share/doc/task/rc/dark-gray-blue-256.theme
+#include /usr/local/share/doc/task/rc/solarized-dark-256.theme
+#include /usr/local/share/doc/task/rc/solarized-light-256.theme
+#include /usr/local/share/doc/task/rc/no-color.theme
+
+uda.reviewed.type=date
+uda.reviewed.label=Reviewed
+report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
+report._reviewed.columns=uuid
+report._reviewed.sort=reviewed+,modified+
+report._reviewed.filter=( reviewed.none: or reviewed.before:now-1week ) and ( +PENDING or +WAITING )
+confirmation=off
+urgency.blocking.coefficient=5
+context.homework=+isc or +bible or +multi or +cos
+
+report.today.description=Tasks due or scheduled for today
+report.today.columns=id,project,tags,description.count,scheduled.relative,due.relative
+report.today.sort=urgency-,tags+/
+report.today.filter=+PENDING and (sched.before:tom or due.before:2days)
+alias.tod=today
+
+report.tomorrow.description=Tasks due or scheduled for today
+report.tomorrow.columns=id,project,tags,description.count,scheduled.relative,due.relative
+report.tomorrow.sort=urgency-,tags+/
+report.tomorrow.filter=+PENDING and (sched:tom or due:3days)
+alias.tom=tomorrow
+
+report.week.description=Tasks due or scheduled for today
+report.week.columns=id,project,tags,description.count,scheduled.relative,due.relative
+report.week.sort=urgency-,tags+/
+report.week.filter=+PENDING and (sched.before:tom+1week or due.before:tom+1week)
+
+report.inbox.description=Tasks without due dates or scheduled dates
+report.inbox.columns=id,project,tags,description.count,scheduled.relative,due.relative
+report.inbox.sort=urgency-,tags+/
+report.inbox.filter=sched: due: +PENDING
+
+#report.most.sort=scheduled+/,due+/,project+
+#report.most.description=
+#report.most.columns=
+#report.most.sort=
+#report.most.filter=
+
+search.case.sensitive=no
+default.command=next limit:5
+urgency.tags.coefficient=0
+urgency.annotations.coefficient=0
