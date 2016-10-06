@@ -39,15 +39,15 @@ values."
      haskell
      ;go
      html
+     helm
      java
-     myjava
      javascript
      latex
      markdown
      (org :variables
           org-enable-github-support t)
-     myorg
      python
+     pdf-tools
      (ruby :variables
            ruby-test-runner 'rspec)
      ;react
@@ -56,7 +56,6 @@ values."
      shell-scripts
      ;swift
      yaml
-     eyebrowse
      spacemacs-layouts
      typography
      ))
@@ -158,7 +157,7 @@ values."
    ;; Emacs commands (M-x).
    ;; By default the command key is `:' so ex-commands are executed like in Vim
    ;; with `:' and Emacs commands are executed with `<leader> :'.
-   dotspacemacs-command-key ";"
+   dotspacemacs-emacs-command-key ";"
    ;; If non nil `Y' is remapped to `y$'. (default t)
    dotspacemacs-remap-Y-to-y$ t
    ;; Name of the default layout (default "Default")
@@ -413,7 +412,188 @@ layers configuration. You are free to put any user code."
 "
       ("\\section*{%s}" . "\\section*{%s}")
       ("\\subsection*{%s}" . "\\subsection*{%s}")
-      (" \\subsubsection*{%s}" . " \\subsubsection*{%s}")))))
+      (" \\subsubsection*{%s}" . " \\subsubsection*{%s}"))
+     ("homework" "\\documentclass{article}
+
+%\\usepackage[utf8]{inputenc}
+
+\\usepackage{fontspec}
+\\usepackage{fancyhdr}
+\\usepackage{extramarks}
+\\usepackage[fleqn]{amsmath}
+\\usepackage{amsthm}
+\\usepackage{amsfonts}
+\\usepackage{pgf,tikz}
+\\usepackage{mathrsfs}
+\\usepackage{mathtools}
+\\usepackage[plain]{algorithm}
+\\usepackage{algpseudocode}
+\\usepackage{xparse}
+\\usepackage{xstring}
+\\usepackage{esvect}
+\\usepackage{subcaption}
+\\usepackage[makeroom]{cancel}
+\\usepackage{siunitx}
+
+\\usetikzlibrary{automata,positioning,arrows}
+
+%
+% Basic Document Settings
+%
+
+\\topmargin=-0.45in
+\\evensidemargin=0in
+\\oddsidemargin=0in
+\\textwidth=6.5in
+\\textheight=9.0in
+\\headsep=0.25in
+
+\\linespread{1.1}
+
+\\pagestyle{fancy}
+\\lhead{\\hmwkAuthorName}
+\\chead{\\hmwkClass\\ (\\hmwkClassInstructor\\ \\hmwkClassTime): \\hmwkTitle}
+\\rhead{\\firstxmark}
+\\lfoot{\\lastxmark}
+\\cfoot{\\thepage}
+
+\\renewcommand\\headrulewidth{0.4pt}
+\\renewcommand\\footrulewidth{0.4pt}
+
+\\setlength\\parindent{0pt}
+
+%
+% Create Problem Sections
+%
+
+\\newcommand{\\enterProblemHeader}[1]{
+  \\nobreak\\extramarks{}{Problem #1 continued on next page\\ldots}\\nobreak{}
+  \\nobreak\\extramarks{Problem #1 (continued)}{Problem #1 continued on next page\\ldots}\\nobreak{}
+}
+
+\\newcommand{\\exitProblemHeader}[1]{
+  \\nobreak\\extramarks{Problem #1 (continued)}{Problem #1 continued on next page\\ldots}\\nobreak{}
+  \\nobreak\\extramarks{Problem #1}{}\\nobreak{}
+}
+
+\\setcounter{secnumdepth}{0}
+\\newcounter{partCounter}
+\\newcommand{\\homeworkProblemCounter}{}
+\\def\\homeworkSection{}
+
+%
+% Homework Problem Environment
+%
+% This environment takes an optional argument. When given, it will adjust the
+% problem counter. This is useful for when the problems given for your
+% assignment aren't sequential. See the last 3 problems of this template for an
+% example.
+%
+\\DeclareDocumentEnvironment{homeworkProblem}{m o}{
+  \\renewcommand{\\homeworkProblemCounter}{#1}
+  \\IfValueT{#2} {\\global\\def\\homeworkSection{#2}}
+  \\StrLeft{\\homeworkSection}{1}[\\firstchar]
+  \\IfInteger{\\firstchar}{\\def\\secchar{§}}{\\def\\secchar{}}
+  \\IfValueTF{\\homeworkSection} {
+    \\section{\\secchar\\homeworkSection{} \\#\\homeworkProblemCounter}
+  } {
+    \\section{\\homeworkProblemCounter}
+  }
+  \\setcounter{partCounter}{1}
+  \\enterProblemHeader{\\homeworkProblemCounter}
+}{
+  \\exitProblemHeader{\\homeworkProblemCounter}
+}
+
+%
+% Homework Details
+% - Title
+% - Due date
+% - Class
+% - Section/Time
+% - Instructor
+% - Author
+%
+
+%
+% Title Page
+%
+
+\\title{
+  \\vspace{2in}
+  \\textmd{\\textbf{\\hmwkClass:\\ \\hmwkTitle}}\\\\
+  \\normalsize\\vspace{0.1in}\\small{Due\\ on\\ \\hmwkDueDate}\\\\
+  \\vspace{0.1in}\\large{\\textit{\\hmwkClassInstructor\\ \\hspace{1.5in} \\hmwkClassTime}}
+  \\vspace{3in}
+}
+
+\\author{
+  \\textbf{\\hmwkAuthorName}
+  \\ifcsname hmwkCollaborator\\endcsname
+    \\\\ \\textit{Collaborators: \\hmwkCollaborator}
+  \\fi
+}
+\\date{}
+
+\\renewcommand{\\part}[1]{\\textbf{\\large Part \\Alph{partCounter}}\\stepcounter{partCounter}\\\\}
+
+%
+% Various Helper Commands
+%
+
+% Useful for algorithms
+\\newcommand{\\alg}[1]{\\textsc{\\bfseries \\footnotesize #1}}
+
+% For derivatives
+\\newcommand{\\deriv}[1]{\\frac{\\mathrm{d}}{\\mathrm{d}x} (#1)}
+
+% For partial derivatives
+\\newcommand{\\pderiv}[2]{\\frac{\\partial}{\\partial #1} (#2)}
+
+% Integral dx
+\\newcommand{\\dx}{\\mathrm{d}x}
+
+% Alias for the Solution section header
+\\newcommand{\\solution}{\\textbf{\\large Solution}}
+
+% Probability commands: Expectation, Variance, Covariance, Bias
+\\newcommand{\\E}{\\mathrm{E}}
+\\newcommand{\\Var}{\\mathrm{Var}}
+\\newcommand{\\Cov}{\\mathrm{Cov}}
+\\newcommand{\\Bias}{\\mathrm{Bias}}
+
+\\newcommand{\\real}{\\mathbb{R}}
+
+\\renewcommand{\\i}{\\hat{\\imath}}
+\\renewcommand{\\j}{\\hat{\\jmath}}
+\\renewcommand{\\k}{\\hat{k}}
+
+\\newcommand{\\uv}[1]{\\hat{#1}}
+\\newcommand{\\valg}[1]{\\left\\langle #1 \\right\\rangle}
+\\newcommand{\\norm}[1]{\\left|\\left|#1\\right|\\right|}
+
+\\newenvironment{mat}[1] {
+ \\left[\\begin{array}{#1}
+}{
+  \\end{array}\\right]
+}
+
+\\newenvironment{detmat}[1] {
+  \\left|\\begin{array}{#1}
+}{
+  \\end{array}\\right|
+}
+
+\\DeclareMathOperator{\\proj}{proj}
+
+\\definecolor{zzttqq}{rgb}{0.6,0.2,0.}
+\\definecolor{qqqqff}{rgb}{0.,0.,1.}
+\\definecolor{uuuuuu}{rgb}{0.26666666666666666,0.26666666666666666,0.26666666666666666}"
+      ("\\section{%s}" . "\\section*{%s}")
+      ("\\subsection{%s}" . "\\subsection*{%s}")
+      ("\\subsubsection{%s}" . "\\subsubsuection*{%s}")
+      ("\\paragraph{%s}" . "\\paragraph*{%}")
+      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))))
  '(org-latex-create-formula-image-program (quote imagemagick))
  '(org-latex-default-packages-alist
 (quote
@@ -452,7 +632,7 @@ layers configuration. You are free to put any user code."
  '(org-time-stamp-custom-formats (quote ("<%B %e, %Y>" . "<%B %e, %Y %H:%M>")))
 '(package-selected-packages
 (quote
- (wolfram-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode undo-tree pcre2el log4e gntp json-snatcher request flx fringe-helper web-completion-data dash-functional pos-tip inflections edn paredit peg eval-sexp-fu highlight spinner queue pkg-info epl popup alert git-commit eclim rake tern ghc s toml-mode racer rust-mode flycheck-rust company-racer deferred py-yapf swift-mode haml-mode auctex package-build go-eldoc company-go go-mode hydra js2-mode f magit-popup auto-complete gitignore-mode with-editor yasnippet async inf-ruby markdown-mode clojure-mode packed anaconda-mode flycheck haskell-mode git-gutter company projectile helm helm-core multiple-cursors json-reformat magit pythonic bind-key evil srefactor orgit magit-gitflow helm-flx git-gutter-fringe+ git-gutter+ evil-magit company-quickhelp clj-refactor yaml-mode xterm-color ws-butler which-key web-mode web-beautify use-package typo toc-org tagedit stickyfunc-enhance spacemacs-theme solarized-theme smeargle slim-mode shm shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv quelpa pyvenv python pytest pyenv-mode projectile-rails popwin pip-requirements persp-mode page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets nix-mode multi-term mmm-mode markdown-toc macrostep less-css-mode json-mode js2-refactor js-doc jade-mode ido-vertical-mode hy-mode htmlize hl-todo hindent help-fns+ helm-pydoc helm-projectile helm-nixos-options helm-gitignore helm-descbinds helm-css-scss helm-company helm-c-yasnippet haskell-snippets gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe gh-md flycheck-pos-tip flycheck-haskell fish-mode fill-column-indicator feature-mode eyebrowse exec-path-from-shell evil-visualstar evil-surround evil-escape eshell-prompt-extras esh-help emmet-mode emacs-eclim elisp-slime-nav disaster diff-hl cython-mode company-web company-tern company-statistics company-nixos-options company-ghc company-cabal company-c-headers company-auctex company-anaconda coffee-mode cmm-mode cmake-mode clang-format cider-eval-sexp-fu cider chruby bundler bind-map auto-yasnippet auto-compile align-cljlet ac-ispell)))
+ (helm-themes helm-swoop helm-mode-manager helm-make helm-hoogle helm-ag ace-jump-helm-line yapfify thrift py-isort pdf-tools tablist ox-gfm org-projectile org org-download livid-mode skewer-mode simple-httpd live-py-mode intero hlint-refactor git-link goto-chg eshell-z diminish company-shell company-ghci company-emacs-eclim ace-window avy cdlatex wolfram-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode undo-tree pcre2el log4e gntp json-snatcher request flx fringe-helper web-completion-data dash-functional pos-tip inflections edn paredit peg eval-sexp-fu highlight spinner queue pkg-info epl popup alert git-commit eclim rake tern ghc s toml-mode racer rust-mode flycheck-rust company-racer deferred py-yapf swift-mode haml-mode auctex package-build go-eldoc company-go go-mode hydra js2-mode f magit-popup auto-complete gitignore-mode with-editor yasnippet async inf-ruby markdown-mode clojure-mode packed anaconda-mode flycheck haskell-mode git-gutter company projectile helm helm-core multiple-cursors json-reformat magit pythonic bind-key evil srefactor orgit magit-gitflow helm-flx git-gutter-fringe+ git-gutter+ evil-magit company-quickhelp clj-refactor yaml-mode xterm-color ws-butler which-key web-mode web-beautify use-package typo toc-org tagedit stickyfunc-enhance spacemacs-theme solarized-theme smeargle slim-mode shm shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv quelpa pyvenv python pytest pyenv-mode projectile-rails popwin pip-requirements persp-mode page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets nix-mode multi-term mmm-mode markdown-toc macrostep less-css-mode json-mode js2-refactor js-doc jade-mode ido-vertical-mode hy-mode htmlize hl-todo hindent help-fns+ helm-pydoc helm-projectile helm-nixos-options helm-gitignore helm-descbinds helm-css-scss helm-company helm-c-yasnippet haskell-snippets gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe gh-md flycheck-pos-tip flycheck-haskell fish-mode fill-column-indicator feature-mode eyebrowse exec-path-from-shell evil-visualstar evil-surround evil-escape eshell-prompt-extras esh-help emmet-mode emacs-eclim elisp-slime-nav disaster diff-hl cython-mode company-web company-tern company-statistics company-nixos-options company-ghc company-cabal company-c-headers company-auctex company-anaconda coffee-mode cmm-mode cmake-mode clang-format cider-eval-sexp-fu cider chruby bundler bind-map auto-yasnippet auto-compile align-cljlet ac-ispell)))
 '(safe-local-variable-values
 (quote
  ((global-flycheck-mode . t)
