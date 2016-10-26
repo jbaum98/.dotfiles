@@ -20,7 +20,7 @@ values."
    ;; installation feature and you have to explicitly list a layer in the
    ;; variable `dotspacemacs-configuration-layers' to install it.
    ;; (default 'unused)
-   dotspacemacs-enable-lazy-installation 'unused
+   dotspacemacs-enable-lazy-installation nil
    ;; If non-nil then Spacemacs will ask for confirmation before installing
    ;; a layer lazily. (default t)
    dotspacemacs-ask-for-lazy-installation t
@@ -55,7 +55,7 @@ values."
      markdown
      (org :variables
           org-enable-github-support t)
-     ;myorg
+     myorg
      python
      pdf-tools
      (ruby :variables
@@ -73,7 +73,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(cdlatex)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -158,10 +158,10 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Consolas"
-                               :size 14
+                               :size 18
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 2)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -473,9 +473,13 @@ you should place your code here."
       (" \\subsubsection*{%s}" . " \\subsubsection*{%s}"))
      ("homework" "\\documentclass{article}
 
-%\\usepackage[utf8]{inputenc}
+[NO-DEFAULT-PACKAGES]
+[NO-PACKAGES]
 
-\\usepackage{fontspec}
+\\usepackage{hyperref}
+\\usepackage{gnuplottex}
+\\usepackage{xcolor}
+\\usepackage{xparse}
 \\usepackage{fancyhdr}
 \\usepackage{extramarks}
 \\usepackage[fleqn]{amsmath}
@@ -486,18 +490,67 @@ you should place your code here."
 \\usepackage{mathtools}
 \\usepackage[plain]{algorithm}
 \\usepackage{algpseudocode}
-\\usepackage{xparse}
 \\usepackage{xstring}
 \\usepackage{esvect}
 \\usepackage{subcaption}
-\\usepackage[makeroom]{cancel}
+\\usepackage[version=4]{mhchem}
 \\usepackage{siunitx}
+\\usepackage{titling}
+\\usepackage{empheq}
+\\usepackage{cancel}
+\\usepackage{tocloft}
+
+\\renewcommand{\\cftsecleader}{\\cftdotfill{\\cftdotsep}}
+\\makeatletter
+\\renewcommand{\\@cftmaketoctitle}{}
+\\makeatother
+
+\\ExplSyntaxOn
+\\DeclareExpandableDocumentCommand{\\convertlen}{ O{cm} m }
+{
+  \\dim_to_decimal_in_unit:nn { #2 } { 1 #1 } cm
+}
+\\ExplSyntaxOff
+
+\\newcommand{\\hl}[1]{%
+  \\colorbox{yellow!50}{$\\displaystyle#1$}}
+
+\\sisetup{math-micro = μ, text-micro = μ, group-separator = {,},
+  group-digits=integer, range-units=single, range-phrase = {--}, per-mode=symbol,per-symbol=/}
+
+% Command \"alignedbox{}{}\" for a box within an align environment
+% Source: http://www.latex-community.org/forum/viewtopic.php?f=46&t=8144
+\\newlength\\dlf% Define a new measure, dlf
+\\newcommand\\alignedbox[2]{
+  % Argument #1 = before & if there were no box (lhs)
+  % Argument #2 = after & if there were no box (rhs)
+  &  % Alignment sign of the line
+  {
+    \\settowidth\\dlf{$\\displaystyle #1$}
+    % The width of \\dlf is the width of the lhs, with a displaystyle font
+    \\addtolength\\dlf{\\fboxsep+\\fboxrule}
+    % Add to it the distance to the box, and the width of the line of the box
+    \\hspace{-\\dlf}
+    % Move everything dlf units to the left, so that & #1 #2 is aligned under #1 & #2
+    \\boxed{#1 #2}
+    % Put a box around lhs and rhs
+  }
+}
+
+
+
+\\DeclareSIUnit\\poise{P}
+\\DeclareSIUnit\\molar{M}
+\\DeclareSIUnit\\inch{in}
+\\DeclareSIUnit\\feet{ft}
+\\DeclareSIUnit\\erg{erg}
+\\DeclareSIUnit\\amu{amu}
 
 \\usetikzlibrary{automata,positioning,arrows}
 
-%
+% 
 % Basic Document Settings
-%
+% 
 
 \\topmargin=-0.45in
 \\evensidemargin=0in
@@ -510,7 +563,7 @@ you should place your code here."
 
 \\pagestyle{fancy}
 \\lhead{\\hmwkAuthorName}
-\\chead{\\hmwkClass\\ (\\hmwkClassInstructor\\ \\hmwkClassTime): \\hmwkTitle}
+\\chead{\\hmwkClass\\: \\hmwkTitle}
 \\rhead{\\firstxmark}
 \\lfoot{\\lastxmark}
 \\cfoot{\\thepage}
@@ -520,96 +573,127 @@ you should place your code here."
 
 \\setlength\\parindent{0pt}
 
-%
+% 
 % Create Problem Sections
-%
+% 
 
 \\newcommand{\\enterProblemHeader}[1]{
-  \\nobreak\\extramarks{}{Problem #1 continued on next page\\ldots}\\nobreak{}
-  \\nobreak\\extramarks{Problem #1 (continued)}{Problem #1 continued on next page\\ldots}\\nobreak{}
+  \\nobreak\\extramarks{}{Problem \\arabic{#1} continued on next page\\ldots}\\nobreak{}
+  \\nobreak\\extramarks{Problem \\arabic{#1} (continued)}{Problem \\arabic{#1} continued on next page\\ldots}\\nobreak{}
 }
 
 \\newcommand{\\exitProblemHeader}[1]{
-  \\nobreak\\extramarks{Problem #1 (continued)}{Problem #1 continued on next page\\ldots}\\nobreak{}
-  \\nobreak\\extramarks{Problem #1}{}\\nobreak{}
+  \\nobreak\\extramarks{Problem \\arabic{#1} (continued)}{Problem \\arabic{#1} continued on next page\\ldots}\\nobreak{}
+  \\stepcounter{#1}
+  \\nobreak\\extramarks{Problem \\arabic{#1}}{}\\nobreak{}
 }
 
 \\setcounter{secnumdepth}{0}
 \\newcounter{partCounter}
-\\newcommand{\\homeworkProblemCounter}{}
+\\newcounter{homeworkProblemCounter}
+\\setcounter{homeworkProblemCounter}{1}
 \\def\\homeworkSection{}
 
-%
+% 
 % Homework Problem Environment
-%
+% 
 % This environment takes an optional argument. When given, it will adjust the
 % problem counter. This is useful for when the problems given for your
 % assignment aren't sequential. See the last 3 problems of this template for an
 % example.
-%
-\\DeclareDocumentEnvironment{homeworkProblem}{m o}{
-  \\renewcommand{\\homeworkProblemCounter}{#1}
+% 
+\\DeclareDocumentEnvironment{homeworkProblem}{o o}{
+  \\IfValueT{#1} {\\setcounter{homeworkProblemCounter}{#1}}
+
   \\IfValueT{#2} {\\global\\def\\homeworkSection{#2}}
+
   \\StrLeft{\\homeworkSection}{1}[\\firstchar]
   \\IfInteger{\\firstchar}{\\def\\secchar{§}}{\\def\\secchar{}}
+
   \\IfValueTF{\\homeworkSection} {
-    \\section{\\secchar\\homeworkSection{} \\#\\homeworkProblemCounter}
+    \\section{\\secchar\\homeworkSection{} \\#\\arabic{homeworkProblemCounter}}
+    \\setcounter{section}{\\arabic{homeworkProblemCounter}}
   } {
-    \\section{\\homeworkProblemCounter}
+    \\section{Problem \\arabic{homeworkProblemCounter}}
   }
   \\setcounter{partCounter}{1}
-  \\enterProblemHeader{\\homeworkProblemCounter}
+  \\enterProblemHeader{homeworkProblemCounter}
 }{
-  \\exitProblemHeader{\\homeworkProblemCounter}
+  \\exitProblemHeader{homeworkProblemCounter}
 }
 
-%
+\\numberwithin{equation}{section}
+
+% 
 % Homework Details
 % - Title
 % - Due date
 % - Class
-% - Section/Time
-% - Instructor
 % - Author
-%
-
-%
+% 
+[EXTRA]
+% 
 % Title Page
-%
+% 
 
+\\setlength{\\droptitle}{-0.7in}
 \\title{
-  \\vspace{2in}
   \\textmd{\\textbf{\\hmwkClass:\\ \\hmwkTitle}}\\\\
   \\normalsize\\vspace{0.1in}\\small{Due\\ on\\ \\hmwkDueDate}\\\\
-  \\vspace{0.1in}\\large{\\textit{\\hmwkClassInstructor\\ \\hspace{1.5in} \\hmwkClassTime}}
-  \\vspace{3in}
+  \\vspace{0.1in}
 }
 
 \\author{
   \\textbf{\\hmwkAuthorName}
   \\ifcsname hmwkCollaborator\\endcsname
-    \\\\ \\textit{Collaborators: \\hmwkCollaborator}
+  \\\\ \\textit{Collaborators: \\hmwkCollaborator}
   \\fi
 }
 \\date{}
 
 \\renewcommand{\\part}[1]{\\textbf{\\large Part \\Alph{partCounter}}\\stepcounter{partCounter}\\\\}
 
-%
+% 
 % Various Helper Commands
-%
+% 
 
 % Useful for algorithms
 \\newcommand{\\alg}[1]{\\textsc{\\bfseries \\footnotesize #1}}
 
 % For derivatives
-\\newcommand{\\deriv}[1]{\\frac{\\mathrm{d}}{\\mathrm{d}x} (#1)}
+\\newcommand{\\deriv}[2]{\\frac{\\mathrm{d}}{\\mathrm{d}#1} \\left(#2\\right)}
+\\newcommand{\\dwrto}[3][1]{
+  \\IfEq{#1}{1}
+  {
+    \\frac{\\mathrm{d} #2}{\\mathrm{d}#3}
+  }
+  {
+    \\frac{\\mathrm{d}^#1 #2}{\\mathrm{d}#3^#1}
+  }
+}
 
 % For partial derivatives
-\\newcommand{\\pderiv}[2]{\\frac{\\partial}{\\partial #1} (#2)}
+\\newcommand{\\pderiv}[2]{\\frac{\\partial}{\\partial#1} (#2)}
+\\newcommand{\\pwrto}[3][1]{
+  \\IfEq{#1}{1}
+  {
+    \\frac{\\partial #2}{
+      \\foreach \\x in #3 {
+        \\partial \\x
+      }
+    }
+  }
+  {
+    \\frac{\\partial^#1 #2}{\\partial#3^#1}
+  }
+}
 
 % Integral dx
 \\newcommand{\\dx}{\\mathrm{d}x}
+\\newcommand{\\dt}{\\mathrm{d}t}
+\\renewcommand{\\d}{\\mathrm{d}}
+\\newcommand{\\from}[3]{\\left. #1 \\right|_{#2}^{#3}}
+\\newcommand{\\at}[2]{\\left. #1 \\right|_{#2}}
 
 % Alias for the Solution section header
 \\newcommand{\\solution}{\\textbf{\\large Solution}}
@@ -627,26 +711,28 @@ you should place your code here."
 \\renewcommand{\\k}{\\hat{k}}
 
 \\newcommand{\\uv}[1]{\\hat{#1}}
-\\newcommand{\\valg}[1]{\\left\\langle #1 \\right\\rangle}
 \\newcommand{\\norm}[1]{\\left|\\left|#1\\right|\\right|}
-
-\\newenvironment{mat}[1] {
- \\left[\\begin{array}{#1}
-}{
-  \\end{array}\\right]
-}
-
-\\newenvironment{detmat}[1] {
-  \\left|\\begin{array}{#1}
-}{
-  \\end{array}\\right|
-}
+\\newcommand{\\conc}[1]{\\left[\\ce{#1}\\right]}
+% \\newcommand{\\dens}[1]{ρ_\\text{#1}}
+% \\newcommand{\\vol}[1]{V_\\text{#1}}
+\\newcommand{\\thalf}{t_{\\frac{1}{2}}}
 
 \\DeclareMathOperator{\\proj}{proj}
+\\DeclareMathOperator{\\re}{Re}
+\\DeclareMathOperator{\\im}{Im}
 
-\\definecolor{zzttqq}{rgb}{0.6,0.2,0.}
+\\definecolor{ffvvqq}{rgb}{1.,0.3333333333333333,0.}
+\\definecolor{ffzzqq}{rgb}{1.,0.6,0.}
 \\definecolor{qqqqff}{rgb}{0.,0.,1.}
-\\definecolor{uuuuuu}{rgb}{0.26666666666666666,0.26666666666666666,0.26666666666666666}"
+\\definecolor{qqwuqq}{rgb}{0.,0.39215686274509803,0.}
+\\definecolor{ttqqqq}{rgb}{0.2,0.,0.}
+\\definecolor{uuuuuu}{rgb}{0.26666666666666666,0.26666666666666666,0.26666666666666666}
+\\definecolor{zzttff}{rgb}{0.6,0.2,1.}
+\\definecolor{zzttqq}{rgb}{0.6,0.2,0.}
+
+\\renewcommand{\\theenumi}{\\alph{enumi}}
+\\renewcommand{\\theenumii}{\\roman{enumii}}
+"
       ("\\section{%s}" . "\\section*{%s}")
       ("\\subsection{%s}" . "\\subsection*{%s}")
       ("\\subsubsection{%s}" . "\\subsubsuection*{%s}")
@@ -686,14 +772,16 @@ you should place your code here."
  '(org-pretty-entities t)
  '(org-read-date-force-compatible-dates nil)
  '(org-return-follows-link t)
- '(org-startup-with-inline-images t)
+ '(org-startup-with-inline-images t t)
  '(org-time-stamp-custom-formats (quote ("<%B %e, %Y>" . "<%B %e, %Y %H:%M>")))
 '(package-selected-packages
 (quote
- (window-numbering volatile-highlights vi-tilde-fringe uuidgen spaceline powerline rainbow-delimiters paradox open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation google-translate golden-ratio flx-ido fancy-battery expand-region evil-visual-mark-mode evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-link pug-mode helm-themes helm-swoop helm-mode-manager helm-make helm-hoogle helm-ag ace-jump-helm-line yapfify thrift py-isort pdf-tools tablist ox-gfm org-projectile org org-download livid-mode skewer-mode simple-httpd live-py-mode intero hlint-refactor git-link goto-chg eshell-z diminish company-shell company-ghci company-emacs-eclim ace-window avy cdlatex wolfram-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode undo-tree pcre2el log4e gntp json-snatcher request flx fringe-helper web-completion-data dash-functional pos-tip inflections edn paredit peg eval-sexp-fu highlight spinner queue pkg-info epl popup alert git-commit eclim rake tern ghc s toml-mode racer rust-mode flycheck-rust company-racer deferred py-yapf swift-mode haml-mode auctex package-build go-eldoc company-go go-mode hydra js2-mode f magit-popup auto-complete gitignore-mode with-editor yasnippet async inf-ruby markdown-mode clojure-mode packed anaconda-mode flycheck haskell-mode git-gutter company projectile helm helm-core multiple-cursors json-reformat magit pythonic bind-key evil srefactor orgit magit-gitflow helm-flx git-gutter-fringe+ git-gutter+ evil-magit company-quickhelp clj-refactor yaml-mode xterm-color ws-butler which-key web-mode web-beautify use-package typo toc-org tagedit stickyfunc-enhance spacemacs-theme solarized-theme smeargle slim-mode shm shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv quelpa pyvenv python pytest pyenv-mode projectile-rails popwin pip-requirements persp-mode page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets nix-mode multi-term mmm-mode markdown-toc macrostep less-css-mode json-mode js2-refactor js-doc jade-mode ido-vertical-mode hy-mode htmlize hl-todo hindent help-fns+ helm-pydoc helm-projectile helm-nixos-options helm-gitignore helm-descbinds helm-css-scss helm-company helm-c-yasnippet haskell-snippets gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe gh-md flycheck-pos-tip flycheck-haskell fish-mode fill-column-indicator feature-mode eyebrowse exec-path-from-shell evil-visualstar evil-surround evil-escape eshell-prompt-extras esh-help emmet-mode emacs-eclim elisp-slime-nav disaster diff-hl cython-mode company-web company-tern company-statistics company-nixos-options company-ghc company-cabal company-c-headers company-auctex company-anaconda coffee-mode cmm-mode cmake-mode clang-format cider-eval-sexp-fu cider chruby bundler bind-map auto-yasnippet auto-compile align-cljlet ac-ispell)))
+ (helm-purpose window-purpose imenu-list java-snippets minitest insert-shebang hide-comnt window-numbering volatile-highlights vi-tilde-fringe uuidgen spaceline powerline rainbow-delimiters paradox open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation google-translate golden-ratio flx-ido fancy-battery expand-region evil-visual-mark-mode evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-link pug-mode helm-themes helm-swoop helm-mode-manager helm-make helm-hoogle helm-ag ace-jump-helm-line yapfify thrift py-isort pdf-tools tablist ox-gfm org-projectile org org-download livid-mode skewer-mode simple-httpd live-py-mode intero hlint-refactor git-link goto-chg eshell-z diminish company-shell company-ghci company-emacs-eclim ace-window avy cdlatex wolfram-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode undo-tree pcre2el log4e gntp json-snatcher request flx fringe-helper web-completion-data dash-functional pos-tip inflections edn paredit peg eval-sexp-fu highlight spinner queue pkg-info epl popup alert git-commit eclim rake tern ghc s toml-mode racer rust-mode flycheck-rust company-racer deferred py-yapf swift-mode haml-mode auctex package-build go-eldoc company-go go-mode hydra js2-mode f magit-popup auto-complete gitignore-mode with-editor yasnippet async inf-ruby markdown-mode clojure-mode packed anaconda-mode flycheck haskell-mode git-gutter company projectile helm helm-core multiple-cursors json-reformat magit pythonic bind-key evil srefactor orgit magit-gitflow helm-flx git-gutter-fringe+ git-gutter+ evil-magit company-quickhelp clj-refactor yaml-mode xterm-color ws-butler which-key web-mode web-beautify use-package typo toc-org tagedit stickyfunc-enhance spacemacs-theme solarized-theme smeargle slim-mode shm shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv quelpa pyvenv python pytest pyenv-mode projectile-rails popwin pip-requirements persp-mode page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets nix-mode multi-term mmm-mode markdown-toc macrostep less-css-mode json-mode js2-refactor js-doc jade-mode ido-vertical-mode hy-mode htmlize hl-todo hindent help-fns+ helm-pydoc helm-projectile helm-nixos-options helm-gitignore helm-descbinds helm-css-scss helm-company helm-c-yasnippet haskell-snippets gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe gh-md flycheck-pos-tip flycheck-haskell fish-mode fill-column-indicator feature-mode eyebrowse exec-path-from-shell evil-visualstar evil-surround evil-escape eshell-prompt-extras esh-help emmet-mode emacs-eclim elisp-slime-nav disaster diff-hl cython-mode company-web company-tern company-statistics company-nixos-options company-ghc company-cabal company-c-headers company-auctex company-anaconda coffee-mode cmm-mode cmake-mode clang-format cider-eval-sexp-fu cider chruby bundler bind-map auto-yasnippet auto-compile align-cljlet ac-ispell)))
 '(safe-local-variable-values
 (quote
- ((TeX-command-extra-options . "-shell-escape")
+ ((org-export-allow-bind-keywords . t)
+  (org-confirm-babel-evaluate)
+  (TeX-command-extra-options . "-shell-escape")
   (global-flycheck-mode . t)
   (flycheck-disabled-checkers haskell-stack-ghc)
   (flycheck-disabled-checkers . haskell-stack-ghc)

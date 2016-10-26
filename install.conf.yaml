@@ -14,7 +14,7 @@
     ~/.exrc: exrc
     ~/.gitconfig: gitconfig
     ~/.githelpers: githelpers
-    ~/.spacemacs: spacemacs
+    ~/.spacemacs.d: spacemacs.d
     ~/.tmux.conf: tmux.conf
     ~/.vim: vim/
     ~/.config/nvim: vim/
