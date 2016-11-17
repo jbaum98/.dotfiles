@@ -774,6 +774,7 @@ you should place your code here."
 (quote
  ("xelatex -interaction nonstopmode %f" "xelatex -interaction nonstopmode %f")))
  '(org-pretty-entities t)
+ '(org-preview-latex-default-process (quote imagemagick))
  '(org-read-date-force-compatible-dates nil)
  '(org-return-follows-link t)
  '(org-startup-with-inline-images t)
