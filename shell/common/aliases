@@ -13,8 +13,10 @@ alias be="bundle exec"
 alias todos='grep -n "TODO" *'
 
 alias vi="vi -u $HOME/.exrc"
-alias e="emacsclient -c -a ''"
-alias E="SUDO_EDITOR=\"emacsclient -c -a ''\" sudoedit"
+alias e="emacsclient -t -a ''"
+alias g="emacsclient -c -a ''"
+alias E="SUDO_EDITOR=\"emacsclient -t -a ''\" sudoedit"
+alias G="SUDO_EDITOR=\"emacsclient -c -a ''\" sudoedit"
 
 if ! exists pbcopy; then
     if exists xclip; then
