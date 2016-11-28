@@ -22,6 +22,10 @@ if OS="OSX"; then
     add_path "/Applications/MATLAB_R2016b.app/bin"
 fi
 
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then 
+    . /home/jake/.nix-profile/etc/profile.d/nix.sh;
+fi # added by Nix installer
+
 if exists direnv; then
     if [ -n "$ZSH_VERSION" ]; then
         eval "$(direnv hook zsh)"
