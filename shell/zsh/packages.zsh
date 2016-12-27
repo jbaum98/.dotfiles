@@ -8,6 +8,7 @@ if ! zgen saved; then
         zsh-users/zsh-syntax-highlighting
         zsh-users/zsh-history-substring-search
         zsh-users/zsh-completions
+        zsh-users/zsh-autosuggestions
         srijanshetty/zsh-pandoc-completion
         robbyrussell/oh-my-zsh plugins/git
         robbyrussell/oh-my-zsh plugins/ssh-agent
