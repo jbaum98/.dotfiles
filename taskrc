@@ -73,6 +73,7 @@ report.inbox.filter=sched: due: +PENDING
 #report.most.filter=
 
 search.case.sensitive=no
-default.command=next limit:5
+default.command=next limit:
 urgency.tags.coefficient=0
 urgency.annotations.coefficient=0
+urgency.scheduled.coefficient=7.9
