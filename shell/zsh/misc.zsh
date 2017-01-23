@@ -22,6 +22,8 @@ setopt prompt_subst
 
 bindkey '^[[1;5D' emacs-backward-word
 bindkey '^[[1;5C' emacs-forward-word
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 fpath=($DOTFILE_DIR/lib $fpath)
 autoload source_all get_ed
