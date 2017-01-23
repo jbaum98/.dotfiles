@@ -31,3 +31,22 @@ from lines like:
 (eval-after-load 'ox '(add-to-list
                        'org-export-filter-timestamp-functions
                        'org-export-filter-timestamp-remove-brackets))
+
+(defun flatten (LIST)
+  "flattens LIST"
+  (cond
+   ((atom LIST) (list LIST))
+   ((null (cdr LIST)) (flatten (car LIST)))
+   (t (append (flatten (car LIST)) (flatten (cdr LIST)))))) 
+
+
+;;;###autoload
+(defun orgtbl-to-booktabs (table params)
+  "Convert the orgtbl-mode TABLE to LaTeX booktabs."
+  (orgtbl-to-generic
+   table
+   (org-combine-plists
+    '(:lstart "" :lend " \\\\" :sep " & "
+              :hline "\\midrule" :efmt "%se%s" :fmt "\\num{%s}"
+              )
+    params))) 
