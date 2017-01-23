@@ -3,74 +3,85 @@
 scriptencoding utf-8
 set encoding=utf-8
 set fileencoding=utf-8
-" Plug {{{
-call plug#begin('~/.vim/plugged')
-" }}}
+if &compatible
+    set nocompatible
+endif
+"  Dein {{{
+set runtimepath+=~/.vim/bundle/repos/github.com/Shougo/dein.vim
+if dein#load_state('~/.vim/bundle')
+    call dein#begin('~/.vim/bundle')
+    """ Let Dein manage itself
+    call dein#add('Shougo/dein.vim')
 
-" Plugs {{{
-"Plug 'mhinz/vim-startify'
-Plug 'vimwiki/vimwiki'
-Plug 'tbabej/taskwiki'
-Plug 'vim-utils/vim-man'
-Plug 'dhruvasagar/vim-markify'
-Plug 'jceb/vim-orgmode'
-Plug 'tpope/vim-speeddating'
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'rhysd/vim-crystal'
-Plug 'amiorin/vim-fenced-code-blocks'
-Plug 'rust-lang/rust.vim'
-"Plug 'vim-scripts/AnsiEsc.vim'
-"Plug 'Shougo/vimproc'
-"Plug 'Shougo/context_filetype.vim'
-Plug 'mnpk/vim-monokai'
-Plug 'jbaum98/vim-colors-solarized'
-Plug 'kien/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-"Plug 'nathanaelkane/vim-indent-guides'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'godlygeek/tabular'
-""" Text Objects
-Plug 'bkad/CamelCaseMotion' " i,w is camelCase word
-Plug 'vim-scripts/argtextobj.vim' " aa and ia are arguments in a function call
-Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock' " ar and ir are Ruby blocks
-"""
-""" Languages
-"""""" Javascript
-Plug 'jelera/vim-javascript-syntax'
-Plug 'rhysd/vim-crystal'
-Plug 'pangloss/vim-javascript'
-Plug 'crusoexia/vim-javascript-lib'
-Plug 'LnL7/vim-nix'
-""""""
-Plug 'kchmck/vim-coffee-script'
-Plug 'digitaltoad/vim-jade'
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-Plug 'stephpy/vim-yaml'
-Plug 'tpope/vim-haml'
-Plug 'slim-template/vim-slim'
-Plug 'groenewege/vim-less'
-Plug 'dag/vim2hs'
-Plug 'sophacles/vim-processing'
-Plug 'rust-lang/rust.vim'
-"""
-Plug 'scrooloose/nerdcommenter'
-"Plug 'christoomey/vim-tmux-navigator'
-"Plug 'godlygeek/tabular'
-Plug 'ap/vim-css-color'
-"Plug 'spf13/PIV'
-"Plug 'Chiel92/vim-autoformat'
-call plug#end()
+    """ Color Schemes
+    call dein#add('mnpk/vim-monokai')
+
+    " Misc Utilities {{{
+    call dein#add('vim-utils/vim-man')
+    call dein#add('dhruvasagar/vim-markify')
+    call dein#add('tpope/vim-speeddating')
+    call dein#add('bling/vim-airline')
+    call dein#add('vim-airline/vim-airline-themes')
+    call dein#add('amiorin/vim-fenced-code-blocks')
+    call dein#add('kien/ctrlp.vim')
+    call dein#add('tacahiroy/ctrlp-funky')
+    call dein#add('tpope/vim-fugitive')
+    call dein#add('airblade/vim-gitgutter')
+    call dein#add('tpope/vim-surround')
+    call dein#add('tpope/vim-repeat')
+    call dein#add('godlygeek/tabular')
+    call dein#add('scrooloose/nerdcommenter')
+    call dein#add('ap/vim-css-color')
+    " }}}
+
+    " Text Objects {{{
+    " i,w is camelCase word
+    call dein#add('bkad/CamelCaseMotion') 
+
+    " aa and ia are arguments in a function call
+    call dein#add('vim-scripts/argtextobj.vim') 
+
+    call dein#add('kana/vim-textobj-user')
+
+    " ar and ir are Ruby blocks
+    call dein#add('nelstrom/vim-textobj-rubyblock') 
+    " }}}
+
+    " Languages {{{
+    "" Markup Languages {{{{
+    call dein#add('digitaltoad/vim-jade')     " Jade
+    call dein#add('slim-template/vim-slim')   " Slim
+    call dein#add('groenewege/vim-less')      " Less
+    "" }}}}
+    "" Configuration {{{{
+    call dein#add('stephpy/vim-yaml')         " YAML
+    call dein#add('tpope/vim-haml')           " HAML
+    "" }}}}
+    "" Javascript {{{{
+    call dein#add('jelera/vim-javascript-syntax')
+    call dein#add('pangloss/vim-javascript')
+    call dein#add('crusoexia/vim-javascript-lib')
+    "" }}}}
+    call dein#add('rust-lang/rust.vim')       " Rust
+    call dein#add('rhysd/vim-crystal')        " Crystal
+    call dein#add('LnL7/vim-nix')             " Nix
+    call dein#add('jceb/vim-orgmode')         " Orgmode
+    call dein#add('kchmck/vim-coffee-script') " Coffee Script
+    call dein#add('vim-ruby/vim-ruby')        " Ruby
+    call dein#add('tpope/vim-rails')          " Rails
+    call dein#add('dag/vim2hs')               " Haskell
+    call dein#add('sophacles/vim-processing') " Processing
+    " }}}
+    "
+
+    call dein#end()
+    call dein#save_state()
+endif
 filetype plugin indent on    " required
+syntax enable
 " }}}
 
 " Basics {{{
-set nocompatible
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
 " remember more commands and search history
@@ -86,7 +97,7 @@ set t_ti= t_te=
 set wildmode=longest,list
 " make tab completion for files/buffers act like bash
 set wildmenu
-let mapleader = "\<Space>"
+let mapleader = ","
 " Normally, Vim messes with iskeyword when you open a shell file. This can
 " leak out, polluting other file types even after a 'set ft=' change. This
 " variable prevents the iskeyword change so it can't hurt anyone.
@@ -108,11 +119,14 @@ augroup vimrcEx
               \   exe "normal g`\"" |
               \ endif
 
-  "for ruby, autoindent with two spaces, always expand tabs
-  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,slim,crystal set ai sw=2 sts=2 et
+  "For certain filetypes, autoindent with two spaces, always expand tabs
+  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,slim,crystal \
+      set ai sw=2 sts=2 et
 
 
+  " Sass file recognition
   autocmd! BufRead,BufNewFile *.sass setfiletype sass
+
   " Leave the return key alone when in command line windows, since it's used
   " to run commands there.
   autocmd! CmdwinEnter * :unmap <cr>
@@ -121,13 +135,11 @@ augroup END
 " }}}
 
 " Colors {{{
-syntax enable
 set number
 let g:solarized_termcolors=256
 set t_Co=256
 set background=dark
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"autocmd VimEnter * colorscheme solarized
 colorscheme monokai
 " }}}
 
@@ -136,7 +148,6 @@ set tabstop=4 " number of visual spaces per TAB
 set softtabstop=4 " number of spaces in tab when editing
 set shiftwidth=4
 set expandtab " makes tabs spaces
-filetype plugin indent on
 set modelines=1
 set backspace=indent,eol,start
 set autoindent
@@ -146,8 +157,6 @@ set smartindent
 
 " Invisbles {{{ set list
 set listchars=tab:▸\ ,trail:·
-"hi NonText guifg=#444444¬
-"hi SpecialKey guifg=#444444
 "}}}
 
 " UI {{{
@@ -159,10 +168,10 @@ set showtabline=2
 set winwidth=79
 " keep more context when scrolling off the end of a buffer
 set scrolloff=3
-if (exists('+colorcolumn'))
-    set colorcolumn=80
-    highlight ColorColumn ctermbg=9
-endif
+"if (exists('+colorcolumn'))
+"    set colorcolumn=80
+"    highlight ColorColumn ctermbg=9
+"endif
 " }}}
 
 " Git Gutter {{{
