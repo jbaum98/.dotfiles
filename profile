@@ -23,7 +23,7 @@ if OS="OSX"; then
 fi
 
 if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then 
-    . /home/jake/.nix-profile/etc/profile.d/nix.sh;
+    . "$HOME/.nix-profile/etc/profile.d/nix.sh";
 fi # added by Nix installer
 
 if exists direnv; then
