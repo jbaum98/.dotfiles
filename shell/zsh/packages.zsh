@@ -27,23 +27,5 @@ if ! zplug check --verbose; then
     fi
 fi
 
-#setopt xtrace
 # Then, source plugins and add commands to $PATH
 zplug load
-#unsetopt xtrace
-
-#if ! zgen saved; then
-#    echo "Creating a zgen save"
-#
-#    zgen loadall <<EOPLUGINS
-#        robbyrussell/oh-my-zsh lib/
-#        zsh-users/zsh-syntax-highlighting
-#        zsh-users/zsh-history-substring-search
-#        zsh-users/zsh-completions
-#        zsh-users/zsh-autosuggestions
-#        srijanshetty/zsh-pandoc-completion
-#        nojhan/liquidprompt
-#EOPLUGINS
-#
-#    zgen save
-#fi
