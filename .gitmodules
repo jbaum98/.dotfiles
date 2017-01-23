@@ -1,6 +1,3 @@
-[submodule "shell/zsh/zgen"]
-	path = shell/zsh/zgen
-	url = https://github.com/tarjoilija/zgen.git
 [submodule "emacs.d"]
 	path = emacs.d
 	url = https://github.com/syl20bnr/spacemacs.git
@@ -11,3 +8,6 @@
 [submodule "shell/bash/liquidprompt"]
 	path = shell/bash/liquidprompt
 	url = https://github.com/nojhan/liquidprompt.git
+[submodule "shell/zsh/zplug"]
+	path = shell/zsh/zplug
+	url = https://github.com/zplug/zplug
