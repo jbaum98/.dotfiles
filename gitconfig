@@ -1,6 +1,7 @@
 [user]
 	email = jake.waksbaum@gmail.com
 	name = Jake Waksbaum
+	signingkey = E122504E
 [branch]
 	autosetuprebase = always
 [push]
@@ -56,3 +57,5 @@
 	lgb = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset%n' --abbrev-commit --date=relative --branches
 [credential]
 	helper = cache
+[commit]
+	gpgsign = false
