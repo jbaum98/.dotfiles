@@ -24,6 +24,7 @@
         "nodePackages.tern"
         gnupg
         zsh
+        tmux
       ];
     };
   };
