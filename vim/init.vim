@@ -8,7 +8,7 @@ if &compatible
 endif
 "  Dein {{{
 set runtimepath+=~/.vim/bundle/repos/github.com/Shougo/dein.vim
-if dein#load_state('~/.vim/bundle')
+if dein#load_state(expand('~/.vim/bundle'))
     call dein#begin('~/.vim/bundle')
     """ Let Dein manage itself
     call dein#add('Shougo/dein.vim')
@@ -120,8 +120,8 @@ augroup vimrcEx
               \ endif
 
   "For certain filetypes, autoindent with two spaces, always expand tabs
-  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,slim,crystal \
-      set ai sw=2 sts=2 et
+  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,slim,crystal
+              \ set ai sw=2 sts=2 et
 
 
   " Sass file recognition
@@ -213,7 +213,7 @@ let g:airline_powerline_fonts = 0
 let g:airline_theme = 'kalisi'
 set laststatus=2 " Always display the statusline in all windows
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
-set guifont=Droid\ Sans\ Mono\ for\ Powerline:h15
+"set guifont=Droid\ Sans\ Mono\ for\ Powerline:h15
 set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
 if has("gui_running")
