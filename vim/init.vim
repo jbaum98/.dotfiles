@@ -77,6 +77,7 @@ if dein#load_state(expand('~/.vim/bundle'))
     call dein#add('tpope/vim-rails')          " Rails
     call dein#add('dag/vim2hs')               " Haskell
     call dein#add('sophacles/vim-processing') " Processing
+    call dein#add('rudrab/vimf90')            " Fortran
     " }}}
     "
 
