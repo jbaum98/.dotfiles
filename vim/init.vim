@@ -97,6 +97,8 @@ set t_ti= t_te=
 set wildmode=longest,list
 " make tab completion for files/buffers act like bash
 set wildmenu
+" use system clipboard
+set clipboard=unnamed
 let mapleader = ","
 " Normally, Vim messes with iskeyword when you open a shell file. This can
 " leak out, polluting other file types even after a 'set ft=' change. This

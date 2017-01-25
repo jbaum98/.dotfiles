@@ -12,6 +12,7 @@
         clang
         elmPackages.elm
         (if stdenv.isDarwin then "emacs-25.1-mac-6.0" else emacs)
+        (if stdenv.isDarwin then reattach-to-user-namespace else "")
         exercism
         gnupg
         go
