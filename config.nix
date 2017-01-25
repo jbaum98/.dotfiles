@@ -8,26 +8,33 @@
     all = buildEnv {
       name = "all";
       paths = [
-        nox
+        stdenv
+        clang
+        elmPackages.elm
         (if stdenv.isDarwin then "emacs-25.1-mac-6.0" else emacs)
-        neovim
-        vim
-        rustc
-        rustfmt
-        rustracer
+        exercism
+        gnupg
         go
+        imagemagick
+        (import ~/.nixpkgs/jupyter.nix)
+        man
+        neovim
+        nodejs
+        nox
+        "nodePackages.nyaovim"
+        "nodePackages.tern"
         python
         python3
         python3Packages.ipython
-        (import ~/.nixpkgs/jupyter.nix)
         ruby
-        clang
+        rustc
+        rustfmt
+        rustracer
         # stack
-        nodejs
-        "nodePackages.tern"
-        gnupg
-        zsh
+        texinfo
         tmux
+        vim
+        zsh
       ];
     };
   };
