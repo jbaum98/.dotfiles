@@ -11,11 +11,6 @@ setopt extended_glob
 setopt interactivecomments
 skip_global_compinit=1
 
-if [ `uname` = "Darwin" ]; then
-    test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
-    fpath=(/usr/local/share/zsh-completions $fpath)
-fi
-
 autoload -U promptinit
 promptinit
 setopt prompt_subst
