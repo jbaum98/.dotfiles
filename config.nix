@@ -16,6 +16,7 @@
         exercism
         gnupg
         go
+        gocode
         imagemagick
         (import ~/.nixpkgs/jupyter.nix)
         man
