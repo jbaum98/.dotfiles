@@ -16,7 +16,13 @@ if dein#load_state(expand('~/.vim/bundle'))
     """ Color Schemes
     call dein#add('mnpk/vim-monokai')
 
+    " Deoplete (Code Completion) {{{
+    call dein#add('zchee/deoplete-clang')
+    call dein#add('zchee/deoplete-go', {'build': 'make'})
+    " }}}
+
     " Misc Utilities {{{
+    call dein#add('Shougo/deoplete.nvim')
     call dein#add('vim-utils/vim-man')
     call dein#add('dhruvasagar/vim-markify')
     call dein#add('tpope/vim-speeddating')
@@ -82,6 +88,7 @@ syntax enable
 " }}}
 
 " Basics {{{
+let g:nixprofile = expand('~/.nix-profile')
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
 " remember more commands and search history
@@ -382,6 +389,16 @@ let g:markify_warning_text='❢❢'
 " CtrlP {{{
 let g:ctrlp_root_markers=['.project_root']
 set wildignore+=*.o
+" }}}
+
+" Deoplete {{{
+let g:deoplete#enable_at_startup = 1
+if has('mac')
+    let g:deoplete#sources#clang#libclang_path = g:nixprofile . '/lib/libclang.dylib'
+else
+    let g:deoplete#sources#clang#libclang_path = g:nixprofile . '/lib/libclang.so'
+end
+let g:deoplete#sources#clang#clang_header = g:nixprofile . '/lib/clang'
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
