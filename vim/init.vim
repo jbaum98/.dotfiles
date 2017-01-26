@@ -17,8 +17,8 @@ if dein#load_state(expand('~/.vim/bundle'))
     call dein#add('mnpk/vim-monokai')
 
     " Deoplete (Code Completion) {{{
-    call dein#add('zchee/deoplete-clang')
-    call dein#add('zchee/deoplete-go', {'build': 'make'})
+    call dein#add('zchee/deoplete-clang')                 " C/C++
+    call dein#add('zchee/deoplete-go', {'build': 'make'}) " Go
     " }}}
 
     " Misc Utilities {{{
