@@ -393,13 +393,17 @@ set wildignore+=*.o
 " }}}
 
 " Deoplete {{{
+" Enable on startup
 let g:deoplete#enable_at_startup = 1
 if has('mac')
-    let g:deoplete#sources#clang#libclang_path = g:nixprofile . '/lib/libclang.dylib'
+    let g:libclang_path = g:nixprofile . '/lib/libclang.dylib'
 else
-    let g:deoplete#sources#clang#libclang_path = g:nixprofile . '/lib/libclang.so'
+    let g:libclang_path = g:nixprofile . '/lib/libclang.so'
 end
+"" C/C++ {{{{
+let g:deoplete#sources#clang#libclang_path = g:libclang_path
 let g:deoplete#sources#clang#clang_header = g:nixprofile . '/lib/clang'
+"" }}}}
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
