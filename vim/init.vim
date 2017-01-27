@@ -19,6 +19,7 @@ if dein#load_state(expand('~/.vim/bundle'))
     " Deoplete (Code Completion) {{{
     call dein#add('zchee/deoplete-clang')                 " C/C++
     call dein#add('zchee/deoplete-go', {'build': 'make'}) " Go
+    call dein#add('sebastianmarkow/deoplete-rust')        " Rust
     " }}}
 
     " Misc Utilities {{{
@@ -412,6 +413,10 @@ let g:deoplete#sources#go#use_cache = 1
 let g:deoplete#sources#go#json_directory = '~/.cache/deoplete/go/$GOOS_$GOARCH'
 let g:deoplete#sources#go#cgo = 1
 let g:deoplete#sources#go#cgo#libclang_path = g:libclang_path
+"" }}}}
+"" Rust {{{{
+let g:deoplete#sources#rust#racer_binary = g:nixprofile . '/bin/racer'
+let g:deoplete#sources#rust#rust_source_path = './src'
 "" }}}}
 " }}}
 
