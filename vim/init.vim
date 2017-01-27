@@ -20,6 +20,7 @@ if dein#load_state(expand('~/.vim/bundle'))
     call dein#add('zchee/deoplete-clang')                 " C/C++
     call dein#add('zchee/deoplete-go', {'build': 'make'}) " Go
     call dein#add('sebastianmarkow/deoplete-rust')        " Rust
+    call dein#add('Shougo/neco-vim')                      " Vim
     " }}}
 
     " Misc Utilities {{{
