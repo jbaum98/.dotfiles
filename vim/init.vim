@@ -420,4 +420,6 @@ let g:deoplete#sources#rust#rust_source_path = './src'
 "" }}}}
 " }}}
 
+autocmd FileType gitcommit setlocal spell
+
 " vim:foldmethod=marker:foldlevel=0
