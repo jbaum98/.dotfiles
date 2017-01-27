@@ -25,7 +25,7 @@
         nodejs
         nox
         "nodePackages.nyaovim"
-        "nodePackages.tern"
+        #"nodePackages.tern"
         python
         python3
         python3Packages.ipython
