@@ -396,6 +396,7 @@ set wildignore+=*.o
 " Deoplete {{{
 " Enable on startup
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_refresh_always = 1
 if has('mac')
     let g:libclang_path = g:nixprofile . '/lib/libclang.dylib'
 else
