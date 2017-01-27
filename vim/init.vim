@@ -22,6 +22,7 @@ if dein#load_state(expand('~/.vim/bundle'))
     call dein#add('sebastianmarkow/deoplete-rust')        " Rust
     call dein#add('Shougo/neco-vim')                      " Vim
     call dein#add('zchee/deoplete-jedi')                  " Python
+    call dein#add('eagletmt/neco-ghc')                    " Haskell
     " }}}
 
     " Misc Utilities {{{
@@ -421,6 +422,10 @@ let g:deoplete#sources#go#cgo#libclang_path = g:libclang_path
 "" Rust {{{{
 let g:deoplete#sources#rust#racer_binary = g:nixprofile . '/bin/racer'
 let g:deoplete#sources#rust#rust_source_path = './src'
+"" }}}}
+"" Haskell {{{{
+let g:haskellmode_completion_ghc = 0
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 "" }}}}
 " }}}
 
