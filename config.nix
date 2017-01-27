@@ -18,6 +18,7 @@
         go
         gocode
         imagemagick
+        pythonPackages.jedi
         (import ~/.nixpkgs/jupyter.nix)
         man
         neovim
