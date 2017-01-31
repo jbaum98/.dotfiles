@@ -12,9 +12,10 @@
         aspell
         clang
         curl
+        diffutils
         direnv
         dos2unix
-        # epstool
+        epstool
         elmPackages.elm
         (if stdenv.isDarwin then "emacs-25.1-mac-6.0" else emacs)
         (if stdenv.isDarwin then reattach-to-user-namespace else "")
@@ -27,12 +28,14 @@
         gitAndTools.hub
         httpie
         imagemagick
+        patch
         pandoc
         pythonPackages.jedi
-        (import ~/.nixpkgs/jupyter.nix)
+        #(import ~/.nixpkgs/jupyter.nix)
         pstoedit
         man
         neovim
+        nix-repl
         nodejs
         nox
         "nodePackages.nyaovim"
@@ -44,6 +47,7 @@
         rustc
         rustfmt
         rustracer
+        smartmontools
         # stack
         taskwarrior
         texinfo
