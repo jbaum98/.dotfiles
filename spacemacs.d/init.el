@@ -557,414 +557,86 @@ you should place your code here."
  '(org-hide-emphasis-markers t)
  '(org-highlight-latex-and-related (quote (latex script entities)))
  '(org-latex-active-timestamp-format "%s")
- '(org-latex-classes
-   (quote
-    (("article" "\\documentclass[11pt]{article}"
-      ("\\section{%s}" . "\\section*{%s}")
-      ("\\subsection{%s}" . "\\subsection*{%s}")
-      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-      ("\\paragraph{%s}" . "\\paragraph*{%s}")
-      ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
-     ("report" "\\documentclass[11pt]{report}"
-      ("\\part{%s}" . "\\part*{%s}")
-      ("\\chapter{%s}" . "\\chapter*{%s}")
-      ("\\section{%s}" . "\\section*{%s}")
-      ("\\subsection{%s}" . "\\subsection*{%s}")
-      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
-     ("book" "\\documentclass[11pt]{book}"
-      ("\\part{%s}" . "\\part*{%s}")
-      ("\\chapter{%s}" . "\\chapter*{%s}")
-      ("\\section{%s}" . "\\section*{%s}")
-      ("\\subsection{%s}" . "\\subsection*{%s}")
-      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
-     ("lab-report" "\\documentclass[11pt,titlepage]{report}
-[NO-DEFAULT-PACKAGES]
-[PACKAGES]
-
-\\makeatletter
-\\newcommand\\partners[1]{\\renewcommand\\@partners{#1}}
-\\newcommand\\@partners{\\@latex@error{No \\noexpand\\partners{} given}\\@ehc}
-\\newcommand\\labnumber[1]{\\renewcommand\\@labnumber{#1}}
-\\newcommand\\@labnumber{\\@latex@error{No \\noexpand\\labnumber{} given}\\@ehc}
-
-
-\\renewcommand{\\maketitle}{
-\\begin{titlepage}
-    \\begin{center}
-        \\vspace*{1cm}
-
-        \\Huge
-        \\textbf{\\@title}
-
-        \\vspace{0.5cm}
-        \\LARGE
-        Lab \\#\\@labnumber{}
-
-        \\vspace{1.5cm}
-
-        \\textbf{\\@author}
-
-        \\textbf{\\@partners}
-
-    \\end{center}
-\\end{titlepage}
-
-\\LARGE
-\\textbf{\\@title}
-\\normalsize
-}
-\\makeatother
-"
-      ("\\section*{%s}" . "\\section*{%s}")
-      ("\\subsection*{%s}" . "\\subsection*{%s}")
-      (" \\subsubsection*{%s}" . " \\subsubsection*{%s}"))
-     ("homework" "\\documentclass{article}
-
-[NO-DEFAULT-PACKAGES]
-[NO-PACKAGES]
-
-\\usepackage{hyperref}
-\\usepackage{gnuplottex}
-\\usepackage{xcolor}
-\\usepackage{xparse}
-\\usepackage{fancyhdr}
-\\usepackage{extramarks}
-\\usepackage[fleqn]{amsmath}
-\\usepackage{amsthm}
-\\usepackage{amsfonts}
-\\usepackage{pgf,tikz}
-\\usepackage{mathrsfs}
-\\usepackage{mathtools}
-\\usepackage[plain]{algorithm}
-\\usepackage{algpseudocode}
-\\usepackage{xstring}
-\\usepackage{esvect}
-\\usepackage{subcaption}
-\\usepackage[version=4]{mhchem}
-\\usepackage{siunitx}
-\\usepackage{titling}
-\\usepackage{empheq}
-\\usepackage{cancel}
-\\usepackage{tocloft}
-
-\\renewcommand{\\cftsecleader}{\\cftdotfill{\\cftdotsep}}
-\\makeatletter
-\\renewcommand{\\@cftmaketoctitle}{}
-\\makeatother
-
-\\ExplSyntaxOn
-\\DeclareExpandableDocumentCommand{\\convertlen}{ O{cm} m }
-{
-  \\dim_to_decimal_in_unit:nn { #2 } { 1 #1 } cm
-}
-\\ExplSyntaxOff
-
-\\newcommand{\\hl}[1]{%
-  \\colorbox{yellow!50}{$\\displaystyle#1$}}
-
-\\sisetup{math-micro = μ, text-micro = μ, group-separator = {,},
-  group-digits=integer, range-units=single, range-phrase = {--}, per-mode=symbol,per-symbol=/}
-
-% Command \"alignedbox{}{}\" for a box within an align environment
-% Source: http://www.latex-community.org/forum/viewtopic.php?f=46&t=8144
-\\newlength\\dlf% Define a new measure, dlf
-\\newcommand\\alignedbox[2]{
-  % Argument #1 = before & if there were no box (lhs)
-  % Argument #2 = after & if there were no box (rhs)
-  &  % Alignment sign of the line
-  {
-    \\settowidth\\dlf{$\\displaystyle #1$}
-    % The width of \\dlf is the width of the lhs, with a displaystyle font
-    \\addtolength\\dlf{\\fboxsep+\\fboxrule}
-    % Add to it the distance to the box, and the width of the line of the box
-    \\hspace{-\\dlf}
-    % Move everything dlf units to the left, so that & #1 #2 is aligned under #1 & #2
-    \\boxed{#1 #2}
-    % Put a box around lhs and rhs
-  }
-}
-
-
-
-\\DeclareSIUnit\\poise{P}
-\\DeclareSIUnit\\molar{M}
-\\DeclareSIUnit\\inch{in}
-\\DeclareSIUnit\\feet{ft}
-\\DeclareSIUnit\\erg{erg}
-\\DeclareSIUnit\\amu{amu}
-
-\\usetikzlibrary{automata,positioning,arrows}
-
-% 
-% Basic Document Settings
-% 
-
-\\topmargin=-0.45in
-\\evensidemargin=0in
-\\oddsidemargin=0in
-\\textwidth=6.5in
-\\textheight=9.0in
-\\headsep=0.25in
-
-\\linespread{1.1}
-
-\\pagestyle{fancy}
-\\lhead{\\hmwkAuthorName}
-\\chead{\\hmwkClass\\: \\hmwkTitle}
-\\rhead{\\firstxmark}
-\\lfoot{\\lastxmark}
-\\cfoot{\\thepage}
-
-\\renewcommand\\headrulewidth{0.4pt}
-\\renewcommand\\footrulewidth{0.4pt}
-
-\\setlength\\parindent{0pt}
-
-% 
-% Create Problem Sections
-% 
-
-\\newcommand{\\enterProblemHeader}[1]{
-  \\nobreak\\extramarks{}{Problem \\arabic{#1} continued on next page\\ldots}\\nobreak{}
-  \\nobreak\\extramarks{Problem \\arabic{#1} (continued)}{Problem \\arabic{#1} continued on next page\\ldots}\\nobreak{}
-}
-
-\\newcommand{\\exitProblemHeader}[1]{
-  \\nobreak\\extramarks{Problem \\arabic{#1} (continued)}{Problem \\arabic{#1} continued on next page\\ldots}\\nobreak{}
-  \\stepcounter{#1}
-  \\nobreak\\extramarks{Problem \\arabic{#1}}{}\\nobreak{}
-}
-
-\\setcounter{secnumdepth}{0}
-\\newcounter{partCounter}
-\\newcounter{homeworkProblemCounter}
-\\setcounter{homeworkProblemCounter}{1}
-\\def\\homeworkSection{}
-
-% 
-% Homework Problem Environment
-% 
-% This environment takes an optional argument. When given, it will adjust the
-% problem counter. This is useful for when the problems given for your
-% assignment aren't sequential. See the last 3 problems of this template for an
-% example.
-% 
-\\DeclareDocumentEnvironment{homeworkProblem}{o o}{
-  \\IfValueT{#1} {\\setcounter{homeworkProblemCounter}{#1}}
-
-  \\IfValueT{#2} {\\global\\def\\homeworkSection{#2}}
-
-  \\StrLeft{\\homeworkSection}{1}[\\firstchar]
-  \\IfInteger{\\firstchar}{\\def\\secchar{§}}{\\def\\secchar{}}
-
-  \\IfValueTF{\\homeworkSection} {
-    \\section{\\secchar\\homeworkSection{} \\#\\arabic{homeworkProblemCounter}}
-    \\setcounter{section}{\\arabic{homeworkProblemCounter}}
-  } {
-    \\section{Problem \\arabic{homeworkProblemCounter}}
-  }
-  \\setcounter{partCounter}{1}
-  \\enterProblemHeader{homeworkProblemCounter}
-}{
-  \\exitProblemHeader{homeworkProblemCounter}
-}
-
-\\numberwithin{equation}{section}
-
-% 
-% Homework Details
-% - Title
-% - Due date
-% - Class
-% - Author
-% 
-[EXTRA]
-% 
-% Title Page
-% 
-
-\\setlength{\\droptitle}{-0.7in}
-\\title{
-  \\textmd{\\textbf{\\hmwkClass:\\ \\hmwkTitle}}\\\\
-  \\normalsize\\vspace{0.1in}\\small{Due\\ on\\ \\hmwkDueDate}\\\\
-  \\vspace{0.1in}
-}
-
-\\author{
-  \\textbf{\\hmwkAuthorName}
-  \\ifcsname hmwkCollaborator\\endcsname
-  \\\\ \\textit{Collaborators: \\hmwkCollaborator}
-  \\fi
-}
-\\date{}
-
-\\renewcommand{\\part}[1]{\\textbf{\\large Part \\Alph{partCounter}}\\stepcounter{partCounter}\\\\}
-
-% 
-% Various Helper Commands
-% 
-
-% Useful for algorithms
-\\newcommand{\\alg}[1]{\\textsc{\\bfseries \\footnotesize #1}}
-
-% For derivatives
-\\newcommand{\\deriv}[2]{\\frac{\\mathrm{d}}{\\mathrm{d}#1} \\left(#2\\right)}
-\\newcommand{\\dwrto}[3][1]{
-  \\IfEq{#1}{1}
-  {
-    \\frac{\\mathrm{d} #2}{\\mathrm{d}#3}
-  }
-  {
-    \\frac{\\mathrm{d}^#1 #2}{\\mathrm{d}#3^#1}
-  }
-}
-
-% For partial derivatives
-\\newcommand{\\pderiv}[2]{\\frac{\\partial}{\\partial#1} (#2)}
-\\newcommand{\\pwrto}[3][1]{
-  \\IfEq{#1}{1}
-  {
-    \\frac{\\partial #2}{
-      \\foreach \\x in #3 {
-        \\partial \\x
-      }
-    }
-  }
-  {
-    \\frac{\\partial^#1 #2}{\\partial#3^#1}
-  }
-}
-
-% Integral dx
-\\newcommand{\\dx}{\\mathrm{d}x}
-\\newcommand{\\dt}{\\mathrm{d}t}
-\\renewcommand{\\d}{\\mathrm{d}}
-\\newcommand{\\from}[3]{\\left. #1 \\right|_{#2}^{#3}}
-\\newcommand{\\at}[2]{\\left. #1 \\right|_{#2}}
-
-% Alias for the Solution section header
-\\newcommand{\\solution}{\\textbf{\\large Solution}}
-
-% Probability commands: Expectation, Variance, Covariance, Bias
-\\newcommand{\\E}{\\mathrm{E}}
-\\newcommand{\\Var}{\\mathrm{Var}}
-\\newcommand{\\Cov}{\\mathrm{Cov}}
-\\newcommand{\\Bias}{\\mathrm{Bias}}
-
-\\newcommand{\\real}{\\mathbb{R}}
-
-\\renewcommand{\\i}{\\hat{\\imath}}
-\\renewcommand{\\j}{\\hat{\\jmath}}
-\\renewcommand{\\k}{\\hat{k}}
-
-\\newcommand{\\uv}[1]{\\hat{#1}}
-\\newcommand{\\norm}[1]{\\left|\\left|#1\\right|\\right|}
-\\newcommand{\\conc}[1]{\\left[\\ce{#1}\\right]}
-% \\newcommand{\\dens}[1]{ρ_\\text{#1}}
-% \\newcommand{\\vol}[1]{V_\\text{#1}}
-\\newcommand{\\thalf}{t_{\\frac{1}{2}}}
-
-\\DeclareMathOperator{\\proj}{proj}
-\\DeclareMathOperator{\\re}{Re}
-\\DeclareMathOperator{\\im}{Im}
-
-\\definecolor{ffvvqq}{rgb}{1.,0.3333333333333333,0.}
-\\definecolor{ffzzqq}{rgb}{1.,0.6,0.}
-\\definecolor{qqqqff}{rgb}{0.,0.,1.}
-\\definecolor{qqwuqq}{rgb}{0.,0.39215686274509803,0.}
-\\definecolor{ttqqqq}{rgb}{0.2,0.,0.}
-\\definecolor{uuuuuu}{rgb}{0.26666666666666666,0.26666666666666666,0.26666666666666666}
-\\definecolor{zzttff}{rgb}{0.6,0.2,1.}
-\\definecolor{zzttqq}{rgb}{0.6,0.2,0.}
-
-\\renewcommand{\\theenumi}{\\alph{enumi}}
-\\renewcommand{\\theenumii}{\\roman{enumii}}
-"
-      ("\\section{%s}" . "\\section*{%s}")
-      ("\\subsection{%s}" . "\\subsection*{%s}")
-      ("\\subsubsection{%s}" . "\\subsubsuection*{%s}")
-      ("\\paragraph{%s}" . "\\paragraph*{%}")
-      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))))
  '(org-latex-create-formula-image-program (quote imagemagick))
  '(org-latex-default-packages-alist
-(quote
- (("AUTO" "inputenc" nil)
-  ("T1" "fontenc" t)
-  ("" "fixltx2e" nil)
-  ("" "graphicx" t)
-  ("" "grffile" t)
-  ("" "longtable" nil)
-  ("" "wrapfig" nil)
-  ("" "rotating" nil)
-  ("normalem" "ulem" t)
-  ("" "amsmath" t)
-  ("" "textcomp" t)
-  ("" "amssymb" t)
-  ("" "capt-of" nil)
-  ("" "hyperref" nil))))
-'(org-latex-packages-alist
-(quote
- (("" "hyperref" nil)
-  ("" "amsmath" t)
-  ("" "amssymb" t)
-  ("" "siunitx" t)
-  ("" "fontspec" t)
-  ("margin=1in" "geometry" nil)
-  "\\setlength{\\parindent}{0cm}"
-  ("" "titlesec" t)
-  "\\titleformat*{\\section}{\\LARGE\\bfseries}" "\\titleformat*{\\subsection}{\\normalsize\\bfseries}")))
-'(org-latex-pdf-process
-(quote
- ("xelatex -interaction nonstopmode %f" "xelatex -interaction nonstopmode %f")))
+   (quote
+    (("AUTO" "inputenc" nil)
+     ("T1" "fontenc" t)
+     ("" "fixltx2e" nil)
+     ("" "graphicx" t)
+     ("" "grffile" t)
+     ("" "longtable" nil)
+     ("" "wrapfig" nil)
+     ("" "rotating" nil)
+     ("normalem" "ulem" t)
+     ("" "amsmath" t)
+     ("" "textcomp" t)
+     ("" "amssymb" t)
+     ("" "capt-of" nil)
+     ("" "hyperref" nil))))
+ '(org-latex-packages-alist
+   (quote
+    (("" "hyperref" nil)
+     ("" "amsmath" t)
+     ("" "amssymb" t)
+     ("" "siunitx" t)
+     ("" "fontspec" t)
+     ("margin=1in" "geometry" nil)
+     "\\setlength{\\parindent}{0cm}"
+     ("" "titlesec" t)
+     "\\titleformat*{\\section}{\\LARGE\\bfseries}" "\\titleformat*{\\subsection}{\\normalsize\\bfseries}")))
+ '(org-latex-pdf-process
+   (quote
+    ("xelatex -interaction nonstopmode %f" "xelatex -interaction nonstopmode %f")))
  '(org-pretty-entities t)
  '(org-preview-latex-default-process (quote imagemagick))
  '(org-read-date-force-compatible-dates nil)
  '(org-return-follows-link t)
  '(org-startup-with-inline-images t)
  '(org-time-stamp-custom-formats (quote ("<%B %e, %Y>" . "<%B %e, %Y %H:%M>")))
-'(package-selected-packages
-(quote
- (cargo hide-comnt pcache auctex-latexmk csv-mode window-numbering volatile-highlights vi-tilde-fringe uuidgen spaceline powerline rainbow-delimiters paradox open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation google-translate golden-ratio flx-ido fancy-battery expand-region evil-visual-mark-mode evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-link reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl pug-mode helm-themes helm-swoop helm-mode-manager helm-make helm-hoogle helm-ag ace-jump-helm-line yapfify thrift py-isort pdf-tools tablist ox-gfm org-projectile org org-download livid-mode skewer-mode simple-httpd live-py-mode intero hlint-refactor git-link goto-chg eshell-z diminish company-shell company-ghci company-emacs-eclim ace-window avy cdlatex wolfram-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode undo-tree pcre2el log4e gntp json-snatcher request flx fringe-helper web-completion-data dash-functional pos-tip inflections edn paredit peg eval-sexp-fu highlight spinner queue pkg-info epl popup alert git-commit eclim rake tern ghc s toml-mode racer rust-mode flycheck-rust company-racer deferred py-yapf swift-mode haml-mode auctex package-build go-eldoc company-go go-mode hydra js2-mode f magit-popup auto-complete gitignore-mode with-editor yasnippet async inf-ruby markdown-mode clojure-mode packed anaconda-mode flycheck haskell-mode git-gutter company projectile helm helm-core multiple-cursors json-reformat magit pythonic bind-key evil srefactor orgit magit-gitflow helm-flx git-gutter-fringe+ git-gutter+ evil-magit company-quickhelp clj-refactor yaml-mode xterm-color ws-butler which-key web-mode web-beautify use-package typo toc-org tagedit stickyfunc-enhance spacemacs-theme solarized-theme smeargle slim-mode shm shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv quelpa pyvenv python pytest pyenv-mode projectile-rails popwin pip-requirements persp-mode page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets nix-mode multi-term mmm-mode markdown-toc macrostep less-css-mode json-mode js2-refactor js-doc jade-mode ido-vertical-mode hy-mode htmlize hl-todo hindent help-fns+ helm-pydoc helm-projectile helm-nixos-options helm-gitignore helm-descbinds helm-css-scss helm-company helm-c-yasnippet haskell-snippets gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe gh-md flycheck-pos-tip flycheck-haskell fish-mode fill-column-indicator feature-mode eyebrowse exec-path-from-shell evil-visualstar evil-surround evil-escape eshell-prompt-extras esh-help emmet-mode emacs-eclim elisp-slime-nav disaster diff-hl cython-mode company-web company-tern company-statistics company-nixos-options company-ghc company-cabal company-c-headers company-auctex company-anaconda coffee-mode cmm-mode cmake-mode clang-format cider-eval-sexp-fu cider chruby bundler bind-map auto-yasnippet auto-compile align-cljlet ac-ispell)))
-'(safe-local-variable-values
-(quote
- ((eval spacemacs/toggle-line-numbers)
-  (eval setq org-hide-emphasis-markers t)
-  (eval font-lock-add-keywords
-        (quote org-mode)
-        (quote
-         (("^ +\\([-*]\\) "
-           (0
-            (prog1 nil
-              (compose-region
-               (match-beginning 1)
-               (match-end 1)
-               "•")))))))
-  (eval buffer-face-set
-        (quote variable-pitch))
-  (eval set-face-attribute
-        (quote org-table)
-        nil :inherit
-        (quote fixed-pitch))
-  (eval setq buffer-face-mode-face
-        (face-font
-         (quote variable-pitch)))
-  (org-export-allow-bind-keywords . t)
-  (org-confirm-babel-evaluate)
-  (TeX-command-extra-options . "-shell-escape")
-  (global-flycheck-mode . t)
-  (flycheck-disabled-checkers haskell-stack-ghc)
-  (flycheck-disabled-checkers . haskell-stack-ghc)
-  (flycheck-ghc-search-path
-   ("lib"))
-  (flycheck-mode t)
-  (flycheck-mode . t)
-  (flycheck-ghc-search-path . "lib")
-  (flycheck-disabled-checkers
+ '(package-selected-packages
    (quote
-    (haskell-stack-ghc)))
-  (flycheck-disabled-checkers
-   (haskell-stack-ghc))
-  (flycheck-ghc-search-path "lib")))))
+    (ox-pandoc pandoc-mode ht cargo hide-comnt pcache auctex-latexmk csv-mode window-numbering volatile-highlights vi-tilde-fringe uuidgen spaceline powerline rainbow-delimiters paradox open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation google-translate golden-ratio flx-ido fancy-battery expand-region evil-visual-mark-mode evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-link reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl pug-mode helm-themes helm-swoop helm-mode-manager helm-make helm-hoogle helm-ag ace-jump-helm-line yapfify thrift py-isort pdf-tools tablist ox-gfm org-projectile org org-download livid-mode skewer-mode simple-httpd live-py-mode intero hlint-refactor git-link goto-chg eshell-z diminish company-shell company-ghci company-emacs-eclim ace-window avy cdlatex wolfram-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode undo-tree pcre2el log4e gntp json-snatcher request flx fringe-helper web-completion-data dash-functional pos-tip inflections edn paredit peg eval-sexp-fu highlight spinner queue pkg-info epl popup alert git-commit eclim rake tern ghc s toml-mode racer rust-mode flycheck-rust company-racer deferred py-yapf swift-mode haml-mode auctex package-build go-eldoc company-go go-mode hydra js2-mode f magit-popup auto-complete gitignore-mode with-editor yasnippet async inf-ruby markdown-mode clojure-mode packed anaconda-mode flycheck haskell-mode git-gutter company projectile helm helm-core multiple-cursors json-reformat magit pythonic bind-key evil srefactor orgit magit-gitflow helm-flx git-gutter-fringe+ git-gutter+ evil-magit company-quickhelp clj-refactor yaml-mode xterm-color ws-butler which-key web-mode web-beautify use-package typo toc-org tagedit stickyfunc-enhance spacemacs-theme solarized-theme smeargle slim-mode shm shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv quelpa pyvenv python pytest pyenv-mode projectile-rails popwin pip-requirements persp-mode page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets nix-mode multi-term mmm-mode markdown-toc macrostep less-css-mode json-mode js2-refactor js-doc jade-mode ido-vertical-mode hy-mode htmlize hl-todo hindent help-fns+ helm-pydoc helm-projectile helm-nixos-options helm-gitignore helm-descbinds helm-css-scss helm-company helm-c-yasnippet haskell-snippets gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe gh-md flycheck-pos-tip flycheck-haskell fish-mode fill-column-indicator feature-mode eyebrowse exec-path-from-shell evil-visualstar evil-surround evil-escape eshell-prompt-extras esh-help emmet-mode emacs-eclim elisp-slime-nav disaster diff-hl cython-mode company-web company-tern company-statistics company-nixos-options company-ghc company-cabal company-c-headers company-auctex company-anaconda coffee-mode cmm-mode cmake-mode clang-format cider-eval-sexp-fu cider chruby bundler bind-map auto-yasnippet auto-compile align-cljlet ac-ispell)))
+ '(safe-local-variable-values
+   (quote
+    ((eval spacemacs/toggle-line-numbers)
+     (eval setq org-hide-emphasis-markers t)
+     (eval font-lock-add-keywords
+           (quote org-mode)
+           (quote
+            (("^ +\\([-*]\\) "
+              (0
+               (prog1 nil
+                 (compose-region
+                  (match-beginning 1)
+                  (match-end 1)
+                  "•")))))))
+     (eval buffer-face-set
+           (quote variable-pitch))
+     (eval set-face-attribute
+           (quote org-table)
+           nil :inherit
+           (quote fixed-pitch))
+     (eval setq buffer-face-mode-face
+           (face-font
+            (quote variable-pitch)))
+     (org-export-allow-bind-keywords . t)
+     (org-confirm-babel-evaluate)
+     (TeX-command-extra-options . "-shell-escape")
+     (global-flycheck-mode . t)
+     (flycheck-disabled-checkers haskell-stack-ghc)
+     (flycheck-disabled-checkers . haskell-stack-ghc)
+     (flycheck-ghc-search-path
+      ("lib"))
+     (flycheck-mode t)
+     (flycheck-mode . t)
+     (flycheck-ghc-search-path . "lib")
+     (flycheck-disabled-checkers
+      (quote
+       (haskell-stack-ghc)))
+     (flycheck-disabled-checkers
+      (haskell-stack-ghc))
+     (flycheck-ghc-search-path "lib")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
