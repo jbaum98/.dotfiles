@@ -396,6 +396,7 @@ let g:markify_warning_text='❢❢'
 " CtrlP {{{
 let g:ctrlp_root_markers=['.project_root']
 set wildignore+=*.o
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 " }}}
 
 " Deoplete {{{
