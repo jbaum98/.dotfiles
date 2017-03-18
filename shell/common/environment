@@ -1,8 +1,9 @@
 # -*- mode: sh; -*-
 
 export EDITOR="vim"
-export TERM="xterm-256color"
+export TERM="screen-256color"
 export LANG="en_US.UTF-8"
 export CLASSPATH=".:/opt/stdlib.jar"
+export VIMRUNTIME="~/.nix-profile/share/nvim/runtime"
 
 # vim:filetype=sh
