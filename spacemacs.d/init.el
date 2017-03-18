@@ -60,6 +60,7 @@ values."
      (org :variables
           org-enable-github-support t)
      myorg
+     pandoc
      python
      pdf-tools
      (ruby :variables
