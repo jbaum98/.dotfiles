@@ -4,6 +4,8 @@ if exists xiwi; then
     alias subl='LANG=en_US.UTF-8 xiwi subl -w'
 fi
 
+alias ls="ls --color=auto"
+
 alias tmux="tmux -2 -u"
 
 alias brtest="brew install hello && brew test hello && brew rm hello"

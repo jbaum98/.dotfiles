@@ -5,5 +5,6 @@ export TERM="screen-256color"
 export LANG="en_US.UTF-8"
 export CLASSPATH=".:/opt/stdlib.jar"
 export VIMRUNTIME="~/.nix-profile/share/nvim/runtime"
+export LP_ENABLE_GIT=0 # Disable Git in theme, too slow
 
 # vim:filetype=sh
