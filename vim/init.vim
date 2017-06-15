@@ -1,8 +1,3 @@
-" Jake Waksbaum
-
-scriptencoding utf-8
-set encoding=utf-8
-set fileencoding=utf-8
 if &compatible
     set nocompatible
 endif
@@ -17,75 +12,105 @@ if dein#load_state(expand('~/.vim/bundle'))
     call dein#add('mnpk/vim-monokai')
 
     " Deoplete (Code Completion) {{{
+    call dein#add('Shougo/deoplete.nvim', {'on_event': 'InsertEnter'})
     call dein#add('zchee/deoplete-clang')                 " C/C++
-    call dein#add('zchee/deoplete-go', {'build': 'make'}) " Go
-    call dein#add('sebastianmarkow/deoplete-rust')        " Rust
-    call dein#add('Shougo/neco-vim')                      " Vim
-    call dein#add('zchee/deoplete-jedi')                  " Python
-    call dein#add('eagletmt/neco-ghc')                    " Haskell
+    call dein#add('zchee/deoplete-go',
+                \ {'build': 'make', 'on_ft': 'go'})       " Go
+    call dein#add('sebastianmarkow/deoplete-rust',
+                \ {'on_ft': 'rust'})                      " Rust
+    call dein#add('Shougo/neco-vim',
+                \ {'on_ft': 'vim'})                       " Vim
+    call dein#add('zchee/deoplete-jedi',
+                \ {'on_ft': 'python'})                    " Python
+    call dein#add('eagletmt/neco-ghc',
+                \ {'on_ft': 'haskell'})                   " Haskell
+    " }}}
+
+    " Airline {{{
+    call dein#add('bling/vim-airline')
+    call dein#add('vim-airline/vim-airline-themes')
     " }}}
 
     " Misc Utilities {{{
-    call dein#add('Shougo/deoplete.nvim')
-    call dein#add('vim-utils/vim-man')
-    call dein#add('dhruvasagar/vim-markify')
-    call dein#add('tpope/vim-speeddating')
-    call dein#add('bling/vim-airline')
-    call dein#add('vim-airline/vim-airline-themes')
-    call dein#add('amiorin/vim-fenced-code-blocks')
-    call dein#add('kien/ctrlp.vim')
-    call dein#add('tacahiroy/ctrlp-funky')
-    call dein#add('tpope/vim-fugitive')
-    call dein#add('tpope/vim-rhubarb')
-    call dein#add('airblade/vim-gitgutter')
+    call dein#add('amiorin/vim-fenced-code-blocks',
+                \ {'on_ft': 'markdown'})
+    " call dein#add('vim-utils/vim-man')
+    call dein#add('dhruvasagar/vim-markify',
+                \ {'on_event': 'QuickFixCmdPost'})
+    " call dein#add('tpope/vim-speeddating')
+    " call dein#add('kien/ctrlp.vim')
+    " call dein#add('tacahiroy/ctrlp-funky')
+    " call dein#add('tpope/vim-fugitive')
+    " call dein#add('tpope/vim-rhubarb')
+    call dein#add('airblade/vim-gitgutter',
+                \ {'on_event': 'CursorHold'})
     call dein#add('tpope/vim-surround')
     call dein#add('tpope/vim-repeat')
-    call dein#add('godlygeek/tabular')
-    call dein#add('scrooloose/nerdcommenter')
-    call dein#add('ap/vim-css-color')
+    " call dein#add('godlygeek/tabular')
+    " call dein#add('scrooloose/nerdcommenter')
+    " call dein#add('ap/vim-css-color')
     " }}}
 
     " Text Objects {{{
     " i,w is camelCase word
-    call dein#add('bkad/CamelCaseMotion') 
+    call dein#add('bkad/CamelCaseMotion')
 
     " aa and ia are arguments in a function call
-    call dein#add('vim-scripts/argtextobj.vim') 
+    call dein#add('vim-scripts/argtextobj.vim')
 
     call dein#add('kana/vim-textobj-user')
 
     " ar and ir are Ruby blocks
-    call dein#add('nelstrom/vim-textobj-rubyblock') 
+    call dein#add('nelstrom/vim-textobj-rubyblock',
+                \ {'on_ft': 'ruby'})
     " }}}
 
     " Languages {{{
     "" Markup Languages {{{{
-    call dein#add('digitaltoad/vim-jade')     " Jade
-    call dein#add('slim-template/vim-slim')   " Slim
-    call dein#add('groenewege/vim-less')      " Less
+    call dein#add('digitaltoad/vim-jade',
+                \ {'on_ft': 'jade'})          " Jade
+    call dein#add('slim-template/vim-slim',
+                \ {'on_ft': 'slim'})          " Slim
+    call dein#add('groenewege/vim-less',
+                \ {'on_ft': 'less'})          " Less
     "" }}}}
     "" Configuration {{{{
-    call dein#add('stephpy/vim-yaml')         " YAML
-    call dein#add('tpope/vim-haml')           " HAML
+    call dein#add('stephpy/vim-yaml',
+                \ {'on_ft': 'yaml'})          " YAML
+    call dein#add('tpope/vim-haml',
+                \ {'on_ft': 'haml'})          " HAML
     "" }}}}
     "" Javascript {{{{
-    call dein#add('jelera/vim-javascript-syntax')
-    call dein#add('pangloss/vim-javascript')
-    call dein#add('crusoexia/vim-javascript-lib')
+    call dein#add('jelera/vim-javascript-syntax',
+                \ {'on_ft': 'javascript'})
+    call dein#add('pangloss/vim-javascript',
+                \ {'on_ft': 'javascript'})
+    call dein#add('crusoexia/vim-javascript-lib',
+                \ {'on_ft': 'javascript'})
     "" }}}}
-    call dein#add('rust-lang/rust.vim')       " Rust
-    call dein#add('rhysd/vim-crystal')        " Crystal
-    call dein#add('LnL7/vim-nix')             " Nix
-    call dein#add('jceb/vim-orgmode')         " Orgmode
-    call dein#add('kchmck/vim-coffee-script') " Coffee Script
-    call dein#add('vim-ruby/vim-ruby')        " Ruby
-    call dein#add('tpope/vim-rails')          " Rails
-    call dein#add('dag/vim2hs')               " Haskell
-    call dein#add('sophacles/vim-processing') " Processing
-    call dein#add('rudrab/vimf90')            " Fortran
-    call dein#add('tkztmk/vim-vala')          " Vala
+    call dein#add('rust-lang/rust.vim',
+                \ {'on_ft': 'rust'})          " Rust
+    call dein#add('rhysd/vim-crystal',
+                \ {'on_ft': 'crystal'})       " Crystal
+    call dein#add('LnL7/vim-nix',
+                \ {'on_ft': 'nix'})           " Nix
+    call dein#add('jceb/vim-orgmode',
+                \ {'on_ft': 'org'})           " Orgmode
+    call dein#add('kchmck/vim-coffee-script',
+                \ {'on_ft': 'coffee'})        " Coffee Script
+    call dein#add('vim-ruby/vim-ruby',
+                \ {'on_ft': 'ruby'})          " Ruby
+    call dein#add('tpope/vim-rails',
+                \ {'on_ft': 'ruby'})          " Rails
+    call dein#add('dag/vim2hs',
+                \ {'on_ft': 'haskell'})       " Haskell
+    call dein#add('sophacles/vim-processing',
+                \ {'on_ft': 'processing'})    " Processing
+    call dein#add('rudrab/vimf90',
+                \ {'on_ft': 'fortran'})       " Fortran
+    call dein#add('tkztmk/vim-vala',
+                \ {'on_ft': 'vala'})          " Vala
     " }}}
-    "
 
     call dein#end()
     call dein#save_state()
@@ -102,18 +127,14 @@ set hidden
 set history=10000
 set cmdheight=1
 set switchbuf=useopen
-" This makes RVM work inside Vim. I have no idea why.
-set shell=bash
-" Prevent Vim from clobbering the scrollback buffer. See
-" http://www.shallowsky.com/linux/noaltscreen.html
-set t_ti= t_te=
 " use emacs-style tab completion when selecting files, etc
 set wildmode=longest,list
 " make tab completion for files/buffers act like bash
 set wildmenu
 " use system clipboard
 set clipboard=unnamed
-let mapleader = ","
+" set leader key
+let mapleader = " "
 " Normally, Vim messes with iskeyword when you open a shell file. This can
 " leak out, polluting other file types even after a 'set ft=' change. This
 " variable prevents the iskeyword change so it can't hurt anyone.
@@ -123,31 +144,6 @@ let g:sh_noisk=1
 set nojoinspaces
 " If a file is changed outside of vim, automatically reload it without asking
 set autoread
-" }}}
-
-" Autocmds {{{
-augroup vimrcEx
-  " Clear all autocmds in the group
-  autocmd!
-  " Jump to last cursor position unless it's invalid or in an event handler
-  autocmd BufReadPost *
-              \ if line("'\"") > 0 && line("'\"") <= line("$") |
-              \   exe "normal g`\"" |
-              \ endif
-
-  "For certain filetypes, autoindent with two spaces, always expand tabs
-  autocmd FileType ruby,haml,eruby,yaml,html,javascript,sass,cucumber,slim,crystal
-              \ set ai sw=2 sts=2 et
-
-
-  " Sass file recognition
-  autocmd! BufRead,BufNewFile *.sass setfiletype sass
-
-  " Leave the return key alone when in command line windows, since it's used
-  " to run commands there.
-  autocmd! CmdwinEnter * :unmap <cr>
-  autocmd! CmdwinLeave * :call MapCR()
-augroup END
 " }}}
 
 " Colors {{{
@@ -171,7 +167,8 @@ set copyindent
 set smartindent
 " }}}
 
-" Invisbles {{{ set list
+" Invisibles {{{
+set list
 set listchars=tab:▸\ ,trail:·
 "}}}
 
@@ -184,10 +181,30 @@ set showtabline=2
 set winwidth=79
 " keep more context when scrolling off the end of a buffer
 set scrolloff=3
-"if (exists('+colorcolumn'))
-"    set colorcolumn=80
-"    highlight ColorColumn ctermbg=9
-"endif
+" }}}
+
+" Custom Mappings {{{
+" make ; the command key
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+" Open and source .vimrc file
+nnoremap <leader>fed :split $MYVIMRC<cr>
+nnoremap <leader>feR :source $MYVIMRC<cr>
+" use visual line up and down
+nnoremap j gj
+nnoremap k gk
+" make fd switch to command mode
+inoremap fd <esc>
+vnoremap fd <esc>
+"Move splits more easily
+nnoremap <leader>wj <c-w>j
+nnoremap <leader>wk <c-w>k
+nnoremap <leader>wh <c-w>h
+nnoremap <leader>wl <c-w>l
+" Spacemacs-like
+nnoremap <leader>fs :w<cr>
 " }}}
 
 " Git Gutter {{{
@@ -212,180 +229,13 @@ set foldnestmax=10
 set foldmethod=indent
 " }}}
 
-" Backups/Undo {{{
-set backup
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set backupskip=/tmp/*,/private/tmp/*
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set writebackup
-if has("persistent_undo")
-    set undodir=~/.undo/
-    set undofile
-endif
-" }}}
-
 " Airline {{{
 let g:airline_powerline_fonts = 0
 let g:airline_theme = 'kalisi'
 set laststatus=2 " Always display the statusline in all windows
 set noshowmode " Hide the default mode text (e.g. -- INSERT -- below the statusline)
-"set guifont=Droid\ Sans\ Mono\ for\ Powerline:h15
 set fillchars+=stl:\ ,stlnc:\
 set termencoding=utf-8
-if has("gui_running")
-    let s:uname = system("uname")
-    if s:uname == "Darwin\n"
-        set guifont=Droid\ Sans\ Mono\ for\ Powerline:h15
-    endif
-endif
-" }}}
-
-" Custom Mappings {{{
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
-" Open and source .vimrc file
-nnoremap <leader>erc :split $MYVIMRC<cr>
-nnoremap <leader>src :source $MYVIMRC<cr>
-nnoremap j gj
-nnoremap k gk
-" nnoremap gV `[v`]
-inoremap fd <esc>
-vnoremap fd <esc>
-"Move splits more easily
-nnoremap <leader>wj <c-w>j
-nnoremap <leader>wk <c-w>k
-nnoremap <leader>wh <c-w>h
-nnoremap <leader>wl <c-w>l
-" nnoremap H ^
-" nnoremap L $
-inoremap <C-c> <CR><Esc>O
-nnoremap <C-]> ^i<tab><Esc>
-nnoremap <Leader>f :CtrlPFunky<Cr>
-nnoremap <Leader>p :CtrlP<Cr>
-nnoremap <Leader>m :w \| make<cr><cr>
-" Close all other windows, open a vertical split, and open this file's test
-" alternate in it.
-nnoremap <leader>s :call FocusOnFile()<cr>
-function! FocusOnFile()
-  tabnew %
-  normal! v
-  normal! l
-  :A
-  normal! h
-endfunction
-" Current directory
-cnoremap <expr> %% expand('%:h').'/'
-map <leader>e :edit %%
-map <leader>v :view %%
-" Rename current file
-function! RenameFile()
-    let old_name = expand('%')
-    let new_name = input('New file name: ', expand('%'), 'file')
-    if new_name != '' && new_name != old_name
-        exec ':saveas ' . new_name
-        exec ':silent !rm ' . old_name
-        redraw!
-    endif
-endfunction
-map <leader>n :call RenameFile()<cr>
-" Promote to let
-function! PromoteToLet()
-  :normal! dd
-  " :exec '?^\s*it\>'
-  :normal! P
-  :.s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
-  :normal ==
-endfunction
-:command! PromoteToLet :call PromoteToLet()
-:map <leader>L :PromoteToLet<cr>
-" }}}
-
-" Multipurpose Tab {{{
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
-inoremap <expr> <tab> InsertTabWrapper()
-inoremap <s-tab> <c-n>
-" }}}
-
-" Running Tests {{{
-"function! MapCR()
-  "nnoremap <cr> :call RunTestFile()<cr>
-"endfunction
-"call MapCR()
-"nnoremap <leader>T :call RunNearestTest()<cr>
-"nnoremap <leader>t :call RunTestFile()<cr>
-"nnoremap <leader>a :call RunTests('')<cr>
-"nnoremap <leader>c :w\|:!script/features<cr>
-"nnoremap <leader>w :w\|:!script/features --profile wip<cr>
-
-function! RunTestFile(...)
-    if a:0
-        let command_suffix = a:1
-    else
-        let command_suffix = ""
-    endif
-
-    " Run the tests for the previously-marked file.
-    let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.py\)$') != -1
-    if in_test_file
-        call SetTestFile(command_suffix)
-    elseif !exists("t:grb_test_file")
-        return
-    end
-    call RunTests(t:grb_test_file)
-endfunction
-
-function! RunNearestTest()
-    let spec_line_number = line('.')
-    call RunTestFile(":" . spec_line_number)
-endfunction
-
-function! SetTestFile(command_suffix)
-    " Set the spec file that tests will be run for.
-    let t:grb_test_file=@% . a:command_suffix
-endfunction
-
-function! RunTests(filename)
-    " Write the file and run tests for the given filename
-    if expand("%") != ""
-      :w
-    end
-    if match(a:filename, '\.feature$') != -1
-        exec ":!script/features " . a:filename
-    else
-        " First choice: project-specific test script
-        if filereadable("script/test")
-            exec ":!script/test " . a:filename
-        " Fall back to the .test-commands pipe if available, assuming someone
-        " is reading the other side and running the commands
-        elseif filewritable(".test-commands")
-          let cmd = 'rspec --color --format progress --require "~/lib/vim_rspec_formatter" --format VimFormatter --out tmp/quickfix'
-          exec ":!echo " . cmd . " " . a:filename . " > .test-commands"
-
-          " Write an empty string to block until the command completes
-          sleep 100m " milliseconds
-          :!echo > .test-commands
-          redraw!
-        " Fall back to a blocking test run with Bundler
-        elseif filereadable("Gemfile")
-            exec ":!bundle exec rspec --color " . a:filename
-        " If we see python-looking tests, assume they should be run with Nose
-        elseif strlen(glob("test/**/*.py") . glob("tests/**/*.py"))
-            exec "!nosetests " . a:filename
-        " Fall back to a normal blocking test run
-        else
-            exec ":!rspec --color " . a:filename
-        end
-    end
-endfunction
 " }}}
 
 " Markify {{{
@@ -393,16 +243,13 @@ let g:markify_error_text='✗✗'
 let g:markify_warning_text='❢❢'
 " }}}
 
-" CtrlP {{{
-let g:ctrlp_root_markers=['.project_root']
-set wildignore+=*.o
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-" }}}
-
 " Deoplete {{{
 " Enable on startup
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_refresh_always = 1
+" Use tab key
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 if has('mac')
     let g:libclang_path = g:nixprofile . '/lib/libclang.dylib'
 else
@@ -431,6 +278,8 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 "" }}}}
 " }}}
 
+" Git Commit {{{
 autocmd FileType gitcommit setlocal spell
+" }}}
 
 " vim:foldmethod=marker:foldlevel=0

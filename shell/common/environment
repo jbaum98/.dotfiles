@@ -1,6 +1,6 @@
 # -*- mode: sh; -*-
 
-export EDITOR="vim"
+export EDITOR="nvim"
 export TERM="screen-256color"
 export LANG="en_US.UTF-8"
 export CLASSPATH=".:/opt/stdlib.jar"
