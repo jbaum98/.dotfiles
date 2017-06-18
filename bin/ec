@@ -1,3 +1,3 @@
 #!/bin/sh
 
-emacsclient -a emacsdaemon -c
+emacsclient -a emacsdaemon -c $@

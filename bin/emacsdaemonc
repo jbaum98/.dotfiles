@@ -1,4 +1,4 @@
 #!/bin/sh
 
 $HOME/.nix-profile/Applications/Emacs.app/Contents/MacOS/Emacs --daemon
-ec
+ec $@
