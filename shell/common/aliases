@@ -4,6 +4,10 @@ if exists xiwi; then
     alias subl='LANG=en_US.UTF-8 xiwi subl -w'
 fi
 
+if ! exists sudoedit; then
+    alias sudoedit='sudo -e'
+fi
+
 alias ls="ls --color=auto"
 
 alias tmux="tmux -2 -u"
@@ -15,10 +19,6 @@ alias be="bundle exec"
 alias todos='grep -n "TODO" *'
 
 alias vi="vi -u $HOME/.exrc"
-alias e="emacsclient -t -a ''"
-alias g="emacsclient -c -a ''"
-alias E="SUDO_EDITOR=\"emacsclient -t -a ''\" sudoedit"
-alias G="SUDO_EDITOR=\"emacsclient -c -a ''\" sudoedit"
 
 if ! exists pbcopy; then
     if exists xclip; then

@@ -1,7 +1,7 @@
 - shell:
     - [git pull, Updating dotfiles]
     - [git submodule update --init --recursive, Updating submodules]
-    - mkdir -p $HOME/.config $HOME/.nixpkgs
+    - mkdir -p $HOME/.config $HOME/.nixpkgs $HOME/.local/bin
 
 - clean: ['$HOME', '$HOME/.config', '$HOME/.nixpkgs']
 
@@ -22,3 +22,7 @@
     ~/.zshrc: zshrc
     ~/.nixpkgs/config.nix: config.nix
     ~/.taskrc: taskrc
+    ~/.local/bin/ec: bin/ec
+    ~/.local/bin/et: bin/et
+    ~/.local/bin/emacsdaemonc: bin/emacsdaemonc
+    ~/.local/bin/emacsdaemont: bin/emacsdaemont

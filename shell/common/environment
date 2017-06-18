@@ -1,6 +1,7 @@
 # -*- mode: sh; -*-
 
-export EDITOR="nvim"
+export EDITOR="ec"
+export SUDO_EDITOR="ec"
 export TERM="screen-256color"
 export LANG="en_US.UTF-8"
 export CLASSPATH=".:/opt/stdlib.jar"
