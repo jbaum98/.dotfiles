@@ -5,71 +5,198 @@
       buildInputs = [ stdenv clang ];
     };
 
-    all = buildEnv {
-      name = "all";
+    nodeEnv = myEnvFun {
+      name = "nodeEnv";
+      buildInputs = [
+        neovim
+        zsh
+        nodejs
+        "tern"
+        ];
+    };
+
+    go = go_1_8;
+
+    myHunspell = hunspellWithDicts (with hunspellDicts; [
+      en-us
+    ]);
+
+    dev-env = buildEnv {
+      name = "dev-env";
       paths = [
         stdenv
-        aspell
         clang
         curl
         diffutils
         direnv
         dos2unix
-        # epstool
         entr
-        elmPackages.elm
-        (if stdenv.isDarwin then emacs25Macport else emacs)
-        (if stdenv.isDarwin then reattach-to-user-namespace else "")
-        exercism
-        gawk
-        gnupg
-        go
-        gocode
-        gnugrep
+        git
         gitAndTools.hub
         httpie
-        imagemagick
+        gnugrep
+        gnupg
+        gawk
         patch
+        gnutar
+        man
+        xz
+        zsh
+        pkgconfig
+      ];
+    };
+
+    misc-env = buildEnv {
+      name = "misc-env";
+      paths = [
+        exercism
+        imagemagick
+        rsync
+        smartmontools
+      ];
+    };
+
+    emacs-env = buildEnv {
+      name = "emacs-env";
+      paths = [
+        myHunspell
+        emacs25
+      ];
+    };
+
+    tmux-env = buildEnv {
+      name = "tmux-env";
+      paths = [
+        tmux
+      ] ++ lib.optional stdenv.isDarwin reattach-to-user-namespace;
+    };
+
+    elm-env = buildEnv {
+      name = "elm-env";
+      paths = [
+        elmPackages.elm
+      ];
+    };
+
+    latex-env = buildEnv {
+      name = "latex-env";
+      paths = [
         pandoc
         pdfpc
-        pythonPackages.jedi
-        #(import ~/.nixpkgs/jupyter.nix)
         pstoedit
-        man
+        # epstool
+        texinfo
+      ];
+    };
+
+    vim-env = buildEnv {
+      name = "vim-env";
+      paths = [
         neovim
+      ];
+    };
+
+    nix-env = buildEnv {
+      name = "nix-env";
+      paths = [
         nix-repl
-        nodejs
-        cabal-install
+        # nox
         cabal2nix
         nodePackages.node2nix
-        nox
-        "nodePackages.nyaovim"
-        pkgconfig
-        #"nodePackages.tern"
-        python
-        python3
-        python3Packages.ipython
-        python3Packages.pygments
-        R
-        rPackages.tikzDevice
-        rsync
+      ];
+    };
+
+    mKpython-env = { pythonPackages, version } : 
+    buildEnv {
+      name = "python${version}-env";
+      paths = [
+        pythonPackages.python
+        pythonPackages.jedi
+        pythonPackages.ipython
+        pythonPackages.pygments
+      ];
+    };
+
+    python2-env = mKpython-env { pythonPackages = python2Packages; version = "2"; };
+    python3-env = mKpython-env { pythonPackages = python3Packages; version = "3"; };
+
+    js-env = buildEnv {
+      name = "js-env";
+      paths = [
+        nodejs
+        nodePackages.tern
+      ];
+    };
+
+    hs-env = buildEnv {
+      name = "hs-env";
+      paths = with haskellPackages; [
+        stack
+        ghc
+        intero
+        hindent
+        hlint
+      ];
+    };
+
+    ruby-env = buildEnv {
+      name = "ruby-env";
+      paths = [
         ruby
+      ];
+    };
+
+    rust-env = buildEnv {
+      name = "rust-env";
+      paths = [
         rustc
         rustfmt
         rustracer
-        smartmontools
-        stack
-        taskwarrior
-        texinfo
-        tmux
-        vim
-        vit
-        xz
-        zsh
       ];
     };
+
+    go-env = buildEnv {
+      name = "go-env";
+      paths = [
+        go
+        gocode
+      ];
+    };
+
+    R-env = buildEnv {
+      name = "R-env";
+      paths = [
+        R
+        rPackages.tikzDevice
+      ];
+    };
+
+    taskwarrior-env = buildEnv {
+      name = "taskwarrior-env";
+      paths = [
+        taskwarrior
+        vit
+      ];
+    };
+
+    jupyter-env = buildEnv {
+      name = "jupyter-env";
+      paths = with pythonPackages; [
+        (jupyter.override {
+          propagatedBuildInputs = with self; [
+            notebook
+            qtconsole
+            jupyter_console
+            nbconvert
+            ipykernel
+            ipywidgets
+          ];
+        })
+      ];
+    };
+
   };
 
   allowUnfree = true;
-  # allowBroken = true;
+  allowBroken = true;
 }
