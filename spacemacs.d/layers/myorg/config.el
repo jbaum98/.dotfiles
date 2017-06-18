@@ -1,6 +1,10 @@
 (setq-default
  org-src-fontify-natively t
- org-src-tab-acts-natively t)
+ org-src-tab-acts-natively t
+ org-latex-listings 'minted
+ org-latex-to-pdf-process "latexmk -xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+ )
+
 
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 (add-hook 'org-babel-after-execute-hook 'spacemacs/toggle-typographic-substitutions-on)

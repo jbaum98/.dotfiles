@@ -15,8 +15,11 @@
 
 (add-hook 'java-mode-hook
           (lambda ()
-            (set (make-local-variable 'compile-command)
-                 (concat "javac " (file-name-nondirectory buffer-file-name)))
+            (let ((buf buffer-file-name))
+              (if (not (null buf))
+                  (set (make-local-variable 'compile-command)
+                       (concat "javac " (file-name-nondirectory buf)))
+                ))
             (flycheck-mode)))
 
 ;;; config.el ends here
