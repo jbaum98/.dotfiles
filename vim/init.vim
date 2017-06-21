@@ -9,7 +9,7 @@ if dein#load_state(expand('~/.vim/bundle'))
     call dein#add('Shougo/dein.vim')
 
     """ Color Schemes
-    call dein#add('mnpk/vim-monokai')
+    call dein#add('w0ng/vim-hybrid')
 
     " Deoplete (Code Completion) {{{
     call dein#add('Shougo/deoplete.nvim', {'on_event': 'InsertEnter'})
@@ -152,11 +152,10 @@ autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 
 
 " Colors {{{
 set number
-let g:solarized_termcolors=256
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set t_Co=256
 set background=dark
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme monokai
+colorscheme hybrid
 " }}}
 
 " Spaces and Tabs {{{
