@@ -18,7 +18,7 @@ add_path "$HOME/.local/bin"
 add_path "$HOME/.cabal/bin"
 add_path "$HOME/bin"
 add_path "$HOME/.cargo/bin"
-if OS="OSX"; then
+if [ OS="OSX" ]; then
     add_path "/Applications/MATLAB_R2016b.app/bin"
 fi
 
