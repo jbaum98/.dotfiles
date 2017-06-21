@@ -1,7 +1,15 @@
 # -*- mode: sh; -*-
 
-export EDITOR="ec"
-export SUDO_EDITOR="ec"
+if [ $OS = "OSX" ]; then
+    export EDITOR="ec"
+    export SUDO_EDITOR="ec"
+elif exists nvim; then
+    export EDITOR="nvim"
+    export SUDO_EDITOR="nvim"
+elif exists vim; then
+    export EDITOR="vim"
+    export SUDO_EDITOR="vim"
+fi
 export TERM="screen-256color"
 export LANG="en_US.UTF-8"
 export CLASSPATH=".:/opt/stdlib.jar"
