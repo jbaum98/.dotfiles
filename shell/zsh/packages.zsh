@@ -19,7 +19,7 @@ zplug "zsh-users/zsh-history-substring-search", defer:3
 zplug "nojhan/liquidprompt"
 
 # Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
+if ! zplug check; then
     printf "Install? [y/N]: "
     if read -q; then
         echo; zplug install
