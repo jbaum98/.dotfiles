@@ -193,7 +193,7 @@ nnoremap : ;
 vnoremap ; :
 vnoremap : ;
 " Open and source .vimrc file
-nnoremap <leader>fed :split $MYVIMRC<cr>
+nnoremap <leader>fed :edit $MYVIMRC<cr>
 nnoremap <leader>feR :source $MYVIMRC<cr>
 " use visual line up and down
 nnoremap j gj
