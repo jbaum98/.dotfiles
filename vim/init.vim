@@ -146,6 +146,10 @@ set nojoinspaces
 set autoread
 " }}}
 
+" Last Position Jump {{{
+autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
+" }}}
+
 " Colors {{{
 set number
 let g:solarized_termcolors=256
