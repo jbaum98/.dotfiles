@@ -10,6 +10,7 @@ zplug "plugins/ssh-agent", from:oh-my-zsh
 zplug "plugins/rake", from:oh-my-zsh
 zplug "plugins/rbenv", from:oh-my-zsh
 zplug "plugins/common-aliases", from:oh-my-zsh
+zplug "lib/directories", from:oh-my-zsh
  
 zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
 
