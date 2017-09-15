@@ -40,10 +40,10 @@
           (setq merlin-error-after-save nil)
           (flycheck-ocaml-setup))))))
 
-(defun ocaml/post-init-ggtags ()
+(defun myocaml/post-init-ggtags ()
   (add-hook 'ocaml-mode-local-vars-hook #'spacemacs/ggtags-mode-enable))
 
-(defun ocaml/post-init-helm-gtags ()
+(defun myocaml/post-init-helm-gtags ()
   (spacemacs/helm-gtags-define-keys-for-mode 'ocaml-mode))
 
 (defun myocaml/init-merlin ()
@@ -88,7 +88,7 @@
     (spacemacs/set-leader-keys-for-major-mode 'tuareg-mode
       "=" 'ocp-indent-buffer)))
 
-(defun ocaml/post-init-smartparens ()
+(defun myocaml/post-init-smartparens ()
   (with-eval-after-load 'smartparens
     ;; don't auto-close apostrophes (type 'a = foo) and backticks (`Foo)
     (sp-local-pair 'tuareg-mode "'" nil :actions nil)
