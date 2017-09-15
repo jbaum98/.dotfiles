@@ -106,7 +106,10 @@
         "cc" 'compile)
       ;; Make OCaml-generated files invisible to filename completion
       (dolist (ext '(".cmo" ".cmx" ".cma" ".cmxa" ".cmi" ".cmxs" ".cmt" ".cmti" ".annot"))
-        (add-to-list 'completion-ignored-extensions ext)))))
+        (add-to-list 'completion-ignored-extensions ext))))
+  :config
+  (progn
+    (setq tuareg-skip-after-eval-phrase nil)))
 
 (defun myocaml/init-utop ()
   (use-package utop
@@ -117,7 +120,8 @@
       (spacemacs/register-repl 'utop 'utop "ocaml"))
     :config
     (progn
-      (setq utop-command "utop -emacs")
+      (setq utop-edit-command nil)
+      (setq utop-skip-after-eval-phrase nil)
 
       (defun spacemacs/utop-eval-phrase-and-go ()
         "Send phrase to REPL and evaluate it and switch to the REPL in
@@ -153,5 +157,9 @@
         "sr" 'utop-eval-region
         "sR" 'spacemacs/utop-eval-region-and-go)
       (spacemacs/declare-prefix-for-mode 'tuareg-mode "ms" "send"))
+    (define-key tuareg-mode-map (kbd "C-x C-e") 'utop-eval-phrase)
+    (define-key tuareg-mode-map (kbd "C-c C-e") 'utop-eval-phrase)
     (define-key utop-mode-map (kbd "C-j") 'utop-history-goto-next)
-    (define-key utop-mode-map (kbd "C-k") 'utop-history-goto-prev)))
+    (define-key utop-mode-map (kbd "C-k") 'utop-history-goto-prev)
+    (define-key utop-mode-map (kbd "<S-return>") (lambda () (interactive) (utop-eval-input t t t)))
+    ))
