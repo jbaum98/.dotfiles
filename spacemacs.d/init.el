@@ -63,7 +63,8 @@ values."
      myorg
      nixos
      pandoc
-     python
+     (python :variables
+             python-test-runner 'pytest)
      pdf-tools
      (ruby :variables
            ruby-test-runner 'rspec)
