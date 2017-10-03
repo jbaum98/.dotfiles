@@ -582,6 +582,7 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-engine (quote xetex))
+ '(counsel-find-file-ignore-regexp "\\`\\.")
  '(evil-want-Y-yank-to-eol nil)
  '(exec-path-from-shell-arguments (quote ("-l")))
  '(flycheck-javac-infer-classpath (quote ("." "/opt/stdlib.jar")))
