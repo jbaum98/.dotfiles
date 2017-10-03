@@ -7,8 +7,6 @@ zplug "srijanshetty/zsh-pandoc-completion"
 
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/ssh-agent", from:oh-my-zsh
-zplug "plugins/rake", from:oh-my-zsh
-zplug "plugins/rbenv", from:oh-my-zsh
 zplug "plugins/common-aliases", from:oh-my-zsh
 zplug "lib/directories", from:oh-my-zsh
  
