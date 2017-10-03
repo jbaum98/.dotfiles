@@ -195,6 +195,16 @@
       ];
     };
 
+    ocaml-env = buildEnv {
+      name = "ocaml-env";
+      paths = with ocamlPackages; [
+        ocaml
+        merlin
+        ocpIndent
+        utop
+      ];
+    };
+
   };
 
   allowUnfree = true;
