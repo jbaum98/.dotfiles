@@ -64,7 +64,7 @@ values."
           org-enable-github-support t)
      myorg
      nixos
-     pandoc
+     ;pandoc
      (python :variables
              python-test-runner 'pytest)
      pdf-tools
