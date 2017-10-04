@@ -25,7 +25,7 @@
 See `http://www.splint.org/'."
     :command ("splint"
               (eval flycheck-splint-arguments)
-              source)
+              source-original)
     :error-patterns
     ((warning line-start (file-name) ":" line ":" column ":"
               (message (minimal-match (one-or-more anything)))
