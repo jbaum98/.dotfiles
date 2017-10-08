@@ -197,7 +197,7 @@
 
     ocaml-env = buildEnv {
       name = "ocaml-env";
-      paths = with ocamlPackages; [
+      paths = with ocaml-ng.ocamlPackages_4_05; [
         ocaml
         merlin
         ocpIndent
