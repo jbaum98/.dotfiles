@@ -1,16 +1,12 @@
-[submodule "emacs.d"]
-	path = emacs.d
-	url = https://github.com/syl20bnr/spacemacs.git
-	ignore = dirty
-[submodule "dotbot"]
-	path = dotbot
-	url = https://github.com/anishathalye/dotbot.git
-[submodule "shell/bash/liquidprompt"]
-	path = shell/bash/liquidprompt
-	url = https://github.com/nojhan/liquidprompt.git
-[submodule "shell/zsh/zplug"]
-	path = shell/zsh/zplug
-	url = https://github.com/zplug/zplug
-[submodule "vim/bundle/repos/github.com/Shougo/dein.vim"]
-	path = vim/bundle/repos/github.com/Shougo/dein.vim
+[submodule "shell/liquidprompt"]
+	path = shell/.liquidprompt
+	url = https://github.com/nojhan/liquidprompt
+[submodule "emacs/.emacs.d"]
+	path = emacs/.emacs.d
+	url = https://github.com/syl20bnr/spacemacs
+[submodule "vim/.vim/bundle/repos/github.com/Shougo/dein.vim"]
+	path = vim/.vim/bundle/repos/github.com/Shougo/dein.vim
 	url = https://github.com/Shougo/dein.vim
+[submodule "zsh/zplug"]
+	path = zsh/.zplug
+	url = https://github.com/zplug/zplug

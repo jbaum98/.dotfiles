@@ -1,1 +1,7 @@
-.dir-locals.el
+**/sec/**/*.zsh
+**/sec/**/*.zshenv
+*.sec*
+.DS_Store
+/bin/
+!README.md
+example

@@ -1,0 +1,12 @@
+# -*- mode: sh; -*-
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+    *) return;;
+esac
+
+# load environment files
+find -L ~/.bash -name "*.bash" -type f | while read file;
+do
+    source $file
+done
