@@ -45,15 +45,16 @@ values."
      version-control
      (c-c++ :variables c-c++-enable-clang-support t)
      myc
-     ;clojure
+                                        ;clojure
      emacs-lisp
      extra-langs
      (haskell :variables
-              haskell-completion-backend 'intero
+              haskell-completion-backend 'ghci
               haskell-enable-hindent-style "johan-tibell")
-     ;go
+                                        ;go
+     gnus
      html
-     ;helm
+                                        ;helm
      ivy
      java
      myjava
@@ -64,7 +65,7 @@ values."
           org-enable-github-support t)
      myorg
      nixos
-     ;pandoc
+                                        ;pandoc
      (python :variables
              python-test-runner 'pytest)
      pdf-tools
@@ -74,7 +75,7 @@ values."
      ruby-on-rails
      rust
      shell-scripts
-     ;swift
+                                        ;swift
      yaml
      spacemacs-layouts
      typography
@@ -296,7 +297,7 @@ values."
    dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
-   dotspacemacs-folding-method 'evil
+   dotspacemacs-folding-method 'origami
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -343,6 +344,9 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  (exec-path-from-shell-copy-env "NIX_PATH")
+
   (setq-default persp-auto-save-opt 0)
   ;; Make evil-mode up/down operate in screen lines instead of logical lines
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)
@@ -553,6 +557,66 @@ you should place your code here."
                 ))
             uchars-map))
 
+  (setq ;; You need to replace this email address with your own!
+   user-mail-address "jake.waksbaum@gmail.com"
+   ;; You need to replace this key ID with your own key ID!
+   mml2015-signers '("5008D7CA")
+   ;; This tells Gnus to get email from Gmail via IMAP.
+   gnus-select-method
+   '(nnimap "gmail"
+            ;; It could also be imap.googlemail.com if that's your server.
+            (nnimap-address "imap.gmail.com")
+            (nnimap-server-port 993)
+            (nnimap-stream ssl))
+   ;; This tells Gnus to use the Gmail SMTP server. This
+   ;; automatically leaves a copy in the Gmail Sent folder.
+   smtpmail-smtp-server "smtp.gmail.com"
+   smtpmail-smtp-service 587
+   ;; Tell message mode to use SMTP.
+   message-send-mail-function 'smtpmail-send-it
+   ;; This is where we store the password.
+   nntp-authinfo-file "~/.authinfo.gpg"
+   ;; Gmail system labels have the prefix [Gmail], which matches
+   ;; the default value of gnus-ignored-newsgroups. That's why we
+   ;; redefine it.
+   gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"
+   ;; The agent seems to confuse nnimap, therefore we'll disable it.
+   gnus-agent nil
+   ;; We don't want local, unencrypted copies of emails we write.
+   gnus-message-archive-group nil
+   ;; We want to be able to read the emails we wrote.
+   mml2015-encrypt-to-self t)
+
+  ;; Attempt to encrypt all the mails we'll be sending.
+  (add-hook 'message-setup-hook 'mml-secure-message-encrypt)
+
+  ;; Add two key bindings for your Gmail experience.
+  (add-hook 'gnus-summary-mode-hook 'my-gnus-summary-keys)
+
+  (defun my-gnus-summary-keys ()
+    (local-set-key "y" 'gmail-archive)
+    (local-set-key "$" 'gmail-report-spam))
+
+  (defun gmail-archive ()
+    "Archive the current or marked mails.
+This moves them into the All Mail folder."
+    (interactive)
+    (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/All Mail"))
+
+  (defun gmail-report-spam ()
+    "Report the current or marked mails as spam.
+This moves them into the Spam folder."
+    (interactive)
+    (gnus-summary-move-article nil "nnimap+imap.gmail.com:[Gmail]/Spam"))
+  (setq gnus-secondary-select-methods
+        '(
+          (nnimap "gmail"
+                  (nnimap-address
+                   "imap.gmail.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl))
+          ))
+
 ;;; Tell ispell.el that ’ can be part of a word.
   (setq ispell-local-dictionary-alist
         `((nil "[[:alpha:]]" "[^[:alpha:]]"
@@ -661,10 +725,13 @@ you should place your code here."
  '(org-time-stamp-custom-formats (quote ("<%B %e, %Y>" . "<%B %e, %Y %H:%M>")))
  '(package-selected-packages
    (quote
-    (wgrep smex ivy-hydra counsel-projectile counsel swiper ivy flycheck-ocaml utop tuareg caml org-category-capture ocp-indent minitest java-snippets insert-shebang merlin winum fuzzy seq nixos-options ox-pandoc pandoc-mode ht cargo hide-comnt pcache auctex-latexmk csv-mode window-numbering volatile-highlights vi-tilde-fringe uuidgen spaceline powerline rainbow-delimiters paradox open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation google-translate golden-ratio flx-ido fancy-battery expand-region evil-visual-mark-mode evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-link reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl pug-mode helm-themes helm-swoop helm-mode-manager helm-make helm-hoogle helm-ag ace-jump-helm-line yapfify thrift py-isort pdf-tools tablist ox-gfm org-projectile org org-download livid-mode skewer-mode simple-httpd live-py-mode intero hlint-refactor git-link goto-chg eshell-z diminish company-shell company-ghci company-emacs-eclim ace-window avy cdlatex wolfram-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode undo-tree pcre2el log4e gntp json-snatcher request flx fringe-helper web-completion-data dash-functional pos-tip inflections edn paredit peg eval-sexp-fu highlight spinner queue pkg-info epl popup alert git-commit eclim rake tern ghc s toml-mode racer rust-mode flycheck-rust company-racer deferred py-yapf swift-mode haml-mode auctex package-build go-eldoc company-go go-mode hydra js2-mode f magit-popup auto-complete gitignore-mode with-editor yasnippet async inf-ruby markdown-mode clojure-mode packed anaconda-mode flycheck haskell-mode git-gutter company projectile helm helm-core multiple-cursors json-reformat magit pythonic bind-key evil srefactor orgit magit-gitflow helm-flx git-gutter-fringe+ git-gutter+ evil-magit company-quickhelp clj-refactor yaml-mode xterm-color ws-butler which-key web-mode web-beautify use-package typo toc-org tagedit stickyfunc-enhance spacemacs-theme solarized-theme smeargle slim-mode shm shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv quelpa pyvenv python pytest pyenv-mode projectile-rails popwin pip-requirements persp-mode page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets nix-mode multi-term mmm-mode markdown-toc macrostep less-css-mode json-mode js2-refactor js-doc jade-mode ido-vertical-mode hy-mode htmlize hl-todo hindent help-fns+ helm-pydoc helm-projectile helm-nixos-options helm-gitignore helm-descbinds helm-css-scss helm-company helm-c-yasnippet haskell-snippets gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe gh-md flycheck-pos-tip flycheck-haskell fish-mode fill-column-indicator feature-mode eyebrowse exec-path-from-shell evil-visualstar evil-surround evil-escape eshell-prompt-extras esh-help emmet-mode emacs-eclim elisp-slime-nav disaster diff-hl cython-mode company-web company-tern company-statistics company-nixos-options company-ghc company-cabal company-c-headers company-auctex company-anaconda coffee-mode cmm-mode cmake-mode clang-format cider-eval-sexp-fu cider chruby bundler bind-map auto-yasnippet auto-compile align-cljlet ac-ispell)))
+    (origami wgrep smex ivy-hydra counsel-projectile counsel swiper ivy flycheck-ocaml utop tuareg caml org-category-capture ocp-indent minitest java-snippets insert-shebang merlin winum fuzzy seq nixos-options ox-pandoc pandoc-mode ht cargo hide-comnt pcache auctex-latexmk csv-mode window-numbering volatile-highlights vi-tilde-fringe uuidgen spaceline powerline rainbow-delimiters paradox open-junk-file neotree move-text lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation google-translate golden-ratio flx-ido fancy-battery expand-region evil-visual-mark-mode evil-tutor evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu dumb-jump define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol aggressive-indent adaptive-wrap ace-link reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl pug-mode helm-themes helm-swoop helm-mode-manager helm-make helm-hoogle helm-ag ace-jump-helm-line yapfify thrift py-isort pdf-tools tablist ox-gfm org-projectile org org-download livid-mode skewer-mode simple-httpd live-py-mode intero hlint-refactor git-link goto-chg eshell-z diminish company-shell company-ghci company-emacs-eclim ace-window avy cdlatex wolfram-mode stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode undo-tree pcre2el log4e gntp json-snatcher request flx fringe-helper web-completion-data dash-functional pos-tip inflections edn paredit peg eval-sexp-fu highlight spinner queue pkg-info epl popup alert git-commit eclim rake tern ghc s toml-mode racer rust-mode flycheck-rust company-racer deferred py-yapf swift-mode haml-mode auctex package-build go-eldoc company-go go-mode hydra js2-mode f magit-popup auto-complete gitignore-mode with-editor yasnippet async inf-ruby markdown-mode clojure-mode packed anaconda-mode flycheck haskell-mode git-gutter company projectile helm helm-core multiple-cursors json-reformat magit pythonic bind-key evil srefactor orgit magit-gitflow helm-flx git-gutter-fringe+ git-gutter+ evil-magit company-quickhelp clj-refactor yaml-mode xterm-color ws-butler which-key web-mode web-beautify use-package typo toc-org tagedit stickyfunc-enhance spacemacs-theme solarized-theme smeargle slim-mode shm shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv quelpa pyvenv python pytest pyenv-mode projectile-rails popwin pip-requirements persp-mode page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets nix-mode multi-term mmm-mode markdown-toc macrostep less-css-mode json-mode js2-refactor js-doc jade-mode ido-vertical-mode hy-mode htmlize hl-todo hindent help-fns+ helm-pydoc helm-projectile helm-nixos-options helm-gitignore helm-descbinds helm-css-scss helm-company helm-c-yasnippet haskell-snippets gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe gh-md flycheck-pos-tip flycheck-haskell fish-mode fill-column-indicator feature-mode eyebrowse exec-path-from-shell evil-visualstar evil-surround evil-escape eshell-prompt-extras esh-help emmet-mode emacs-eclim elisp-slime-nav disaster diff-hl cython-mode company-web company-tern company-statistics company-nixos-options company-ghc company-cabal company-c-headers company-auctex company-anaconda coffee-mode cmm-mode cmake-mode clang-format cider-eval-sexp-fu cider chruby bundler bind-map auto-yasnippet auto-compile align-cljlet ac-ispell)))
  '(safe-local-variable-values
    (quote
-    ((org-export-latex-listings quote minted)
+    ((checkdoc-minor-mode . t)
+     (mangle-whitespace . t)
+     (intero-targets "group-maker:lib" "group-maker:exe:group-maker" "group-maker:test:group-maker-test")
+     (org-export-latex-listings quote minted)
      (org-latex-listings . ’minted)
      (eval spacemacs/toggle-line-numbers)
      (eval setq org-hide-emphasis-markers t)

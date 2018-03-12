@@ -1,5 +1,4 @@
 # -*- mode: sh; -*-
-
 export DOTFILES="${HOME}/.dotfiles"
 
 source $DOTFILES/lib/exists
@@ -12,6 +11,8 @@ case "$OSTYPE" in
     bsd*)     OS="BSD" ;;
     *)        OS="unknown: $OSTYPE" ;;
 esac
+
+source $DOTFILES/shell/common/environment
 
 add_path "$HOME/.local/bin"
 add_path "$HOME/.cabal/bin"

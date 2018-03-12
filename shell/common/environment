@@ -1,6 +1,6 @@
 # -*- mode: sh; -*-
 
-if [ $OS = "OSX" ]; then
+if [ "$OS" = "OSX" ]; then
     export EDITOR="ec"
     export SUDO_EDITOR="ec"
 elif exists nvim; then
@@ -12,8 +12,9 @@ elif exists vim; then
 fi
 export TERM="screen-256color"
 export LANG="en_US.UTF-8"
-export CLASSPATH=".:/opt/stdlib.jar"
-export VIMRUNTIME="$HOME/.nix-profile/share/nvim/runtime"
+export CLASSPATH=".:/opt/algs4.jar"
+export ZPLUG_HOME="$DOTFILES/shell/zsh/zplug"
+# export VIMRUNTIME="$HOME/.nix-profile/share/nvim/runtime"
 export LP_ENABLE_GIT=0 # Disable Git in theme, too slow
 
 # vim:filetype=sh

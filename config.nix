@@ -12,10 +12,10 @@
         zsh
         nodejs
         "tern"
-        ];
+      ];
     };
 
-    go = go_1_8;
+    # go = go_1_8;
 
     myHunspell = hunspellWithDicts (with hunspellDicts; [
       en-us
@@ -27,15 +27,15 @@
         stdenv
         clang
         curl
+        bashInteractive
         diffutils
-        direnv
+        #direnv
         dos2unix
         entr
         git
-        gitAndTools.hub
+        #gitAndTools.hub
         httpie
         gnugrep
-        gnupg
         gawk
         patch
         gnutar
@@ -43,6 +43,7 @@
         xz
         zsh
         pkgconfig
+        wget
       ];
     };
 
@@ -61,6 +62,8 @@
       paths = [
         myHunspell
         emacs25
+        gnupg
+        nodePackages.tern
       ];
     };
 
@@ -93,6 +96,7 @@
       name = "vim-env";
       paths = [
         neovim
+        # go
       ];
     };
 
@@ -101,12 +105,12 @@
       paths = [
         nix-repl
         # nox
-        cabal2nix
-        nodePackages.node2nix
+        #cabal2nix
+        #nodePackages.node2nix
       ];
     };
 
-    mKpython-env = { pythonPackages, version } : 
+    mKpython-env = { pythonPackages, version } :
     buildEnv {
       name = "python${version}-env";
       paths = [
@@ -123,19 +127,22 @@
     js-env = buildEnv {
       name = "js-env";
       paths = [
-        nodejs
-        nodePackages.tern
+        nodejs-9_x
       ];
     };
 
     hs-env = buildEnv {
       name = "hs-env";
       paths = with haskellPackages; [
-        stack
         ghc
-        intero
         hindent
+        ghcid
+        stylish-haskell
+        intero
+        hpack
+        # hpack-convert
         hlint
+        doctest
       ];
     };
 
@@ -152,6 +159,7 @@
         rustc
         rustfmt
         rustracer
+        cargo
       ];
     };
 
@@ -199,6 +207,7 @@
       name = "ocaml-env";
       paths = with ocaml-ng.ocamlPackages_4_05; [
         ocaml
+        ocamlbuild
         merlin
         ocpIndent
         utop
