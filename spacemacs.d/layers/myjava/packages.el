@@ -34,6 +34,7 @@
     flycheck
     (eclim :excluded t)
     java-snippets
+    (javac-flycheck :location local)
     )
   "The list of Lisp packages required by the myjava layer.
 
@@ -76,34 +77,13 @@ Each entry is either:
 
 (defun myjava/post-init-flycheck ()
   "Configure flycheck for Java."
-  (flycheck-define-checker java/javac
-    "A Java syntax and style checker using javac."
-    :command ("javac"
-              (eval
-               (when (not (null-classpath flycheck-javac-infer-classpath))
-                 (list "-classpath" (make-classpath-str flycheck-javac-infer-classpath))))
-              source)
-    :error-patterns
-    ((error line-start (file-name) ":" line ":" " error:" (message) line-end)
-     (warning line-start (file-name) ":" line ":" " warning:" (message) line-end)
-     (info line-start (file-name) ":" line ":" " info:" (message) line-end))
-    :modes java-mode)
+  (setenv "CLASSPATH" ".:/opt/algs4.jar")
+  )
 
-  (flycheck-define-checker java/javac-in-place
-    "A Java syntax and style checker using javac that also automatically compiles the file."
-    :command ("javac"
-              (eval
-               (when (not (null-classpath flycheck-javac-infer-classpath))
-                 (list "-classpath" (make-classpath-str flycheck-javac-infer-classpath))))
-              source-original)
-    :error-patterns
-    ((error line-start (file-name) ":" line ":" " error:" (message) line-end)
-     (warning line-start (file-name) ":" line ":" " warning:" (message) line-end)
-     (info line-start (file-name) ":" line ":" " info:" (message) line-end))
-    :modes java-mode
-    :predicate flycheck-buffer-saved-p)
-  (add-to-list 'flycheck-checkers 'java/javac)
-  (add-to-list 'flycheck-checkers 'java/javac-in-place)
+(defun myjava/init-javac-flycheck ()
+  ""
+  (use-package javac-flycheck
+               :after flycheck)
   )
 
 (defun myjava/init-java-snippets () ())
