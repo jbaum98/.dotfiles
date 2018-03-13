@@ -1,0 +1,4 @@
+{ zsh }:
+{
+  env.zsh = [ zsh ];
+}

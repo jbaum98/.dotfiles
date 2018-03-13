@@ -1,0 +1,4 @@
+{ stow }: 
+{
+  env.default = [ stow ];
+}

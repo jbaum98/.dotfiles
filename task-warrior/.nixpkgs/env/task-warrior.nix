@@ -1,0 +1,4 @@
+{ taskwarrior }:
+{
+  env.default = [ taskwarrior ];
+}

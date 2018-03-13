@@ -12,14 +12,40 @@ let
           else [];
     in concatLists (lib.mapAttrsToList f children);
 
-  mergeSets = foldl' (a: b: a // b) {};
-
   importAll = map (path: pkgs.callPackage path {});
 
-  stowed = mergeSets (importAll (nixFilesIn ~/.nixpkgs/stowed));
+  recursiveMergeUpdateUntil = pred: lhs: rhs:
+    let f = attrPath:
+      lib.zipAttrsWith (n: values:
+        let first  = head values;
+            rest   = tail values;
+            second = head rest;
+        in if rest == [] then first
+        else if isList first && isList second then second ++ first
+        else if pred attrPath second first then first
+        else f (attrPath ++ [n]) values
+      );
+    in f [] [rhs lhs];
+
+  recursiveMergeUpdate = lhs: rhs:
+    recursiveMergeUpdateUntil (path: lhs: rhs:
+      !(isAttrs lhs && isAttrs rhs)
+    ) lhs rhs;
+
+  envLists = (lib.foldl' recursiveMergeUpdate {} (importAll (nixFilesIn ~/.nixpkgs/env))).env;
+
+  toEnv = envName: paths: pkgs.buildEnv {
+    name = "${envName}-env";
+    inherit paths;
+  };
+
+  env = lib.mapAttrs toEnv envLists;
 in
 {
-  inherit stowed;
+  packageOverrides = pkgs: with pkgs; rec {
+    inherit envLists env;
+  };
+
   allowUnfree = true;
   allowBroken = true;
 }

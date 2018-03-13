@@ -1,0 +1,4 @@
+{ neovim }:
+{
+  env.vim = [ neovim ];
+}

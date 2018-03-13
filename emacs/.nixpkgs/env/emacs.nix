@@ -4,11 +4,8 @@ let
     en-us
   ]);
 in {
-  emacs-env = buildEnv {
-    name = "emacs-env";
-    paths = [
-      myHunspell
-      emacs25
-    ];
-  };
+  env.emacs = [
+    myHunspell
+    emacs25
+  ];
 }

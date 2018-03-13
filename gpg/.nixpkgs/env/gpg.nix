@@ -1,0 +1,4 @@
+{ gnupg }:
+{
+  env.default = [ gnupg ];
+}
