@@ -46,7 +46,6 @@ This function should only modify configuration layer settings."
      racket
      haskell
      shell-scripts
-     myjava
      rust
      coq
      csv
@@ -59,8 +58,6 @@ This function should only modify configuration layer settings."
      ;; Fancy Stuff
      (auto-completion :variables
                       auto-completion-enable-snippets-in-popup t)
-     ;; Needs to go after
-     myocaml
      git
      (shell :variables
             shell-default-height 30
@@ -95,23 +92,22 @@ This function should only modify configuration layer settings."
    dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
-  "Initialization:
-This function is called at the very beginning of Spacemacs startup,
-before layer configuration.
-It should only modify the values of Spacemacs settings."
+  "Initialization function.
+This function is called at the very startup of Spacemacs initialization
+before layers configuration.
+You should not put any user code in there besides modifying the variable
+values."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
-   ;; If non-nil ELPA repositories are contacted via HTTPS whenever it's
+   ;; If non nil ELPA repositories are contacted via HTTPS whenever it's
    ;; possible. Set it to nil if you have no way to use HTTPS in your
    ;; environment, otherwise it is strongly recommended to let it set to t.
    ;; This variable has no effect if Emacs is launched with the parameter
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
    dotspacemacs-elpa-https t
-
    ;; Maximum allowed time in seconds to contact an ELPA repository.
-   ;; (default 5)
    dotspacemacs-elpa-timeout 5
 
    ;; Set `gc-cons-threshold' and `gc-cons-percentage' when startup finishes.
@@ -123,7 +119,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil then Spacelpa repository is the primary source to install
    ;; a locked version of packages. If nil then Spacemacs will install the
    ;; lastest version of packages from MELPA. (default nil)
-   dotspacemacs-use-spacelpa t
+   dotspacemacs-use-spacelpa nil
 
    ;; If non-nil then verify the signature for downloaded Spacelpa archives.
    ;; (default nil)
@@ -453,9 +449,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
     (setq prettify-symbols-alist
           (append
            '(
-	     ;; Big step notation
-	     ("\\" . #X27f1)
-	     ("-->" . #X21A6)
+             ;; Big step notation
+             ("\\\\" . #X21d3)
+             ("-->" . #X21A6)
 
              ;; Double-ended hyphen arrows ----------------
              ("<->" . #Xe100)
@@ -721,25 +717,27 @@ before packages are loaded."
 
   ;; Do not write anything past this comment. This is where Emacs will
   ;; auto-generate custom variable definitions.
-  (custom-set-variables
-   ;; custom-set-variables was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   '(display-raw-bytes-as-hex t)
-   '(evil-want-Y-yank-to-eol nil)
-   '(fill-column 72)
-   '(flycheck-highlighting-mode (quote symbols))
-   '(ispell-program-name "hunspell")
-   '(package-selected-packages
-     (quote
-      (csv-mode company-coq company-math math-symbol-lists java-snippets insert-shebang fish-mode company-shell intero hlint-refactor hindent haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode company-emacs-eclim eclim undo-tree diminish pkg-info epl packed popup orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot goto-chg async company-anaconda anaconda-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode cython-mode pythonic f web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode haml-mode emmet-mode company-web web-completion-data racket-mode faceup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode spaceline powerline popwin neotree hl-todo golden-ratio fill-column-indicator fancy-battery hydra counsel swiper bind-key avy evil ivy projectile helm helm-core xterm-color unfill smeargle shell-pop org-plus-contrib mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy fsharp-mode s company-quickhelp flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub let-alist with-editor eshell-z eshell-prompt-extras esh-help dash diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete which-key wgrep use-package smex pcre2el macrostep ivy-hydra help-fns+ helm-make flx exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav counsel-projectile bind-map auto-compile ace-window))))
-  (custom-set-faces
-   ;; custom-set-faces was added by Custom.
-   ;; If you edit it by hand, you could mess it up, so be careful.
-   ;; Your init file should contain only one such instance.
-   ;; If there is more than one, they won't work right.
-   )
+  
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(display-raw-bytes-as-hex t)
+ '(evil-want-Y-yank-to-eol nil)
+ '(fill-column 72)
+ '(flycheck-highlighting-mode (quote symbols))
+ '(ispell-program-name "hunspell")
+ '(package-selected-packages
+   (quote
+    (ws-butler volatile-highlights vi-tilde-fringe uuidgen toml-mode rainbow-delimiters racer move-text lorem-ipsum linum-relative link-hint indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation flycheck-rust expand-region evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight column-enforce-mode clean-aindent-mode cargo rust-mode auto-highlight-symbol aggressive-indent adaptive-wrap csv-mode company-coq company-math math-symbol-lists java-snippets insert-shebang fish-mode company-shell intero hlint-refactor hindent haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode company-emacs-eclim eclim undo-tree diminish pkg-info epl packed popup orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot goto-chg async company-anaconda anaconda-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode cython-mode pythonic f web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode haml-mode emmet-mode company-web web-completion-data racket-mode faceup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode spaceline powerline popwin neotree hl-todo golden-ratio fill-column-indicator fancy-battery hydra counsel swiper bind-key avy evil ivy projectile helm helm-core xterm-color unfill smeargle shell-pop org-plus-contrib mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy fsharp-mode s company-quickhelp flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub let-alist with-editor eshell-z eshell-prompt-extras esh-help dash diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete which-key wgrep use-package smex pcre2el macrostep ivy-hydra help-fns+ helm-make flx exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav counsel-projectile bind-map auto-compile ace-window))))
+  
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
   (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -750,29 +748,14 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(company-coq-disabled-features (quote (obsolete-settings)) t)
- '(company-coq-prettify-symbols-alist
-   (quote
-    (("|-" . 8866)
-     ("||" . 8214)
-     ("True" . 8868)
-     ("False" . 8869)
-     ("fun" . 955)
-     ("forall" . 8704)
-     ("exists" . 8707)
-     ("nat" . 8469)
-     ("Prop" . 8473)
-     ("Real" . 8477)
-     ("bool" . 120121))))
  '(display-raw-bytes-as-hex t)
- '(epg-gpg-program "~/.nix-profile/bin/gpg2")
  '(evil-want-Y-yank-to-eol nil)
  '(fill-column 72)
  '(flycheck-highlighting-mode (quote symbols))
  '(ispell-program-name "hunspell")
  '(package-selected-packages
    (quote
-    (csv-mode company-coq company-math math-symbol-lists java-snippets insert-shebang fish-mode company-shell intero hlint-refactor hindent haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode company-emacs-eclim eclim undo-tree diminish pkg-info epl packed popup orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot goto-chg async company-anaconda anaconda-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode cython-mode pythonic f web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode haml-mode emmet-mode company-web web-completion-data racket-mode faceup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode spaceline powerline popwin neotree hl-todo golden-ratio fill-column-indicator fancy-battery hydra counsel swiper bind-key avy evil ivy projectile helm helm-core xterm-color unfill smeargle shell-pop org-plus-contrib mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy fsharp-mode s company-quickhelp flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub let-alist with-editor eshell-z eshell-prompt-extras esh-help dash diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete which-key wgrep use-package smex pcre2el macrostep ivy-hydra help-fns+ helm-make flx exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav counsel-projectile bind-map auto-compile ace-window))))
+    (yasnippet-snippets toc-org symon string-inflection spaceline-all-the-icons all-the-icons memoize solarized-theme proof-general pippel pipenv password-generator overseer org-bullets org-brain nameless ivy-xref importmagic epc ctable concurrent deferred impatient-mode flycheck-bashate evil-org evil-lion evil-cleverparens paredit editorconfig dante lcr counsel-css browse-at-remote font-lock+ ws-butler volatile-highlights vi-tilde-fringe uuidgen toml-mode rainbow-delimiters racer move-text lorem-ipsum linum-relative link-hint indent-guide hungry-delete highlight-parentheses highlight-numbers parent-mode highlight-indentation flycheck-rust expand-region evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-ediff evil-args evil-anzu anzu eval-sexp-fu highlight column-enforce-mode clean-aindent-mode cargo rust-mode auto-highlight-symbol aggressive-indent adaptive-wrap csv-mode company-coq company-math math-symbol-lists java-snippets insert-shebang fish-mode company-shell intero hlint-refactor hindent haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode company-emacs-eclim eclim undo-tree diminish pkg-info epl packed popup orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot goto-chg async company-anaconda anaconda-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode cython-mode pythonic f web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode haml-mode emmet-mode company-web web-completion-data racket-mode faceup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode spaceline powerline popwin neotree hl-todo golden-ratio fill-column-indicator fancy-battery hydra counsel swiper bind-key avy evil ivy projectile helm helm-core xterm-color unfill smeargle shell-pop org-plus-contrib mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy fsharp-mode s company-quickhelp flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit ghub let-alist with-editor eshell-z eshell-prompt-extras esh-help dash diff-hl company-statistics company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete which-key wgrep use-package smex pcre2el macrostep ivy-hydra help-fns+ helm-make flx exec-path-from-shell evil-visualstar evil-escape elisp-slime-nav counsel-projectile bind-map auto-compile ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
