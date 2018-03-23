@@ -13,8 +13,9 @@ zplug "lib/directories", from:oh-my-zsh
 
 zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
 
-zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-syntax-highlighting", defer:3
 zplug "zsh-users/zsh-history-substring-search", defer:3
+zplug "zsh-users/zsh-autosuggestions", defer:3
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check; then
