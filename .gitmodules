@@ -1,9 +1,6 @@
 [submodule "shell/liquidprompt"]
 	path = shell/.liquidprompt
 	url = https://github.com/nojhan/liquidprompt
-[submodule "emacs/.emacs.d"]
-	path = emacs/.emacs.d
-	url = https://github.com/syl20bnr/spacemacs
 [submodule "vim/.vim/bundle/repos/github.com/Shougo/dein.vim"]
 	path = vim/.vim/bundle/repos/github.com/Shougo/dein.vim
 	url = https://github.com/Shougo/dein.vim
