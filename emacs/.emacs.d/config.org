@@ -148,9 +148,6 @@ It's convenient to be able to get at this quickly.
      (use-package general
        :config
        (general-evil-setup t))
-
-
-     (setq-default indent-tabs-mode nil)
    #+END_SRC
 
    ~fd~ will take you from insert mode to normal mode, like ~ESC~.
@@ -492,6 +489,13 @@ It's convenient to be able to get at this quickly.
       (add-hook 'prog-mode-hook 'electric-pair-mode)
     #+END_SRC
 
+    Indentation at 2 spaces.
+    #+BEGIN_SRC emacs-lisp
+      (setq-default indent-tabs-mode nil)
+      (custom-set-variables
+       '(tab-width 2)
+       '(c-basic-offset 2))
+    #+END_SRC
 *** Git
     Magit is better than git at being git.
     #+BEGIN_SRC emacs-lisp
