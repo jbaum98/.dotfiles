@@ -120,6 +120,11 @@ It's convenient to be able to get at this quickly.
     (save-place-mode)
   #+END_SRC
 
+  Save history between sessions.
+  #+BEGIN_SRC emacs-lisp
+    (savehist-mode 1)
+  #+END_SRC
+
   Replace highlighted text with type.
   #+BEGIN_SRC emacs-lisp
     (delete-selection-mode 1)
