@@ -147,7 +147,7 @@ set autoread
 " }}}
 
 " Last Position Jump {{{
-autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif 
+autocmd BufReadPost * if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 " }}}
 
 " Colors {{{
@@ -283,6 +283,11 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
 " Git Commit {{{
 autocmd FileType gitcommit setlocal spell
+" }}}
+
+" Persistent Undo {{{
+set undofile
+set undodir=~/.cache/nvim/undo
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0
