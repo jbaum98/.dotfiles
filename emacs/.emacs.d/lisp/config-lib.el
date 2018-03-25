@@ -50,8 +50,8 @@ todo-marker CANC."
           (when (file-newer-than-file-p config-org config-el)
             (jakemaks/tangle-config-org config-org config-el))
           (require 'config)
-          (let ((byte-compile-warnings '(not noruntime)))
-            (byte-compile-file config-el)))
+          (start-process "emacs-compile" "emacs-compile-config"
+                         "emacs" "-Q" "--batch" "-l" config-el "-f" "batch-byte-compile" config-el))
       (require 'config))))
 
 (defun jakemaks/compile-config ()
