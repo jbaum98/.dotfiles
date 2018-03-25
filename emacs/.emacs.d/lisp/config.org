@@ -509,11 +509,12 @@
 ** Modeline
    Use =spaceline= for a nice modeline.
    #+BEGIN_SRC emacs-lisp
-     ;(use-package spaceline-config
-     ;  :ensure spaceline
-     ;  :config
-     ;  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-     ;  (spaceline-emacs-theme))
+     (use-package spaceline-config
+       :ensure spaceline
+       :config
+       (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state
+             powerline-default-separator 'utf-8)
+       (spaceline-emacs-theme))
    #+END_SRC
 
    Use =diminish= to keep the modeline clean.
