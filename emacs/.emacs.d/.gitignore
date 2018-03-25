@@ -1,5 +1,10 @@
+*~
+*.elc
+*#
 elpa
-config.el
+lisp/config.el
 meghanada
 places
+history
+smex-items
 custom.el

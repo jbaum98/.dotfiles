@@ -4,53 +4,96 @@
 #+TOC: true
 
 * Setup
+** Timing
+   Write a message saying how long startup took.
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'emacs-startup-hook
+               (lambda ()
+                 (message "Emacs ready in %s with %d garbage collections."
+                          (format "%.2f seconds"
+                                  (float-time
+                                   (time-subtract after-init-time before-init-time)))
+                          gcs-done)))
+   #+END_SRC
+
+** Garbage Collection
+   Make startup faster by reducing the frequency of garbage collection.
+   #+BEGIN_SRC emacs-lisp
+     (setq gc-cons-threshold most-positive-fixnum)
+   #+END_SRC
 ** Init files
-It's convenient to be able to get at this quickly.
-#+BEGIN_SRC emacs-lisp
-  (defcustom init-file "~/.emacs.d/config.org"
-    "The path to the init org file."
-    :type '(string))
+   It's convenient to be able to get at this quickly.
+   #+BEGIN_SRC emacs-lisp
+     (defvar jakemaks/init-file "~/.emacs.d/lisp/config.org")
 
-  (defun find-init-file ()
-    "Edit the init file in the current buffer."
-    (interactive)
-    (find-file init-file))
-
-  (defun reload-init-file ()
-    "Reload the init file."
-    (interactive)
-    (org-babel-load-file (expand-file-name init-file)))
-#+END_SRC
+     (defun jakemaks/find-init-file ()
+       "Edit the init file in the current buffer."
+       (interactive)
+       (find-file jakemaks/init-file))
+   #+END_SRC
 
 ** Package repositories
    Get packages from ELPA and MELPAby default. This can be customized
    (e.g. to use a local checkout of =spacemacs-elpa-mirror= by
    customizing =package-archives=).
-
    #+BEGIN_SRC emacs-lisp
-     (require 'package)
-     (setq package-enable-at-startup nil)
      (setq package-archives
            '(("gnu" . "https://elpa.gnu.org/packages/")
              ("melpa" . "https://melpa.org/packages/")
              ("marmalade" . "https://marmalade-repo.org/packages/")))
-     (package-initialize)
    #+END_SRC
 
-  From here-on out =use-package= loads packages. We almost always want to =:ensure= packages are present.
+   Install =use-package= if not yet installed.
+   #+BEGIN_SRC emacs-lisp
+     (eval-when-compile
+       (package-initialize)
+       (unless (package-installed-p 'use-package)
+         (package-refresh-contents)
+         (package-install 'use-package)))
+   #+END_SRC
+
+  Disable package initialize. We usually don't need it because packages
+  are installed at compile time.
   #+BEGIN_SRC emacs-lisp
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents)
-      (package-install 'use-package))
-
-    (eval-when-compile
-      (require 'use-package))
-
-    (custom-set-variables
-     '(use-package-always-ensure t)
-     '(use-package-verbose nil))
+    (setq package-enable-at-startup nil)
   #+END_SRC
 
+  Ask =package.el= note to touch our =init.el=.
+  #+BEGIN_SRC emacs-lisp
+    (setq package--init-file-ensured t)
+  #+END_SRC
+
+  Set =use-package-verbose= to ='t= for interpreted and to =nil= for
+  byte-compiled.
+  #+BEGIN_SRC emacs-lisp
+    (eval-and-compile
+      (setq use-package-verbose
+            (not (bound-and-true-p byte-compile-current-file))))
+  #+END_SRC
+
+  Add the macro generated list of package.el loadpaths to load-path.
+  #+BEGIN_SRC emacs-lisp
+    (setq package-user-dir "~/.emacs.d/elpa")
+    (mapc #'(lambda (add) (add-to-list 'load-path add))
+          (eval-when-compile
+            (setq use-package-always-ensure t)
+            (let ((package-user-dir-real (file-truename package-user-dir)))
+              ;; The reverse is necessary, because outside we mapc
+              ;; add-to-list element-by-element, which reverses.
+              (nreverse (apply #'nconc
+                               ;; Only keep package.el provided loadpaths.
+                               (mapcar #'(lambda (path)
+                                           (if (string-prefix-p package-user-dir-real (file-truename path))
+                                               (list path)
+                                              nil))
+                                       load-path))))))
+  #+END_SRC
+
+  =use-package= uses =diminish= and =bind-key=.
+  #+BEGIN_SRC emacs-lisp
+    (use-package diminish)
+    (use-package bind-key)
+  #+END_SRC
 ** Custom settings load file
    Create an =init-custom.el= to store customizations. This will not be tracked by git.
    #+BEGIN_SRC emacs-lisp
@@ -64,7 +107,7 @@ It's convenient to be able to get at this quickly.
 * Preferences
   Always use lexical binding.
   #+BEGIN_SRC emacs-lisp
-    (customize-set-variable 'lexical-binding t)
+    (setq lexical-binding 't)
   #+END_SRC
 
   Use UTF-8 encoding.
@@ -77,7 +120,8 @@ It's convenient to be able to get at this quickly.
     '(inhibit-startup-screen t)
   #+END_SRC
 
-  On  I use ⌘ as meta and prefer ⌥ to do nothing so I can still insert special characters like easily.
+  On  I use ⌘ as meta and prefer ⌥ to do nothing so I can still insert
+  special characters like easily.
   #+BEGIN_SRC emacs-lisp
     (setq mac-command-modifier 'meta
           mac-option-modifier 'none)
@@ -158,8 +202,8 @@ It's convenient to be able to get at this quickly.
    ~fd~ will take you from insert mode to normal mode, like ~ESC~.
    #+BEGIN_SRC emacs-lisp
      (use-package evil-escape
-       :config
-       (evil-escape-mode)
+       :commands (evil-escape-pre-command-hook)
+       :init (add-hook 'pre-command-hook 'evil-escape-pre-command-hook)
        :custom
        (evil-escape-key-sequence "fd"))
    #+END_SRC
@@ -186,12 +230,12 @@ It's convenient to be able to get at this quickly.
 *** Leader key
    Use =SPC= for leader key.
    #+BEGIN_SRC emacs-lisp
-     (defcustom leader-key "SPC"
+     (defvar jakemaks/leader-key "SPC"
        "Leader key in the style of vim.")
 
      (general-create-definer leader-def
        :states '(normal visual)
-       :prefix leader-key)
+       :prefix jakemaks/leader-key)
 
      (general-define-key
       :states 'motion
@@ -200,12 +244,10 @@ It's convenient to be able to get at this quickly.
       ":" 'evil-repeat-find-char)
 
      (leader-def
-       :states '(normal)
        "SPC" 'execute-extended-command
        "/" 'comment-region
        "\\\\" 'uncomment-region
-       "." 'find-init-file
-       "R" 'reload-init-file
+       "." 'jakemaks/find-init-file
        "W" 'toggle-truncate-lines
        "X" 'delete-reload-whitespace
        "qq" 'kill-emacs)
@@ -325,12 +367,7 @@ It's convenient to be able to get at this quickly.
        "Switch to the `*scratch*' buffer. Create it first if needed."
        (interactive)
        (let ((exists (get-buffer "*scratch*")))
-         (switch-to-buffer (get-buffer-create "*scratch*"))
-         (when (and (not exists)
-                    (not (eq major-mode dotspacemacs-scratch-mode))
-                    (fboundp dotspacemacs-scratch-mode))
-           (funcall dotspacemacs-scratch-mode))))
-
+         (switch-to-buffer (get-buffer-create "*scratch*"))))
 
      (leader-def
        :infix "b"
@@ -342,34 +379,41 @@ It's convenient to be able to get at this quickly.
        "s" 'jakemaks/switch-to-scratch-buffer)
    #+END_SRC
 
+* Misc.
+  #+BEGIN_SRC emacs-lisp
+    (use-package recentf
+      :functions (recentf-remove-if-non-kept)
+      :defer 1)
+    (use-package org
+      :functions (org-element-type)
+      :mode ("\\.org\\'" . org-mode))
+  #+END_SRC
 * Interface
 ** Command Completion
    =smart M-x= suggests =M-x= commands based on recency and frequency.
    I don't tend to use it directly but counsel uses it to order suggestions.
    #+BEGIN_SRC emacs-lisp
-     (use-package smex)
+     (use-package smex
+       :defer 4)
    #+END_SRC
 
    =ivy= is a generic completion framework which uses the minibuffer.
    Turning on =ivy-mode= enables replacement of lots of built in =ido=
    functionality.
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp :tangle no
      (use-package ivy
        :diminish ivy-mode
        :config
-       (ivy-mode t))
-   #+END_SRC
-
-   By default ivy starts filters with =^=. I don't normally want that
-   and can easily type it manually when I do.
-   #+BEGIN_SRC emacs-lisp
-     (setq ivy-initial-inputs-alist nil)
+       (ivy-mode t)
+       :custom
+       (ivy-initial-inputs-alist nil))
    #+END_SRC
 
    =counsel= is a collection of =ivy= enhanced versions of common Emacs
    commands. I haven't bound much as =ivy-mode= takes care of most things.
    #+BEGIN_SRC emacs-lisp
      (use-package counsel
+       :diminish counsel-mode
        :bind (("M-x" . counsel-M-x))
        :general
        (general-nmap (general-chord "yy") 'counsel-yank-pop))
@@ -383,7 +427,8 @@ It's convenient to be able to get at this quickly.
 
    =hydra= presents menus for =ivy= commands.
    #+BEGIN_SRC emacs-lisp
-     (use-package ivy-hydra)
+     (use-package ivy-hydra
+       :defer 4)
    #+END_SRC
 
 ** Discoverable keybindings
@@ -461,12 +506,14 @@ It's convenient to be able to get at this quickly.
 ** Modeline
    Use =spaceline= for a nice modeline.
    #+BEGIN_SRC emacs-lisp
-     (use-package spaceline-config
-       :ensure spaceline
-       :config
-       (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
-       (spaceline-emacs-theme))
+     ;(use-package spaceline-config
+     ;  :ensure spaceline
+     ;  :config
+     ;  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+     ;  (spaceline-emacs-theme))
    #+END_SRC
+
+   Use =diminish= to keep the modeline clean.
 
 * Programming
 ** Common Stuff
@@ -480,13 +527,15 @@ It's convenient to be able to get at this quickly.
     #+BEGIN_SRC emacs-lisp
       (use-package smartparens
           :diminish smartparens-mode
+          :defer 2
           :config
           (add-hook 'prog-mode-hook 'smartparens-mode))
     #+END_SRC
 
     Reindent after every change.
     #+BEGIN_SRC emacs-lisp
-      (use-package aggressive-indent)
+      (use-package aggressive-indent
+        :defer 2)
     #+END_SRC
 
     Automatically insert parentheses.
@@ -513,8 +562,7 @@ It's convenient to be able to get at this quickly.
     #+END_SRC
 
     Display line changes in gutter based on git history. Enable it everywhere.
-
-    #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp :tangle no
       (use-package git-gutter
         :config
         (global-git-gutter-mode 't)
@@ -529,26 +577,10 @@ It's convenient to be able to get at this quickly.
 
 *** Syntax Checking
     #+BEGIN_SRC emacs-lisp
-      (defun jakemaks/toggle-flycheck-error-list ()
-        "Toggle flycheck's error list window.
-           If the error list is visible, hide it.  Otherwise, show it."
-        (interactive)
-        (-if-let (window (flycheck-get-error-list-window))
-                 (quit-window nil window)
-                 (flycheck-list-errors)))
-
-      (defun jakemaks/goto-flycheck-error-list ()
-        "Open and go to the error list buffer."
-        (interactive)
-        (unless (get-buffer-window (get-buffer flycheck-error-list-buffer))
-          (flycheck-list-errors)
-          (switch-to-buffer-other-window flycheck-error-list-buffer)))
-
       (use-package flycheck
         :commands (flycheck-mode flycheck-define-checker)
         :config
         (add-hook 'after-init-hook 'global-flycheck-mode)
-        (add-to-list 'flycheck-checkers 'proselint)
         ;; Define fringe indicator / warning levels
         (define-fringe-bitmap 'flycheck-fringe-bitmap-ball
           (vector #b00000000
@@ -583,6 +615,23 @@ It's convenient to be able to get at this quickly.
           :overlay-category 'flycheck-info-overlay
           :fringe-bitmap 'flycheck-fringe-bitmap-ball
           :fringe-face 'flycheck-fringe-info)
+
+        (defun jakemaks/toggle-flycheck-error-list ()
+          "Toggle flycheck's error list window.
+                 If the error list is visible, hide it.  Otherwise, show it."
+          (interactive)
+          (-if-let (window (flycheck-get-error-list-window))
+              (quit-window nil window)
+            (flycheck-list-errors)))
+
+        (defun jakemaks/goto-flycheck-error-list ()
+          "Open and go to the error list buffer."
+          (interactive)
+          (unless (get-buffer-window (get-buffer flycheck-error-list-buffer))
+            (flycheck-list-errors)
+            (switch-to-buffer-other-window flycheck-error-list-buffer)))
+
+
         (leader-def
           :states '(normal)
           :infix "e"
@@ -598,27 +647,11 @@ It's convenient to be able to get at this quickly.
           ))
     #+END_SRC
 
-    Proselint is a syntax checker for English language. This defines a
-    custom checker which will run in texty modes.
-
-    #+BEGIN_SRC emacs-lisp
-      (flycheck-define-checker proselint
-        "A linter for prose."
-        :command ("proselint" source-inplace)
-        :error-patterns
-        ((warning line-start (file-name) ":" line ":" column ": "
-                  (id (one-or-more (not (any " "))))
-                  (message (one-or-more not-newline)
-                           (zero-or-more "\n" (any " ") (one-or-more not-newline)))
-                  line-end))
-        :modes (text-mode markdown-mode gfm-mode org-mode))
-    #+END_SRC
-
 *** Autocomplete
     Use =company= for autocompletion.
     #+BEGIN_SRC emacs-lisp
       (use-package company
-        :diminish
+        :diminish (company-mode company-search-mode)
         :config
         (add-hook 'after-init-hook 'global-company-mode)
         :custom
@@ -630,6 +663,7 @@ It's convenient to be able to get at this quickly.
     #+BEGIN_SRC emacs-lisp
       (use-package yasnippet
         :diminish yas-minor-mode
+        :commands (yas-hippie-try-expand)
         :config
         (add-to-list 'yas-snippet-dirs "~/.emacs.d/yasnippet-snippets")
         (add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets")
@@ -654,20 +688,18 @@ It's convenient to be able to get at this quickly.
 
 ** Markdown
 
-Markdown support isn't built into Emacs, add it with =markdown-mode=.
-#+BEGIN_SRC emacs-lisp
+   Markdown support isn't built into Emacs, add it with =markdown-mode=.
+   #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
     :commands (markdown-mode gfm-mode)
     :mode (("README\\.md\\'" . gfm-mode)
            ("\\.md\\'" . markdown-mode)
            ("\\.markdown\\'" . markdown-mode))
     :init (setq markdown-command "multimarkdown"))
-#+END_SRC
+   #+END_SRC
 ** Coq
    #+BEGIN_SRC emacs-lisp
-     (defcustom proof-general-load-path "~/.nix-profile/share/emacs/site-lisp/ProofGeneral/generic"
-       "The path to Proof General."
-       :type '(string))
+     (defvar proof-general-load-path "~/.nix-profile/share/emacs/site-lisp/ProofGeneral/generic")
 
      (use-package proof-site
        :load-path proof-general-load-path
@@ -680,8 +712,7 @@ Markdown support isn't built into Emacs, add it with =markdown-mode=.
        (custom-set-faces
         '(proof-eager-annotation-face ((t (:background "medium blue"))))
         '(proof-error-face ((t (:background "dark red"))))
-        '(proof-warning-face ((t (:background "indianred3"))))
-        )
+        '(proof-warning-face ((t (:background "indianred3")))))
        :general
        (general-nmap
         :keymaps 'coq-mode-map
@@ -776,4 +807,16 @@ Markdown support isn't built into Emacs, add it with =markdown-mode=.
 
   #+BEGIN_SRC emacs-lisp
     (setq debug-on-error 't)
+  #+END_SRC
+
+* Cleanup
+
+  Make garbage collection pauses faster by decreasing the threshold
+  #+BEGIN_SRC emacs-lisp
+    (setq gc-cons-threshold
+          (car (get 'gc-cons-threshold 'standard-value)))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+   (provide 'config)
   #+END_SRC
