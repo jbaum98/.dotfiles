@@ -810,10 +810,15 @@
 
 * Debug
 
+  Debug on all errors.
   #+BEGIN_SRC emacs-lisp
     (setq debug-on-error 't)
   #+END_SRC
 
+  Profile startup with =esup=.
+  #+BEGIN_SRC emacs-lisp :tangle no
+    (use-package esup)
+  #+END_SRC
 * Cleanup
 
   Make garbage collection pauses faster by decreasing the threshold
