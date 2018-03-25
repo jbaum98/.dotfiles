@@ -245,7 +245,7 @@
       ":" 'evil-repeat-find-char)
 
      (leader-def
-       "SPC" 'execute-extended-command
+       "SPC" 'counsel-M-x
        "/" 'comment-region
        "\\\\" 'uncomment-region
        "." 'jakemaks/find-init-file
@@ -285,56 +285,57 @@
   #+END_SRC
 
 *** File management
-  #+BEGIN_SRC emacs-lisp
-    (defun jakemaks/rename-current-buffer-file ()
-      "Renames current buffer and file it is visiting."
-      (interactive)
-      (let* ((name (buffer-name))
-             (filename (buffer-file-name)))
-        (if (not (and filename (file-exists-p filename)))
-            (error "Buffer '%s' is not visiting a file!" name)
-          (let* ((dir (file-name-directory filename))
-                 (new-name (read-file-name "New name: " dir)))
-            (cond ((get-buffer new-name)
-                   (error "A buffer named '%s' already exists!" new-name))
-                  (t
-                   (let ((dir (file-name-directory new-name)))
-                     (when (and (not (file-exists-p dir)) (yes-or-no-p (format "Create directory '%s'?" dir)))
-                       (make-directory dir t)))
-                   (rename-file filename new-name 1)
-                   (rename-buffer new-name)
-                   (set-visited-file-name new-name)
-                   (set-buffer-modified-p nil)
-                   (when (fboundp 'recentf-add-file)
-                     (recentf-add-file new-name)
-                     (recentf-remove-if-non-kept filename))
-                   (message "File '%s' successfully renamed to '%s'" name (file-name-nondirectory new-name))))))))
+    #+BEGIN_SRC emacs-lisp
+      (defun jakemaks/rename-current-buffer-file ()
+        "Renames current buffer and file it is visiting."
+        (interactive)
+        (let* ((name (buffer-name))
+               (filename (buffer-file-name)))
+          (if (not (and filename (file-exists-p filename)))
+              (error "Buffer '%s' is not visiting a file!" name)
+            (let* ((dir (file-name-directory filename))
+                   (new-name (read-file-name "New name: " dir)))
+              (cond ((get-buffer new-name)
+                     (error "A buffer named '%s' already exists!" new-name))
+                    (t
+                     (let ((dir (file-name-directory new-name)))
+                       (when (and (not (file-exists-p dir)) (yes-or-no-p (format "Create directory '%s'?" dir)))
+                         (make-directory dir t)))
+                     (rename-file filename new-name 1)
+                     (rename-buffer new-name)
+                     (set-visited-file-name new-name)
+                     (set-buffer-modified-p nil)
+                     (when (fboundp 'recentf-add-file)
+                       (recentf-add-file new-name)
+                       (recentf-remove-if-non-kept filename))
+                     (message "File '%s' successfully renamed to '%s'" name (file-name-nondirectory new-name))))))))
 
-    (defun jakemaks/delete-current-buffer-file ()
-      "Removes file connected to current buffer and kills buffer."
-      (interactive)
-      (let ((filename (buffer-file-name))
-            (buffer (current-buffer))
-            (name (buffer-name)))
-        (if (not (and filename (file-exists-p filename)))
-            (ido-kill-buffer)
-          (when (yes-or-no-p "Are you sure you want to delete this file? ")
-            (delete-file filename t)
-            (kill-buffer buffer)
-            (message "File '%s' successfully removed" filename)))))
+      (defun jakemaks/delete-current-buffer-file ()
+        "Removes file connected to current buffer and kills buffer."
+        (interactive)
+        (let ((filename (buffer-file-name))
+              (buffer (current-buffer))
+              (name (buffer-name)))
+          (if (not (and filename (file-exists-p filename)))
+              (ido-kill-buffer)
+            (when (yes-or-no-p "Are you sure you want to delete this file? ")
+              (delete-file filename t)
+              (kill-buffer buffer)
+              (message "File '%s' successfully removed" filename)))))
 
-    (leader-def
-      :infix "f"
-      "" '(:ignore t :which-key "files")
-      "s" 'save-buffer
-      "f" 'find-file
-      "R" 'jakemaks/rename-current-buffer-file
-      "D" 'jakemaks/delete-current-buffer-file
-      "v" '(:ignore t :which-key "local variables")
-      "vf" 'add-file-local-variable
-      "vp" 'add-file-local-variable-prop-line
-      "vd" 'add-dir-local-variable)
-  #+END_SRC
+      (leader-def
+        :infix "f"
+        "" '(:ignore t :which-key "files")
+        "s" 'save-buffer
+        "f" 'counsel-find-file
+        "r" 'counsel-recentf
+        "R" 'jakemaks/rename-current-buffer-file
+        "D" 'jakemaks/delete-current-buffer-file
+        "v" '(:ignore t :which-key "local variables")
+        "vf" 'add-file-local-variable
+        "vp" 'add-file-local-variable-prop-line
+        "vd" 'add-dir-local-variable)
+    #+END_SRC
 
 *** Help keys
   #+BEGIN_SRC emacs-lisp
@@ -401,8 +402,9 @@
    =ivy= is a generic completion framework which uses the minibuffer.
    Turning on =ivy-mode= enables replacement of lots of built in =ido=
    functionality.
-   #+BEGIN_SRC emacs-lisp :tangle no
+   #+BEGIN_SRC emacs-lisp
      (use-package ivy
+       :defer
        :diminish ivy-mode
        :config
        (ivy-mode t)
@@ -415,6 +417,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package counsel
        :diminish counsel-mode
+       :commands (counsel-recent counsel-M-x)
        :bind (("M-x" . counsel-M-x))
        :general
        (general-nmap (general-chord "yy") 'counsel-yank-pop))
