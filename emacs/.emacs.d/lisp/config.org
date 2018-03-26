@@ -50,6 +50,7 @@
        (unless (package-installed-p 'use-package)
          (package-refresh-contents)
          (package-install 'use-package)))
+     (setq use-package-always-ensure t)
    #+END_SRC
 
   Disable package initialize. We usually don't need it because packages
@@ -76,7 +77,6 @@
     (setq package-user-dir "~/.emacs.d/elpa")
     (mapc #'(lambda (add) (add-to-list 'load-path add))
           (eval-when-compile
-            (setq use-package-always-ensure t)
             (let ((package-user-dir-real (file-truename package-user-dir)))
               ;; The reverse is necessary, because outside we mapc
               ;; add-to-list element-by-element, which reverses.
@@ -91,6 +91,7 @@
 
   =use-package= uses =diminish= and =bind-key=.
   #+BEGIN_SRC emacs-lisp
+    (use-package use-package)
     (use-package diminish)
     (use-package bind-key)
   #+END_SRC
@@ -137,6 +138,7 @@
   #+BEGIN_SRC emacs-lisp
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
+    (menu-bar-mode -1)
   #+END_SRC
 
   Disable error bell.
@@ -227,8 +229,7 @@
   (add-to-list 'evil-emacs-state-modes 'vc-mode)
    #+END_SRC
 
-** Keyboard mappings
-*** Leader key
+** Leader key
    Use =SPC= for leader key.
    #+BEGIN_SRC emacs-lisp
      (defvar jakemaks/leader-key "SPC"
@@ -252,133 +253,6 @@
        "W" 'toggle-truncate-lines
        "X" 'delete-reload-whitespace
        "qq" 'kill-emacs)
-   #+END_SRC
-
-*** Window management
-  #+BEGIN_SRC emacs-lisp
-    (defun toggle-maximize-buffer ()
-      "Maximize buffer"
-      (interactive)
-      (if (and (= 1 (length (window-list)))
-               (assoc ?_ register-alist))
-          (jump-to-register ?_)
-        (progn
-          (window-configuration-to-register ?_)
-          (delete-other-windows))))
-
-    (winner-mode)
-
-    (leader-def
-      :infix "w"
-      "" '(:ignore t :which-key "windows")
-      "l" 'evil-window-right
-      "h" 'evil-window-left
-      "k" 'evil-window-up
-      "j" 'evil-window-down
-      "/" 'split-window-right
-      "-" 'split-window-below
-      "m" 'toggle-maximize-buffer
-      "d" 'delete-window
-      "u" 'winner-undo
-      "U" 'winner-redo
-      )
-  #+END_SRC
-
-*** File management
-    #+BEGIN_SRC emacs-lisp
-      (defun jakemaks/rename-current-buffer-file ()
-        "Renames current buffer and file it is visiting."
-        (interactive)
-        (let* ((name (buffer-name))
-               (filename (buffer-file-name)))
-          (if (not (and filename (file-exists-p filename)))
-              (error "Buffer '%s' is not visiting a file!" name)
-            (let* ((dir (file-name-directory filename))
-                   (new-name (read-file-name "New name: " dir)))
-              (cond ((get-buffer new-name)
-                     (error "A buffer named '%s' already exists!" new-name))
-                    (t
-                     (let ((dir (file-name-directory new-name)))
-                       (when (and (not (file-exists-p dir)) (yes-or-no-p (format "Create directory '%s'?" dir)))
-                         (make-directory dir t)))
-                     (rename-file filename new-name 1)
-                     (rename-buffer new-name)
-                     (set-visited-file-name new-name)
-                     (set-buffer-modified-p nil)
-                     (when (fboundp 'recentf-add-file)
-                       (recentf-add-file new-name)
-                       (recentf-remove-if-non-kept filename))
-                     (message "File '%s' successfully renamed to '%s'" name (file-name-nondirectory new-name))))))))
-
-      (defun jakemaks/delete-current-buffer-file ()
-        "Removes file connected to current buffer and kills buffer."
-        (interactive)
-        (let ((filename (buffer-file-name))
-              (buffer (current-buffer))
-              (name (buffer-name)))
-          (if (not (and filename (file-exists-p filename)))
-              (ido-kill-buffer)
-            (when (yes-or-no-p "Are you sure you want to delete this file? ")
-              (delete-file filename t)
-              (kill-buffer buffer)
-              (message "File '%s' successfully removed" filename)))))
-
-      (leader-def
-        :infix "f"
-        "" '(:ignore t :which-key "files")
-        "s" 'save-buffer
-        "f" 'counsel-find-file
-        "r" 'counsel-recentf
-        "R" 'jakemaks/rename-current-buffer-file
-        "D" 'jakemaks/delete-current-buffer-file
-        "v" '(:ignore t :which-key "local variables")
-        "vf" 'add-file-local-variable
-        "vp" 'add-file-local-variable-prop-line
-        "vd" 'add-dir-local-variable)
-    #+END_SRC
-
-*** Help keys
-  #+BEGIN_SRC emacs-lisp
-    (leader-def
-      :infix "h"
-      "" '(:ignore t :which-key "help")
-      "d" '(:ignore t :which-key "describe")
-      "db" 'describe-bindings
-      "dc" 'describe-char
-      "df" 'describe-function
-      "dk" 'describe-key
-      "dp" 'describe-package
-      "dt" 'describe-theme
-      "dv" 'describe-variable
-      "n" 'view-emacs-news)
-  #+END_SRC
-
-*** Buffers
-   #+BEGIN_SRC emacs-lisp
-     (defun jakemaks/kill-this-buffer (&optional arg)
-       "Kill the current buffer.
-     If the universal prefix argument is used then kill also the window."
-       (interactive "P")
-       (if (window-minibuffer-p)
-           (abort-recursive-edit)
-         (if (equal '(4) arg)
-             (kill-buffer-and-window)
-           (kill-buffer))))
-
-     (defun jakemaks/switch-to-scratch-buffer ()
-       "Switch to the `*scratch*' buffer. Create it first if needed."
-       (interactive)
-       (let ((exists (get-buffer "*scratch*")))
-         (switch-to-buffer (get-buffer-create "*scratch*"))))
-
-     (leader-def
-       :infix "b"
-       "" '(:ignore t :which-key "buffers")
-       "b" 'buffer-menu
-       "d" 'jakemaks/kill-this-buffer
-       "n" 'next-buffer
-       "p" 'previous-buffer
-       "s" 'jakemaks/switch-to-scratch-buffer)
    #+END_SRC
 
 * Misc.
@@ -489,12 +363,18 @@
    #+END_SRC
 
 * Appearance
+** Theme
+   #+BEGIN_SRC emacs-lisp
+     (use-package solarized-theme
+       :config (load-theme 'solarized-light t)
+       )
+   #+END_SRC
 ** Fonts
   Set a nice font.
   #+BEGIN_SRC emacs-lisp
     (when window-system
-      (add-to-list 'default-frame-alist '(font . "Fira Code 14"))
-      (set-face-attribute 'default nil :font "Fira Code 14"))
+      (add-to-list 'default-frame-alist '(font . "Fira Code 12"))
+      (set-face-attribute 'default nil :font "Fira Code 12"))
   #+END_SRC
 
   Set a preferred unicode font.
@@ -770,9 +650,9 @@
   Improve display of bullet points.
   #+BEGIN_SRC emacs-lisp
     (use-package org-bullets
-      :config
-      (setq org-bullets-bullet-list '("∙"))
-      (add-hook 'org-mode-hook 'org-bullets-mode))
+      :hook (org-mode . org-bullets-mode)
+      :custom
+      (org-bullets-bullet-list '("∙")))
   #+END_SRC
 
   Customize appearance.
@@ -800,6 +680,134 @@
                                 `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.33))))
                                 `(org-document-title ((t (,@headline ,@variable-tuple :height 1.33 :underline nil)))))))
   #+END_SRC
+
+* Keyboard mappings
+** Window management
+  #+BEGIN_SRC emacs-lisp
+    (defun toggle-maximize-buffer ()
+      "Maximize buffer"
+      (interactive)
+      (if (and (= 1 (length (window-list)))
+               (assoc ?_ register-alist))
+          (jump-to-register ?_)
+        (progn
+          (window-configuration-to-register ?_)
+          (delete-other-windows))))
+
+    (winner-mode)
+
+    (leader-def
+      :infix "w"
+      "" '(:ignore t :which-key "windows")
+      "l" 'evil-window-right
+      "h" 'evil-window-left
+      "k" 'evil-window-up
+      "j" 'evil-window-down
+      "/" 'split-window-right
+      "-" 'split-window-below
+      "m" 'toggle-maximize-buffer
+      "d" 'delete-window
+      "u" 'winner-undo
+      "U" 'winner-redo
+      )
+  #+END_SRC
+
+** File management
+    #+BEGIN_SRC emacs-lisp
+      (defun jakemaks/rename-current-buffer-file ()
+        "Renames current buffer and file it is visiting."
+        (interactive)
+        (let* ((name (buffer-name))
+               (filename (buffer-file-name)))
+          (if (not (and filename (file-exists-p filename)))
+              (error "Buffer '%s' is not visiting a file!" name)
+            (let* ((dir (file-name-directory filename))
+                   (new-name (read-file-name "New name: " dir)))
+              (cond ((get-buffer new-name)
+                     (error "A buffer named '%s' already exists!" new-name))
+                    (t
+                     (let ((dir (file-name-directory new-name)))
+                       (when (and (not (file-exists-p dir)) (yes-or-no-p (format "Create directory '%s'?" dir)))
+                         (make-directory dir t)))
+                     (rename-file filename new-name 1)
+                     (rename-buffer new-name)
+                     (set-visited-file-name new-name)
+                     (set-buffer-modified-p nil)
+                     (when (fboundp 'recentf-add-file)
+                       (recentf-add-file new-name)
+                       (recentf-remove-if-non-kept filename))
+                     (message "File '%s' successfully renamed to '%s'" name (file-name-nondirectory new-name))))))))
+
+      (defun jakemaks/delete-current-buffer-file ()
+        "Removes file connected to current buffer and kills buffer."
+        (interactive)
+        (let ((filename (buffer-file-name))
+              (buffer (current-buffer))
+              (name (buffer-name)))
+          (if (not (and filename (file-exists-p filename)))
+              (ido-kill-buffer)
+            (when (yes-or-no-p "Are you sure you want to delete this file? ")
+              (delete-file filename t)
+              (kill-buffer buffer)
+              (message "File '%s' successfully removed" filename)))))
+
+      (leader-def
+        :infix "f"
+        "" '(:ignore t :which-key "files")
+        "s" 'save-buffer
+        "f" 'counsel-find-file
+        "r" 'counsel-recentf
+        "R" 'jakemaks/rename-current-buffer-file
+        "D" 'jakemaks/delete-current-buffer-file
+        "v" '(:ignore t :which-key "local variables")
+        "vf" 'add-file-local-variable
+        "vp" 'add-file-local-variable-prop-line
+        "vd" 'add-dir-local-variable)
+    #+END_SRC
+
+** Help keys
+  #+BEGIN_SRC emacs-lisp
+    (leader-def
+      :infix "h"
+      "" '(:ignore t :which-key "help")
+      "d" '(:ignore t :which-key "describe")
+      "db" 'describe-bindings
+      "dc" 'describe-char
+      "df" 'describe-function
+      "dk" 'describe-key
+      "dp" 'describe-package
+      "dt" 'describe-theme
+      "dv" 'describe-variable
+      "n" 'view-emacs-news)
+  #+END_SRC
+
+** Buffers
+   #+BEGIN_SRC emacs-lisp
+     (defun jakemaks/kill-this-buffer (&optional arg)
+       "Kill the current buffer.
+     If the universal prefix argument is used then kill also the window."
+       (interactive "P")
+       (if (window-minibuffer-p)
+           (abort-recursive-edit)
+         (if (equal '(4) arg)
+             (kill-buffer-and-window)
+           (kill-buffer))))
+
+     (defun jakemaks/switch-to-scratch-buffer ()
+       "Switch to the `*scratch*' buffer. Create it first if needed."
+       (interactive)
+       (let ((exists (get-buffer "*scratch*")))
+         (switch-to-buffer (get-buffer-create "*scratch*"))))
+
+     (leader-def
+       :infix "b"
+       "" '(:ignore t :which-key "buffers")
+       "b" 'buffer-menu
+       "d" 'jakemaks/kill-this-buffer
+       "n" 'next-buffer
+       "p" 'previous-buffer
+       "s" 'jakemaks/switch-to-scratch-buffer)
+   #+END_SRC
 
 * Mac OS
   #+BEGIN_SRC emacs-lisp
