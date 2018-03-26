@@ -1,4 +1,3 @@
-;;; -*- lexical-binding: t; -*-
 #+TITLE: Emacs Config
 #+AUTHOR: Jake Waksbaum
 #+TOC: true
