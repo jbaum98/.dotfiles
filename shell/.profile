@@ -8,7 +8,7 @@ export PAGER=less
 
 # load environment files
 for file in $(find -L ~/.profile.d -name "*.env" -type f); do
-    source $file
+    . $file
 done
 
 #export TERM="xterm-256color"
