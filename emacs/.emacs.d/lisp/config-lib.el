@@ -41,28 +41,17 @@ todo-marker CANC."
 
 (defun jakemaks/ensure-config ()
   "Tangle configuration if necessary."
-  (let* ((config-org "~/.emacs.d/lisp/config.org")
-         (config-el (concat (file-name-sans-extension config-org) ".el"))
-         (config-elc (concat (file-name-sans-extension config-org) ".elc")))
-    (if (file-newer-than-file-p config-org config-elc)
-        (progn
-          (when (file-exists-p config-elc) (delete-file config-elc))
-          (when (file-newer-than-file-p config-org config-el)
-            (jakemaks/tangle-config-org config-org config-el))
-          (require 'config)
-          (start-process "emacs-compile" "emacs-compile-config"
-                         "emacs" "-Q" "--batch" "-l" config-el "-f" "batch-byte-compile" config-el))
-      (require 'config))))
-
-(defun jakemaks/compile-config ()
-  "Tangle and compile configuration if necessary."
-  (let* ((config-org "~/.emacs.d/lisp/config.org")
+  (let* ((buf-name "emacs-config-compile")
+         (config-org "~/.emacs.d/lisp/config.org")
          (config-el (concat (file-name-sans-extension config-org) ".el"))
          (config-elc (concat (file-name-sans-extension config-org) ".elc")))
     (when (file-newer-than-file-p config-org config-elc)
-      (delete-file config-elc)
-      (jakemaks/tangle-config-org config-org config-el)
-      (byte-compile-file config-el)
-      (delete-file config-el))))
+      (when (file-exists-p config-elc) (delete-file config-elc))
+      (when (file-newer-than-file-p config-org config-el)
+        (jakemaks/tangle-config-org config-org config-el)))
+    (require 'config)
+    (unless (file-exists-p config-elc)
+      (start-process "emacs-config-compile" "emacs-config-compile" "emacs" "-Q" "--batch" "-l" config-el "-f" "batch-byte-compile" config-el)
+      (display-buffer-at-bottom (get-buffer "emacs-config-compile") nil))))
 
 (provide 'config-lib)
