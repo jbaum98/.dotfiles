@@ -8,3 +8,6 @@ places
 history
 smex-items
 custom.el
+recentf
+var
+session*
