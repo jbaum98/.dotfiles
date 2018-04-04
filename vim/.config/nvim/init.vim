@@ -132,7 +132,7 @@ set wildmode=longest,list
 " make tab completion for files/buffers act like bash
 set wildmenu
 " use system clipboard
-set clipboard=unnamed
+set clipboard=unnamedplus
 " set leader key
 let mapleader = " "
 " Normally, Vim messes with iskeyword when you open a shell file. This can
