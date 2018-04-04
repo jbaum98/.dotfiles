@@ -175,6 +175,9 @@
    Use =evil-mode= to emulate Vim keybindings in Emacs.
    #+BEGIN_SRC emacs-lisp
      (use-package evil
+       :init
+       ;; Fix coq expansion bug https://github.com/ProofGeneral/PG/issues/174
+       (setq evil-want-abbrev-expand-on-insert-exit nil)
        :config (evil-mode 1))
    #+END_SRC
 
