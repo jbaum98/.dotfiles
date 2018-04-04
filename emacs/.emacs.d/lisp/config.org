@@ -509,6 +509,8 @@
           "h" 'flycheck-describe-checker
           "l" 'jakemaks/toggle-flycheck-error-list
           "L" 'jakemaks/goto-flycheck-error-list
+          "n" 'flycheck-next-error
+          "p" 'flycheck-previous-error
           "e" 'flycheck-explain-error-at-point
           "s" 'flycheck-select-checker
           "S" 'flycheck-set-checker-executable
