@@ -357,18 +357,13 @@
        )
    #+END_SRC
 ** Fonts
-  Set a nice font.
-  #+BEGIN_SRC emacs-lisp
-    (when window-system
-      (add-to-list 'default-frame-alist '(font . "Fira Code 10"))
-      (set-face-attribute 'default nil :font "Fira Code 10"))
-  #+END_SRC
-
-  Set a preferred unicode font.
-  #+BEGIN_SRC emacs-lisp
-    (when window-system
-      (set-fontset-font t 'unicode "STIX" nil 'prepend))
-  #+END_SRC
+   Set a nice font.
+   #+BEGIN_SRC emacs-lisp
+     (when window-system
+       (let ((face "Iosevka 10"))
+         (add-to-list 'default-frame-alist (cons 'font face))
+         (set-face-attribute 'default nil :font face)))
+   #+END_SRC
 
   Display pretty symbols.
   #+BEGIN_SRC emacs-lisp
