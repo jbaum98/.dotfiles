@@ -2,8 +2,6 @@
 	email = jake.waksbaum@gmail.com
 	name = Jake Waksbaum
 	signingkey = 649AB165
-[branch]
-	autosetuprebase = always
 [push]
 	default = simple
 [color]

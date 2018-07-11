@@ -13,7 +13,7 @@ if dein#load_state(expand('~/.vim/bundle'))
 
     " Deoplete (Code Completion) {{{
     call dein#add('Shougo/deoplete.nvim', {'on_event': 'InsertEnter'})
-    call dein#add('zchee/deoplete-clang')                 " C/C++
+    " call dein#add('zchee/deoplete-clang')                 " C/C++
     call dein#add('zchee/deoplete-go',
                 \ {'build': 'make', 'on_ft': 'go'})       " Go
     call dein#add('sebastianmarkow/deoplete-rust',
@@ -37,7 +37,7 @@ if dein#load_state(expand('~/.vim/bundle'))
     " call dein#add('vim-utils/vim-man')
     call dein#add('dhruvasagar/vim-markify',
                 \ {'on_event': 'QuickFixCmdPost'})
-    " call dein#add('tpope/vim-speeddating')
+    call dein#add('tpope/vim-speeddating')
     " call dein#add('kien/ctrlp.vim')
     " call dein#add('tacahiroy/ctrlp-funky')
     " call dein#add('tpope/vim-fugitive')
@@ -110,6 +110,8 @@ if dein#load_state(expand('~/.vim/bundle'))
                 \ {'on_ft': 'fortran'})       " Fortran
     call dein#add('tkztmk/vim-vala',
                 \ {'on_ft': 'vala'})          " Vala
+    call dein#add('elmcast/elm-vim',
+                \ {'on_ft': 'elm'})          " Elm
     " }}}
 
     call dein#end()
@@ -200,7 +202,9 @@ nnoremap j gj
 nnoremap k gk
 " make fd switch to command mode
 inoremap fd <esc>
-vnoremap fd <esc>
+vnoremap fd <esc>gV
+onoremap fd <esc>
+cnoremap fd <c-c><esc>
 "Move splits more easily
 nnoremap <leader>wj <c-w>j
 nnoremap <leader>wk <c-w>k
@@ -253,23 +257,23 @@ let g:deoplete#enable_refresh_always = 1
 " Use tab key
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-if has('mac')
-    let g:libclang_path = g:nixprofile . '/lib/libclang.dylib'
-else
-    let g:libclang_path = g:nixprofile . '/lib/libclang.so'
-end
+"if has('mac')
+"    let g:libclang_path = g:nixprofile . '/lib/libclang.dylib'
+"else
+"    let g:libclang_path = g:nixprofile . '/lib/libclang.so'
+"end
 "" C/C++ {{{{
-let g:deoplete#sources#clang#libclang_path = g:libclang_path
-let g:deoplete#sources#clang#clang_header = g:nixprofile . '/lib/clang'
+"let g:deoplete#sources#clang#libclang_path = g:libclang_path
+"let g:deoplete#sources#clang#clang_header = g:nixprofile . '/lib/clang'
 "" }}}}
 "" Go {{{{
-let g:deoplete#sources#go#gocode_binary = g:nixprofile . '/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-let g:deoplete#sources#go#pointer = 1
-let g:deoplete#sources#go#use_cache = 1
-let g:deoplete#sources#go#json_directory = '~/.cache/deoplete/go/$GOOS_$GOARCH'
-let g:deoplete#sources#go#cgo = 1
-let g:deoplete#sources#go#cgo#libclang_path = g:libclang_path
+"let g:deoplete#sources#go#gocode_binary = g:nixprofile . '/bin/gocode'
+"let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+"let g:deoplete#sources#go#pointer = 1
+"let g:deoplete#sources#go#use_cache = 1
+"let g:deoplete#sources#go#json_directory = '~/.cache/deoplete/go/$GOOS_$GOARCH'
+"let g:deoplete#sources#go#cgo = 1
+"let g:deoplete#sources#go#cgo#libclang_path = g:libclang_path
 "" }}}}
 "" Rust {{{{
 let g:deoplete#sources#rust#racer_binary = g:nixprofile . '/bin/racer'
