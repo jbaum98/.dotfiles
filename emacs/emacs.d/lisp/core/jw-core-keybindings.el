@@ -364,7 +364,7 @@ BINDINGS are additions KEY-DEF pairs. `kbd' is applied to every KEY."
 (with-eval-after-load "which-key"
   (jw/define-leader-keys
     "qq" 'save-buffers-kill-emacs
-    "qz" 'delete-frame))
+    "qz" 'save-buffers-kill-terminal))
 
 (provide 'jw-core-keybindings)
 ;;; jw-core-keybindings.el ends here
