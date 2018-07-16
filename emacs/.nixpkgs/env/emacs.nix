@@ -9,7 +9,7 @@ let
 in {
   env.emacs = [
     myHunspell
-    (emacsPrefetch ~/.dotfiles/emacs.d)
+    (emacsPrefetch ~/.dotfiles/emacs/emacs.d)
     proselint
   ];
 }
