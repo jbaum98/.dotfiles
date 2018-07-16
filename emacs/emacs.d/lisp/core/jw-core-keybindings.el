@@ -24,6 +24,8 @@
   "The key used for Emacs commands (after pressing on the leader key).")
 
 ;; Use which-key to show what keybindings are available.
+(autoload 'which-key-add-key-based-replacements "which-key")
+(autoload 'which-key-add-major-mode-key-based-replacements "which-key")
 (use-package which-key
   :ensure
   :demand
@@ -361,7 +363,8 @@ BINDINGS are additions KEY-DEF pairs. `kbd' is applied to every KEY."
 
 (with-eval-after-load "which-key"
   (jw/define-leader-keys
-    "qq" 'save-buffers-kill-emacs))
+    "qq" 'save-buffers-kill-emacs
+    "qz" 'delete-frame))
 
 (provide 'jw-core-keybindings)
 ;;; jw-core-keybindings.el ends here

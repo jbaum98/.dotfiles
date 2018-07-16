@@ -42,11 +42,16 @@
 
 (setf use-package-enable-imenu-support 't)
 
-(require 'bind-key)
 (eval-when-compile
-  (require 'use-package)
-  (use-package use-package
-    :ensure))
+  (require 'use-package))
+
+(use-package bind-key
+  :ensure
+  :demand)
+
+(use-package use-package
+  :ensure
+  :defer 5)
 
 (setf use-package-expand-minimally 't)
 
@@ -74,6 +79,7 @@
 (require 'jw-core-autocomplete)
 (require 'jw-core-ivy)
 (require 'jw-core-org)
+(require 'jw-core-magit)
 
 (require 'jw-lang-aurora)
 (require 'jw-lang-coq)

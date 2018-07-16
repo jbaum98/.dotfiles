@@ -11,18 +11,44 @@
 (eval-when-compile
   (require 'use-package))
 
-;; We want to hide pretty much everything but the text.
-(when window-system
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (blink-cursor-mode -1))
+(defvar after-make-console-frame-hooks '()
+  "Hooks to run after creating a new TTY frame.")
 
-(when (not (memq window-system '(mac ns)))
-  (menu-bar-mode -1))
+(defvar after-make-window-system-frame-hooks '()
+  "Hooks to run after creating a new window system frame.")
+
+(defun run-after-make-frame-hooks (frame)
+  "Run configured hooks in response to the newly-created FRAME.
+Selectively runs either `after-make-console-frame-hooks' or
+`after-make-window-system-frame-hooks'"
+  (with-selected-frame frame
+    (run-hooks (if window-system
+                   'after-make-window-system-frame-hooks
+                 'after-make-console-frame-hooks))))
+
+(add-hook 'after-make-frame-functions 'run-after-make-frame-hooks)
+
+(defconst jw/initial-frame (selected-frame)
+  "The frame (if any) active during Emacs initialization.")
+
+(add-hook 'after-init-hook
+          (lambda () (when jw/initial-frame
+                  (run-after-make-frame-hooks jw/initial-frame))))
 
 ;; Enable the mouse even in the terminal.
-(when (not window-system)
-  (xterm-mouse-mode 1))
+(add-hook 'after-make-console-frame-hooks 'xterm-mouse-mode)
+(add-hook 'after-make-window-system-frame-hooks
+          (lambda ()
+            (tool-bar-mode -1)
+            (scroll-bar-mode -1)
+            (blink-cursor-mode -1)
+            (menu-bar-mode -1)))
+
+(add-hook 'after-make-window-system-frame-hooks
+          (lambda ()
+            (let ((face "Iosevka 14"))
+              (add-to-list 'default-frame-alist (cons 'font face))
+              (set-frame-font face 'keep-size))))
 
 ;; Go straight to the scratch buffer.
 (setf inhibit-splash-screen t
@@ -40,12 +66,6 @@
 (use-package solarized-theme
   :ensure
   :config (load-theme 'solarized-light t))
-
-;;; Fonts
-(when window-system
-  (let ((face "Iosevka 14"))
-    (add-to-list 'default-frame-alist (cons 'font face))
-    (set-frame-font face 'keep-size)))
 
 ;; Display pretty symbols
 (use-package prog-mode
