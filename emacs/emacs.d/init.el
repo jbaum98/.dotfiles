@@ -91,5 +91,8 @@
 (require 'jw-lang-rust)
 (require 'jw-lang-sql)
 
+(use-package esup
+  :commands esup)
+
 (provide 'init)
 ;;; init.el ends here
