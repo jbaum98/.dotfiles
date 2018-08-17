@@ -83,15 +83,21 @@
 
 (require 'jw-lang-aurora)
 (require 'jw-lang-coq)
+(require 'jw-lang-elm)
 (require 'jw-lang-go)
 (require 'jw-lang-haskell)
 (require 'jw-lang-java)
+(require 'jw-lang-lua)
 (require 'jw-lang-markdown)
 (require 'jw-lang-nix)
+(require 'jw-lang-pdf)
+(require 'jw-lang-proto)
 (require 'jw-lang-rust)
 (require 'jw-lang-sql)
+(require 'jw-lang-yaml)
 
 (use-package esup
+  :ensure
   :commands esup)
 
 (provide 'init)

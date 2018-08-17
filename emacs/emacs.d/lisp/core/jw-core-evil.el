@@ -87,5 +87,22 @@
   (setf evil-escape-key-sequence "fd"
         evil-escape-unordered-key-sequence t))
 
+(use-package evil-surround
+  :ensure
+  :commands
+  global-evil-surround-mode
+  evil-surround-edit
+  evil-Surround-edit
+  evil-surround-region
+  evil-Surround-region
+  evil-surround-delete
+  evil-surround-change
+  :config
+  (global-evil-surround-mode 1)
+  (evil-define-key 'operator global-map "s" 'evil-surround-edit)
+  (evil-define-key 'operator global-map "S" 'evil-Surround-edit)
+  (evil-define-key 'visual global-map "S" 'evil-surround-region)
+  (evil-define-key 'visual global-map "gS" 'evil-Surround-region))
+
 (provide 'jw-core-evil)
 ;;; jw-core-evil.el ends here

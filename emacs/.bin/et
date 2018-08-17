@@ -1,3 +1,18 @@
 #!/bin/sh
 
-emacsclient -a emacsdaemont -t $@
+if ! emacsclient --eval "t" >/dev/null 2>/dev/null; then
+    echo "NO SERVER"
+    trap f SIGINT
+    f() {
+        osascript -e 'tell application "System Events" to tell process "Emacs" to set visible to false'
+        emacsclient -t
+        exit 0
+    }
+    open -j -W ~/.nix-profile/Applications/Emacs.app --args \
+        --eval "(server-start)" \
+        --eval "(shell-command \"kill -INT $$\")" &
+    wait
+else
+    echo "SERVER"
+    emacsclient -t
+fi

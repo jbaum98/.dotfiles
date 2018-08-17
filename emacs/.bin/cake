@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export LAYERCAKE_REPO="$HOME/layercake"
+exec $DATA_REPO/dist/go/bin/cake "$@"

@@ -32,5 +32,21 @@
   htlmize-file
   htlmize-many-files)
 
+(use-package cdlatex
+  :ensure
+  ;; org will require it
+  :defer)
+
+(use-package auctex
+  :pin elpa
+  :ensure
+  ;; org will require it
+  :defer)
+
+(use-package org-ref
+  :no-require
+  :ensure
+  :defer)
+
 (provide 'jw-core-org)
 ;;; jw-core-org.el ends here

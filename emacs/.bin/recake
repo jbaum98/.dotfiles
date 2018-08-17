@@ -1,0 +1,3 @@
+#!/bin/sh
+
+(cd $DATA_REPO && ./pants binary go/src/ocelot/layercake/cake/cmd/cake)

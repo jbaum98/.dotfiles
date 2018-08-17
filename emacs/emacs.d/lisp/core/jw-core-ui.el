@@ -72,7 +72,7 @@ Selectively runs either `after-make-console-frame-hooks' or
   :defer 3
   :commands global-prettify-symbols-mode
   :config
-  (setf prettify-symbols-unprettify-at-point 'right-edge)
+  (setq-default prettify-symbols-unprettify-at-point 'right-edge)
   (global-prettify-symbols-mode))
 
 (provide 'jw-core-ui)

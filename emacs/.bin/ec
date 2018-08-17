@@ -1,4 +1,3 @@
 #!/bin/sh
 
-emacsclient -a emacsdaemonc -c $@ &
-osascript -e 'tell application "Emacs" to activate' && wait $! && osascript -e 'tell application "Terminal" to activate'
+emacsclient -a '' -c $@

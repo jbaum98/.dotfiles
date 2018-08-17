@@ -8,7 +8,7 @@ zplug "srijanshetty/zsh-pandoc-completion"
 
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/ssh-agent", from:oh-my-zsh
-zplug "plugins/common-aliases", from:oh-my-zsh
+zplug "plugins/common-aliases", from:oh-my-zsh, hook-load:'unalias fd'
 zplug "lib/directories", from:oh-my-zsh
 
 zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"

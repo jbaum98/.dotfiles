@@ -15,11 +15,9 @@ Delegates to flycheck by evaluating FLYCHECK-FORMS if it is
 enabled and the `next-error` buffer is not visible. Otherwise
 delegates to regular Emacs `next-error` by evaluating
 EMACS-FORMS."
-  (if (and (bound-and-true-p flycheck-mode)
-           (let ((buf (ignore-errors (next-error-find-buffer))))
-             (not (and buf (get-buffer-window buf)))))
-      flycheck-forms
-    emacs-forms))
+  `(if (bound-and-true-p flycheck-mode)
+      ,flycheck-forms
+    ,emacs-forms))
 
 (defun jw/next-error (&optional n reset)
   "Dispatch to flycheck or standard Emacs error. Ignore N and RESET."
